@@ -1,0 +1,165 @@
+/* Center the entire admin page content */
+#admin-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    background-color: #f0f0f0; 
+}
+
+
+.admin-login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    padding: 0px 30px 30px 30px;
+    border-radius: 12px;
+    background: #FFFFFF;
+    box-shadow: 0px 23px 15px 0px #00000026;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+#image-eli1 {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: auto;
+    z-index: 1; 
+    opacity: 1; 
+}
+
+#credi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 20px; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+
+
+#credi img {
+    width: 71.4px;
+    height: 80.35px;
+    margin-bottom: 10px;
+}
+
+#credi div {
+    font-family: Roboto, sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: #0bd6a6;
+    margin-bottom: 0;
+}
+#credi div span{
+    color: #f0f0f0;
+}
+
+.admin-login h2 {
+    font-family: Roboto, sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #0066cc;
+    margin-bottom: 10px;
+}
+
+.admin-login div {
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    margin-bottom: 50px;
+}
+
+.admin-login form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.admin-login form div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.admin-login form label {
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.admin-login form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Password container */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    padding-right: 40px; /* Add padding to the right to make space for the icon */
+}
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+    bottom: 50%;
+}
+
+.admin-login form button {
+    width: 85%;
+    padding: 10px;
+    background-color:#0bd6a6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.admin-login form button:hover {
+    background-color: #044483;
+    
+}
+
+.forgot-password-link {
+    margin-top: 20px;
+    color:#044483;
+    text-decoration: underline;
+}
+
+
+.error-message {
+    color: red;
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
