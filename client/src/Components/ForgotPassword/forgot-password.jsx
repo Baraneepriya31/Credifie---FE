@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { FaArrowLeft } from 'react-icons/fa';
 import '../AdminLogin/Login.css';
 import login_ellipse1 from '../Assets/login-ellipse1.png';
 import login_top_icon from '../Assets/login-top.png';
@@ -8,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
-    // const navigate= useNavigate();
+    const navigate = useNavigate();
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -16,20 +15,29 @@ const ForgotPassword = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        fetch('http://localhost:3008/reset-password', {
+        fetch('http://localhost:3008/forgot-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ email }),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
+
             if (data.message === 'Reset token generated and email sent') {
-                setMessage('Password reset email sent. Please check your inbox.');
-                
+                setMessage(data.message); 
+                // setTimeout(() => {
+                //     navigate('/check-mail', { state: { email } });
+                // }, 2000);
+                 navigate('/check-mail', { state: { email } }); 
             } else {
-                setMessage(data.message);
+                setMessage(data.message || 'Password reset failed');
             }
         })
         .catch(error => {
@@ -50,19 +58,20 @@ const ForgotPassword = () => {
                 <div>No worries, we'll send you reset instructions</div>
                 {message && <p>{message}</p>}
                 <form onSubmit={handleSubmit}>
-                <div>
-                <label htmlFor="email">Email</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={email}
-                    onChange={handleEmailChange}
-                    required
-                />
-                </div>
-                <button type="submit">Reset Password</button>
-            </form>
+                    <div>
+                        <label htmlFor="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={email}
+                            onChange={handleEmailChange}
+                            required
+                        />
+                    </div>
+                    <button type="submit">REQUEST NEW PASSWORD</button>
+                    <a href="/login" className="forgot-password-link">Back to login</a>
+                </form>
             </div>
         </div>
     );
