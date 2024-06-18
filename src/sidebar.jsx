@@ -3,6 +3,9 @@
 
 
   function Sidebar({openSidebarToggle, OpenSidebar}) {
+
+   
+
      return (
      <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive": ""}>
          <div className='sidebar-title'>
@@ -16,14 +19,14 @@
          <ul className='sidebar-list'>
          <li className='sidebar-list-item'>
          <a href="">
-           
-             <button className='btn-1'> Dashboard </button>
+         <p className='nav-menu'>Dashboard</p>
+            
              
         </a>
          </li>
          <li className='sidebar-list-item'>
-        <a href="">
-           <p className='nav-menu'>Groups</p>
+        <a href="/group">
+           <p onclick={handlesubmit} className='nav-menu'>Groups</p>
         </a>
         </li>
         
