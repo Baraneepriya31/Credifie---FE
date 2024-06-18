@@ -3,11 +3,8 @@ import './checkMail.css';
 import login_ellipse1 from '../Assets/login-ellipse1.png';
 import login_top_icon from '../Assets/login-top.png';
 import mail from '../Assets/mail.png';
-import { useLocation } from 'react-router-dom';
 
-const CheckMail = () => {
-    const location = useLocation();
-    const { email } = location.state || {}; // Retrieve email from location state
+const CheckMail = ({ email }) => {
     const [message, setMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -23,12 +20,9 @@ const CheckMail = () => {
                 body: JSON.stringify({ email }),
             });
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
             const data = await response.json();
-            if (data.success) {
+
+            if (response.ok && data.success) {
                 setMessage('Password reset email has been resent');
             } else {
                 setErrorMessage(data.message || 'Failed to resend email');
@@ -42,12 +36,12 @@ const CheckMail = () => {
     return (
         <div id="admin-page">
             <img src={login_ellipse1} id="image-eli1" alt="ellipse" />
-            <div id="credi">
-                <img src={login_top_icon} alt="hand" />
+            <div id='credi'>
+                <img src={login_top_icon} alt='hand' />
                 <div><span>Cred</span>ifie</div>
             </div>
-            <div className="admin-login">
-                <img src={mail} id="lock" alt="postmail" />
+            <div className='admin-login'>
+                <img src={mail} id='lock'/>
                 <h2>Check Your Email</h2>
                 <div>We have sent a password reset link to your registered mail ID</div>
                 {message && <p className="success-message">{message}</p>}

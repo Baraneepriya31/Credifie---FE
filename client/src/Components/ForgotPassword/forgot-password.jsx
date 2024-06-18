@@ -22,20 +22,11 @@ const ForgotPassword = () => {
             },
             body: JSON.stringify({ email }),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
-
-            if (data.message === 'Reset token generated and email sent') {
-                setMessage(data.message); 
-                // setTimeout(() => {
-                //     navigate('/check-mail', { state: { email } });
-                // }, 2000);
-                 navigate('/check-mail', { state: { email } }); 
+            console.log("data",data);
+            if (data.success) {
+                navigate('/check-mail',{state : {email}});
             } else {
                 setMessage(data.message || 'Password reset failed');
             }

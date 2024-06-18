@@ -71,11 +71,11 @@ app.post('/forgot-password', (req, res) => {
         (err, result) => {
             if (err) {
                 console.error(err);
-                res.status(500).json({ message: 'Internal server error' });
+                res.status(500).json({ success: false, message: 'Internal server error' });
                 return;
             }
             if (result.affectedRows === 0) {
-                res.status(400).json({ message: 'No account with that email address exists' });
+                res.status(400).json({ success: false, message: 'No account with that email address exists' });
                 return;
             }
 
@@ -92,9 +92,9 @@ app.post('/forgot-password', (req, res) => {
             transporter.sendMail(mailOptions, (error, response) => {
                 if (error) {
                     console.error('There was an error: ', error);
-                    res.status(500).json({ message: 'Email could not be sent' });
+                    res.status(500).json({ success: false, message: 'Email could not be sent' });
                 } else {
-                    res.status(200).json({ message: 'Password reset email sent successfully' });
+                    res.status(200).json({ success: true, message: 'Password reset email sent successfully2' });
                 }
             });
         }

@@ -5,6 +5,7 @@ import '../AdminLogin/Login.css';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import login_ellipse1 from '../Assets/login-ellipse1.png';
 import login_top_icon from '../Assets/login-top.png';
+import help_circle from '../Assets/help-circle.png';
 
 const ResetPassword = () => {
     const { token } = useParams();
@@ -86,7 +87,8 @@ const ResetPassword = () => {
                 {message && <p>{message}</p>}
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label htmlFor="password">New Password</label>
+                        
+                        <label htmlFor="password">New Password <img src={help_circle} alt='question'/></label>
                         <input
                             type={showPassword ? "text" : "password"}
                             id="password"
