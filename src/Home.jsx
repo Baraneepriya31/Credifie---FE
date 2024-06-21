@@ -15,50 +15,8 @@
    import elipse from './Ellipse 45.png'
    import elipse2 from './Ellipse 46.png'
    import elipse3 from './Ellipse 46 (1).png'
+import DoughnutChart from "./Doughnutchart";
    
-
-    // const Statusbar = (props) => {
-    // const {score} = props;
-      
-    
-    //  const calcColor = (percent, start, end) => {
-    //     let a = percent * 100,
-    //     b = (end - start) + a,
-    //     c = b+start;
-
-    //     return "hsl("+ c + ", 100%, 50%)";
-    //  }
-    
-
-    // return (
-    //      <CircularProgress
-    //      value={score}
-    //     text={'$ {value}'}
-    //     circleRatio = {2}
-    //     styles ={ {
-    //         trail: {
-    //             strokeLinecap:"butt",
-    //             transform:"rotate(360deg)",
-    //             transformOrigin:"center center",
-    //         },
-    //          path: {
-    //             strokeLinecap:"butt",
-    //             transform:"rotate(360deg)",
-    //             transformOrigin:"center center",
-    //             // stroke: calcColor(value , 0, 120),
-    //          },
-    //          text: {
-    //             fill:"#ddd",
-    //          },
-    //         }}
-    //         strokeWidth={20}
-
-        
-    //     />
-
-    // )
-     
-    // }
 
   function Home() {
                     
@@ -99,11 +57,30 @@
       document.body.classList.remove('active-modal')
     }
       
+    const [buttonText, setButtonText,] = useState('Submitted');
+  const [buttonColor, setButtonColor] = useState('#12c2e9');
     
- 
+  const handleRadioChange = (event) => {
+    const { value } = event.target;
+    if (value === 'approved') {
+      setButtonText('Approved');
+      setButtonColor(' #25AE7A');
+    } else if (value === 'aknowledged') {
+      setButtonText('Aknowledged');
+      setButtonColor(' #FFBE0B');
+    } else if (value === 'deadline') {
+      setButtonText('Deadline');
+      setButtonColor('orange');
+    }else if (value === 'inprogress') {
+      setButtonText('On-Process');
+      setButtonColor('#FFBE0B');
+      
+    }else if (value === 'submitted') {
+      setButtonText('Submitted');
+      setButtonColor('#62B8FC');
+    }
 
-   
-    
+  };
 
       
   
@@ -186,9 +163,10 @@
             <div className="application-status">
                 <h3>Application</h3>
                 <hr />
-                <p className="total-application">Total Application</p>
+                <p className="total-application">Total</p>
                 <h4 className="total">1,150</h4>
-                <img className="circularprogress" src={chart} />
+               <DoughnutChart />
+                {/* <img className="circularprogress" src={chart} /> */}
                 <div className="application-elipse">
                 <img className="elipse" src={elipse} />
                 <p className="elipse-status">Application Verified</p>
@@ -217,34 +195,38 @@
                   <td>Rs.2,50,000</td>
                   <td>+91 980765421</td>
                   <td>N/A</td>
-                  <td onClick={OpenModal} className="loan-status">Submitted <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+<td style={{ backgroundColor: buttonColor, color:'white' }}
+  onClick={OpenModal} className="loan-status">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                  
                 </tr>
+               
+       
               <div>
               {Openmodal && (
         <div className="openmodal">
           <div className="modal-list">
             <div className="submitted">
-            <input className="radio-button" type="radio" />
+            <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
             <p className="submit" >Submitted</p>
             </div>
             <div className="submitted">
-            <input className="radio-button" type="radio" />
+            <input className="radio-button" type="radio" name="status" value="aknowledged" onChange={handleRadioChange} />
             <p className="submit">Acknowledged</p>
             </div>
             <div className="submitted">
-            <input className="radio-button" type="radio" />
+            <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
             <p className="submit">Approved</p>
             </div>
             <div className="submitted">
-            <input className="radio-button" type="radio" />
+            <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
             <p className="submit">Deadline</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" />
             <p className="submit">Disbursed</p>
             </div> <div className="submitted">
-            <input className="radio-button" type="radio" />
+            <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
+            onChange={handleRadioChange} />
             <p className="submit">In-Progress</p>
             </div>
             <div className="submitted">
@@ -273,7 +255,7 @@
                   <td>Rs.2,50,000</td>
                   <td>+91 980765421</td>
                   <td>N/A</td>
-                  <td className="loan-status3">On-Progress <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+                  <td className="loan-status3">On-Process <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
 </tr>
      
                 &nbsp;
@@ -283,7 +265,7 @@
                   <td>Rs.2,50,000</td>
                   <td>+91 980765421</td>
                   <td>R.Mohammed</td>
-                  <td className="loan-status4">On-Progress <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+                  <td className="loan-status4">On-Process <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                   
                 </tr>
                 &nbsp;

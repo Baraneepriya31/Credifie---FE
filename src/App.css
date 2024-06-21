@@ -461,7 +461,7 @@ li{
   margin-left: 40px;
   margin-top: 15px;
   width: 250px;
-  height: 320px;
+  height: 340px;
   background-color: #FFFFFF;
   border-radius: 8px;
 }
@@ -474,9 +474,10 @@ hr{
 }
 .total-application{
   color: #777675;
-  margin-left: 55px;
+  margin-left: 100px;
   position: absolute;
   margin-top: 5%;
+  
 }
 .total{
   margin-left: 100px;
@@ -532,12 +533,12 @@ hr{
   margin-left: 2px;
 }
 .recent-application{
-  width: 750px;
+  width: 780px;
   height: 310px;
   margin-top: 20px;
   background-color: #FFFFFF;
   border-radius: 8px;
-  margin-left:20px;
+  margin-left:8px;
 }
 .application-heading{
   margin-left: 20px;
@@ -545,7 +546,7 @@ hr{
   font-size: 18px;
 }
 .table{
-  width: 750px;
+  width: 780px;
   border-collapse: collapse;
 }
 .table th{
