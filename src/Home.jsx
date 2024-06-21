@@ -1,7 +1,7 @@
   import React, { useState } from "react";
   
   import 
-  { BsCalendar2Date, BsCalendar}
+  { BsCalendar2Date}
    from 'react-icons/bs'
    import iconimage from './Group 385.png'
    import rectangle from './Rectangle 257.png'
@@ -15,6 +15,7 @@
    import elipse from './Ellipse 45.png'
    import elipse2 from './Ellipse 46.png'
    import elipse3 from './Ellipse 46 (1).png'
+   
 
     // const Statusbar = (props) => {
     // const {score} = props;
@@ -99,9 +100,15 @@
     }
       
     
+ 
+
+   
+    
+
       
   
     return (
+      <React.Fragment>
       <main className='main-container'>
           <div className='main-title'>
               <h3>Current Months</h3>
@@ -181,7 +188,7 @@
                 <hr />
                 <p className="total-application">Total Application</p>
                 <h4 className="total">1,150</h4>
-                <img className="chart" src={chart}/>
+                <img className="circularprogress" src={chart} />
                 <div className="application-elipse">
                 <img className="elipse" src={elipse} />
                 <p className="elipse-status">Application Verified</p>
@@ -219,7 +226,7 @@
           <div className="modal-list">
             <div className="submitted">
             <input className="radio-button" type="radio" />
-            <p className="submit">Submitted</p>
+            <p className="submit" >Submitted</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" />
@@ -256,7 +263,7 @@
                   <td>Rs.2,50,000</td>
                   <td>+91 980765421</td>
                   <td>B.Vijay Vasanth</td>
-                  <td className="loan-status2">Approved <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+                  <td className="loan-status2" >Approved <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                   
                 </tr>
                 &nbsp;
@@ -267,8 +274,8 @@
                   <td>+91 980765421</td>
                   <td>N/A</td>
                   <td className="loan-status3">On-Progress <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
-                  
-                </tr>
+</tr>
+     
                 &nbsp;
                 <tr>
                   <td className="application-no" onClick={toggleModal}>SLK-123456</td>
@@ -377,6 +384,7 @@
 
 
       </main>
+      </React.Fragment>
     )
   }
   

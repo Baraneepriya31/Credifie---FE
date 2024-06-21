@@ -227,11 +227,9 @@ li{
 .calendar-icon{
   width: 15px;
   height: 15px;
-  margin-left: 10px;
+  
 }
-.calendar{
-  margin-right: 5px;
-}
+
 /* .profile {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -485,11 +483,14 @@ hr{
   position: absolute;
   margin-top: 6.5%;
 }
-.chart{
+.circularprogress{
   height: 165px;
-  margin-left: 25px;
+  margin-left:25px;
   width: 165px;
   position: relative;
+  --color1:#12c2e9;
+  --color2:#c471ed;
+  --color3:#f64f59;
 }
 .application-elipse{
   display: flex;

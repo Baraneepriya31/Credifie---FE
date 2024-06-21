@@ -26,7 +26,7 @@
          </li>
          <li className='sidebar-list-item'>
         <a href="/group">
-           <p onclick={handlesubmit} className='nav-menu'>Groups</p>
+           <p  className='nav-menu'>Groups</p>
         </a>
         </li>
         
