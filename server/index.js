@@ -4,6 +4,7 @@ const cors = require('cors');
 const mysql = require('mysql');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
 
 
 const app = express();
@@ -37,12 +38,13 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
 
     connection.query(
-        'SELECT * FROM admin WHERE email = ? AND password = ?',
-        [email, password],
+        'SELECT * FROM admin WHERE email = ?',
+        [email],
         (err, result) => {
             if (err) {
                 console.error(err);
@@ -53,10 +55,20 @@ app.post('/login', (req, res) => {
                 res.status(401).json({ message: 'Invalid email or password' });
                 return;
             }
+
+            const storedPassword = result[0].password;
+
+            // Compare the provided password with the stored plain text password
+            if (password !== storedPassword) {
+                res.status(401).json({ message: 'Invalid email or password' });
+                return;
+            }
+
             res.status(200).json({ message: 'Login successful' });
         }
     );
 });
+
 
 // Endpoint to handle password reset request
 app.post('/forgot-password', (req, res) => {
@@ -89,7 +101,7 @@ app.post('/forgot-password', (req, res) => {
                 If you did not request this, please ignore this email and your password will remain unchanged.\n`,
             };
 
-            transporter.sendMail(mailOptions, (error, response) => {
+            transporter.sendMail(mailOptions, (error, _response) => {
                 if (error) {
                     console.error('There was an error: ', error);
                     res.status(500).json({ success: false, message: 'Email could not be sent' });
@@ -101,41 +113,74 @@ app.post('/forgot-password', (req, res) => {
     );
 });
 
-// Endpoint to handle resetting the password
+
+
+
+const validatePasswordStrength = (password) => {
+    const lowerCaseRegex = /[a-z]/;
+    const upperCaseRegex = /[A-Z]/;
+    const numberRegex = /[0-9]/;
+    const specialCharRegex = /[$&+,:;=?@#|'<>.^*()%!-]/;
+
+    return (
+        password.length >= 7 &&
+        lowerCaseRegex.test(password) &&
+        upperCaseRegex.test(password) &&
+        numberRegex.test(password) &&
+        specialCharRegex.test(password)
+    );
+};
+
 app.post('/reset-password/:token', (req, res) => {
     const token = req.params.token;
     const newPassword = req.body.newPassword;
+
+    console.log("Received token:", token); // Debugging log
+    console.log("Received new password:", newPassword); // Debugging log
 
     connection.query(
         'SELECT * FROM admin WHERE resetPasswordToken = ? AND resetPasswordExpires > ?',
         [token, Date.now()],
         (err, result) => {
             if (err) {
-                console.error(err);
+                console.error('Error in SELECT query:', err);
                 res.status(500).json({ message: 'Internal server error' });
                 return;
             }
             if (result.length === 0) {
+                console.log('Invalid or expired token');
                 res.status(400).json({ message: 'Password reset token is invalid or has expired' });
                 return;
             }
 
-            // Directly save the new password (plaintext, not recommended in production)
+            const user = result[0];
+
+            // Check if the new password meets the criteria
+            if (!validatePasswordStrength(newPassword)) {
+                res.status(400).json({
+                    message: 'Password must be at least 7 characters long and include uppercase letters, lowercase letters, numbers, and special characters.',
+                });
+                return;
+            }
+
+            // Save the new password in plain text (not recommended)
             connection.query(
                 'UPDATE admin SET password = ?, resetPasswordToken = NULL, resetPasswordExpires = NULL WHERE email = ?',
-                [newPassword, result[0].email],
-                (error) => {
+                [newPassword, user.email],
+                (error, updateResult) => {
                     if (error) {
-                        console.error(error);
+                        console.error('Error in UPDATE query:', error);
                         res.status(500).json({ message: 'Internal server error' });
                         return;
                     }
+                    console.log('Password updated successfully');
                     res.status(200).json({ message: 'Password has been reset successfully' });
                 }
             );
         }
     );
 });
+
 
 // Endpoint to handle resending password reset email
 app.post('/resend-email', (req, res) => {
@@ -168,7 +213,7 @@ app.post('/resend-email', (req, res) => {
                 If you did not request this, please ignore this email and your password will remain unchanged.\n`,
             };
 
-            transporter.sendMail(mailOptions, (error, response) => {
+            transporter.sendMail(mailOptions, (error, _response) => {
                 if (error) {
                     console.error('There was an error: ', error);
                     res.status(500).json({ message: 'Email could not be sent' });

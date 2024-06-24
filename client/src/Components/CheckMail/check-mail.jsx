@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import './checkMail.css';
 import login_ellipse1 from '../Assets/login-ellipse1.png';
 import login_top_icon from '../Assets/login-top.png';
 import mail from '../Assets/mail.png';
 
-const CheckMail = ({ email }) => {
+const CheckMail = () => {
+    const location = useLocation();
+    const email = location.state?.email || '';
     const [message, setMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        console.log("Email passed to CheckMail:", email); // Debugging log
+    }, [email]);
 
     const handleResend = async () => {
         setMessage('');
@@ -41,7 +48,7 @@ const CheckMail = ({ email }) => {
                 <div><span>Cred</span>ifie</div>
             </div>
             <div className='admin-login'>
-                <img src={mail} id='lock'/>
+                <img src={mail} id='lock' alt="lock"/>
                 <h2>Check Your Email</h2>
                 <div>We have sent a password reset link to your registered mail ID</div>
                 {message && <p className="success-message">{message}</p>}
