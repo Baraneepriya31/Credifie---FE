@@ -44,7 +44,19 @@ import DoughnutChart from "./Doughnutchart";
     } else {
       document.body.classList.remove('active-modal')
     }
-      
+     
+    const [Openmodal2, setOpenModal2] = useState(false);
+
+    const OpenModal2 = () => {
+      setOpenModal2(!Openmodal2);
+    };
+  
+    if(modal) {
+      document.body.classList.add('active-modal')
+    } else {
+      document.body.classList.remove('active-modal')
+    }
+
     const [report, setreportmodal] = useState(false);
 
     const reportmodal = () => {
@@ -275,8 +287,45 @@ import DoughnutChart from "./Doughnutchart";
                   <td>Rs.2,50,000</td>
                   <td>+91 980765421</td>
                   <td>N/A</td>
-                  <td className="loan-status5">Submitted <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+                  <td onClick={OpenModal2} className="loan-status5">Submitted <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
 </tr>
+                    
+              {Openmodal2 && (
+        <div className="openmodal">
+          <div className="modal-list">
+            <div className="submitted">
+            <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
+            <p className="submit" >Submitted</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="aknowledged" onChange={handleRadioChange} />
+            <p className="submit">Acknowledged</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
+            <p className="submit">Approved</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
+            <p className="submit">Deadline</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" />
+            <p className="submit">Disbursed</p>
+            </div> <div className="submitted">
+            <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
+            onChange={handleRadioChange} />
+            <p className="submit">In-Progress</p>
+            </div>
+            <div className="submitted">
+            <p onClick={OpenModal2} className="cancel">Cancel</p>
+            <button onClick={OpenModal2} className="btn-ok">Ok</button>
+            </div>
+            
+                  </div>
+                  </div>
+            )}
+             
 
             
            

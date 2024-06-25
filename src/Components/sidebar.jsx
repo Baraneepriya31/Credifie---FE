@@ -1,10 +1,15 @@
    import React from "react";
    import logo from './Group (1).png'
-
+   import { Link } from 'react-router-dom';
+   import { useNavigate } from 'react-router-dom';
 
   function Sidebar({openSidebarToggle, OpenSidebar}) {
 
-   
+   const navigate = useNavigate();
+
+  const handleNavigate = (path) => {
+    navigate(path);
+  };
 
      return (
      <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive": ""}>
@@ -19,25 +24,24 @@
          <ul className='sidebar-list'>
          <li className='sidebar-list-item'>
          <a href="">
-         <p className='nav-menu'>Dashboard</p>
-            
+         <Link to="/" className='nav-menu'>Dashboard</Link>
              
         </a>
          </li>
          <li className='sidebar-list-item'>
-        <a href="/group">
-           <p  className='nav-menu'>Groups</p>
+        <a href="">
+           <p onClick={() => handleNavigate('/group')}  className='nav-menu'>Groups</p>
         </a>
         </li>
         
         <li className='sidebar-list-item'>
         <a href="">
-           <p className='nav-menu'>Collection Agent</p>
+        <Link to="/" className='nav-menu'>Collection Agent</Link>
         </a>
         </li>
         <li className='sidebar-list-item'>
         <a href="">
-           <p className='nav-menu'>Application Status</p>
+        <Link to="/" className='nav-menu'>Application Status</Link>
         </a>
         </li>
         </ul>
