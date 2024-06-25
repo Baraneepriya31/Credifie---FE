@@ -841,7 +841,7 @@ color:#FFFFFF;
   background-color:#d0d0d2;
   border: none;
   width: 205px;
-  height: 45px;
+  height: 35px;
   position: relative;
   padding-left: 10px;
 }
@@ -910,4 +910,12 @@ color:#FFFFFF;
 }
 .table2 td{
   text-align: center;
+ 
+  
+}
+.active-status{
+  color:#25AE7A;
+}
+.closed-status{
+  color: #F84D4D;
 }
