@@ -47,7 +47,7 @@ import './App.css';
 import Header from './Components/Header';
 import Sidebar from './Components/sidebar';
 import Home from './Components/Home';
-import Group from './Components/Group';
+import Group from './Groups/Group';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
