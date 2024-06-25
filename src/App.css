@@ -910,12 +910,48 @@ color:#FFFFFF;
 }
 .table2 td{
   text-align: center;
- 
-  
 }
 .active-status{
   color:#25AE7A;
 }
 .closed-status{
   color: #F84D4D;
+}
+.addmodal{
+  display: flex;
+  width: 100vw;
+ top: 50%;
+ height: 100vh;
+}
+.addmodal, .overlay {
+  width: 100vw;
+  top: 0px;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  position: fixed;
+} 
+.overlay{
+   background: rgba(49,49,49,0.8);  
+}
+.add-group {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #FFFFFF;
+   padding: 15px;
+  border-radius: 3px;
+   max-width: 500px;
+  min-width: 300px; 
+}
+.close-modal {
+  position: absolute;
+  top:5px;
+  right: 5px;
+  padding: 5px 7px;
+  border: none;
+  cursor: pointer;
+  background: #FFFFFF;
+
 }

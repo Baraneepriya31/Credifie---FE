@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import { BsSearch, BsDownload} from 'react-icons/bs';
 import dropdown from './Vector.png';
+import closeicon from './ion_close.png'
+
 
 function Group() {
             
@@ -119,6 +121,14 @@ function Group() {
                    {addmodal && (
                     <div className='addmodal'>
                      <div  onClick={addgroup} className="overlay"></div>
+                     <div className='add-group'>
+                          <h4>Add</h4>
+                          <hr className="popup-line" />
+                          <button className="close-modal" onClick={addgroup}>
+              <img src={closeicon} alt="icon" />
+            </button>
+          
+                     </div>
                     </div>
                    )}
 
