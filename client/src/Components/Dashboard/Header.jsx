@@ -4,8 +4,8 @@ import group from './Group.png'
 import profile from './Profile icon.png'
 import settings from './Settings icon.png'
 import logout from './Frame 1126.png'
-import { BsCalendar } from "react-icons/bs";
 import calendar from './calendar.png'
+import './App.css';
 
  //var datetime = () => {
     //var showdate = new Date();

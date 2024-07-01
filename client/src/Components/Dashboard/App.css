@@ -1,9 +1,8 @@
 body {
-    margin: 0;
-    padding: 0;
     background-color:#F7F7F7;
     font-family: 'Roboto';
 }
+
 
 .grid-container{
     display: grid;
@@ -23,7 +22,7 @@ body {
      justify-content: space-between;
      padding: 0 30px 0 30px;  
     background-color: #FFFFFF;
-    width: 1102px;
+    width: 1090px;
     height: 45px;
     /* top: -1px;
     left: 100px; */
@@ -40,11 +39,22 @@ body {
     padding-right: 25px;
    text-align: center;
 }
-.icon-img{
+
+.calender-img {
   width: 20px;
   height: 20px;
-  margin-right:30px;
   cursor: pointer;
+  margin-left: 20px;
+  margin-top: 5px;
+  padding: 5px;
+}
+.icon-img{
+  width: 25px;
+  height: 25px;
+  margin-right: 30px;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-top: 5px;
 }
 
 .date-line{
@@ -65,7 +75,7 @@ span{
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
   width: 215px;
-  height: 615px;
+  height: 665px;
   gap: 0px;
   opacity: 0px;
 }
@@ -95,27 +105,23 @@ span{
   font-weight: 400;
   text-align: left;
   color: #FFFFFF;
-   background-color: #25AE7A; 
+  background-color: #25AE7A; 
 }
 .nav-menu{
   width: 145px;
-  height: 20px;
+  height: 30px;
   gap: 0px;
   opacity: 0px;
   font-family: 'Roboto';
+  padding: 10px 5px 0px 15px;
   font-size: 16px;
   font-weight: 400;
   text-align: left;
   color: #FFFFFF;
-  margin-left: 15px;
   text-decoration: none;
 }
 
 .nav-menu:hover{
-  width: 140px;
-  height: 25px;
-  padding-top: 10px;
-  transition: 1s;
   border-radius: 0px 200px 200px 0px;
   background-color: #25AE7A; 
   border: none;
@@ -142,8 +148,6 @@ li{
   .sidebar-list {
     padding: 0;
     list-style-type: none;
-     /* padding-left: 15px;  */
-    align-items: center;
   }
   
   .sidebar-list-item {
@@ -738,7 +742,7 @@ body.active-modal {
   min-width: 300px; 
 }
 .popup-line{
-  border: 0.30px solid #777675;
+  border: 0.5px solid #777675;
   width: 448px;
 }
  h4 span{
@@ -801,9 +805,6 @@ box-shadow: 0px 15px 15px 0px #0000001A;
   margin-left: 10px;
   cursor: pointer;
 }
-
-
-    /* Group */
 
 .total-group{
   color: #777675;
