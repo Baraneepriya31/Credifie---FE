@@ -923,8 +923,8 @@ padding-bottom: 5px;
 }
 .grouppopup{
   display: flex;
-  width: 100vh;
-  height: 100vh;
+  width: 100vw;
+ 
   top: 50%;
 }
 .grouppopup, .overlay{
@@ -934,6 +934,7 @@ padding-bottom: 5px;
   right: 0;
   bottom: 0px;
   position: fixed;
+ 
 }
 .groupid-content{
   position: absolute;
@@ -943,11 +944,19 @@ padding-bottom: 5px;
   background: #FFFFFF;
   border-radius: 3px;
   max-width: 500px;
- min-width: 300px; 
+ min-width: 300px;
+ height: 530px;
+}
+.groupid-line{
+  width: 300px;
 }
 .group-member{
   display: flex;
   justify-content: space-between;
+  
+}
+.group-member h5{
+  color:#9e9ea4;
 }
 .application-status2{
   display: flex;
@@ -955,13 +964,99 @@ padding-bottom: 5px;
 .pending{
   background-color: #12c2e9;
   color: white;
-  width: 128px;
+  width: 118px;
   height: 25px;
   border: none;
   border-radius: 20px;
   margin-top: 20px;
   margin-left: 10px;
 }
+.groupid-content h5{
+  margin-left: 20px;
+}
+.group-id5{
+  border-bottom: 0.5px solid #bdbaba;
+ padding: 20px;
+  width: 370px;
+  margin-top: 0;
+}
+.groupid-line{
+  width: 400px;
+  border: 0.5px solid #bdbaba;
+}
+.group-table{
+  background-color: #FFFFFF;
+  /* margin-left: 10px;
+  margin-right: 10px;
+  */
+}
+.id-details{
+  color: #bdbaba;
+  font-size: 10px;
+  text-align: left;
+}
+.id-info{
+  /* padding-left: 20px; */
+  font-size: 10px;
+  color: #000000;
+  text-align: left;
+  font-weight: 600;
+}
+.table-1{
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid #9e9ea4;
+  border-radius: 6px;
+ margin-left: 12px;
+ margin-right: 12px;
+  width: 430px;
+  border-bottom: 0.5px solid #bdbaba;
+  padding: 10px;
+}
+.table-2{
+  margin-right: 10px;
+}
+.loan-history{
+  margin-left: 20px;
+  font-size: 15px;
+}
+.loanstatus-act-clo{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+.loanstats{
+  color: #777675;
+}
+.loanstatus-act{
+  background-color: #25AE7A;
+  border-radius: 20px;
+  color: #FFFFFF;
+  border: none;
+  width: 100px;
+  margin-top: 15px;
+}
+.loanhistory-table{
+    font-size: 11px;
+    margin-left: 12px;
+   border-collapse: collapse;
+   width: 450px;
+   text-align: center;
+   outline: 0.5px solid #9e9ea4;
+   padding: 10px;
+}
+.loanhistory-table th{
+  background-color:#dddbdb;
+  color: #393938;
+
+}
+.loanhistory-table td{
+  color: #393938;
+padding: 5px;
+  border-bottom: 0.5px solid #9e9ea4;
+  margin-bottom: 20px;
+}
+
 .addmodal{
   display: flex;
   width: 100vw;
@@ -1066,14 +1161,14 @@ padding-bottom: 5px;
 }
 .input-line1 {
   border: none;
-  border-bottom: 1px solid #343433;
+  border-bottom: 0.2px solid #343433;
   outline: none;
   width: 190px;
  
 }
 .input-line2{
   border: none;
-  border-bottom: 1px solid #343433;
+  border-bottom: 0.2px solid #343433;
   outline: none;
   width: 147px; 
 }

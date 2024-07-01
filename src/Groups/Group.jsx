@@ -51,7 +51,7 @@ function Group() {
           }
            
            
-          const [buttonText, setButtonText,] = useState('Submitted');
+          const [buttonText, setButtonText,] = useState('Pending');
           const [buttonColor, setButtonColor] = useState('#12c2e9');
 
           const handleRadioChange = (event) => {
@@ -69,8 +69,8 @@ function Group() {
               setButtonText('On-Process');
               setButtonColor('#FFBE0B');
               
-            }else if (value === 'submitted') {
-              setButtonText('Submitted');
+            }else if (value === 'pending') {
+              setButtonText('Pending');
               setButtonColor('#62B8FC');
             }
           }
@@ -174,7 +174,7 @@ function Group() {
         <div className="openmodal3">
           <div className="modal-list">
             <div className="submitted">
-            <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
+            <input   className="radio-button" type="radio" name="status" value="pending" onChange={handleRadioChange} />
             <p className="submit" >Submitted</p>
             </div>
             <div className="submitted">
@@ -214,12 +214,12 @@ function Group() {
                       <div className='grouppopup'>
                         <div onClick={GroupId} className='overlay'></div>
                         <div className="groupid-content">
-                      <h5>Group Id</h5>
-                      <hr className="groupid-line" />
+                      <h5 className='group-id5'>Group Id</h5>
+                     
                       <div className="group-member">
-                      <h5>Group Member  <span>0</span> </h5>
+                      <h5>Group Member  <span style={{background:' #044483',color:'white',width:'100vw'}}>0</span> </h5>
                       <div className='application-status2'>
-                       <h5> Application Status</h5>
+                       <h4> Application Status</h4>
                        <button className='pending'>Pending  
                          <img className="dropdown" src={dropdown} alt="dropdown" /> </button>
                       </div>
@@ -227,26 +227,102 @@ function Group() {
                       <button className="close-modal" onClick={GroupId}>
               <img src={closeicon} alt="icon" />
             </button>
-                   <div>
-                    <table>
+                   <div className='table-1'>
+                    <div>
+                    <table className='group-table'>
                       <tr>
-                       <td>Group Id</td>
-                       <td>-  G 401</td>
+                       <td className='id-details'>Group Id</td>
+                       <td className='id-info'>- &nbsp; G 401</td>
                       </tr>
+                      &nbsp;
                       <tr>
-                       <td>Group Name</td>
-                       <td>-  Chennai Group</td>
+                       <td className='id-details'>Group Name</td>
+                       <td  className='id-info'>- &nbsp;  Chennai Group</td>
                       </tr>
+                      &nbsp;
                       <tr>
-                       <td>Group Leader</td>
-                       <td>-  Vijay</td>
+                       <td className='id-details'>Group Leader</td>
+                       <td  className='id-info'>- &nbsp;  Vijay</td>
                       </tr>
+                      &nbsp;
                       <tr>
-                       <td>Contact Number</td>
-                       <td>+ 91 7890123456</td>
+                       <td className='id-details'>Contact Number</td>
+                       <td  className='id-info'>- &nbsp;+ 91 7890123456</td>
                       </tr>
                     </table>
+                   </div> 
+                   <div className="table-2">
+                    <table className='group-table'>
+                      <tr>
+                      <td className='id-details'>Loan Amount</td>
+                      <td className='id-info'>- &nbsp; Rs.2,50,000</td>
+                      </tr>
+                     &nbsp;
+                      <tr>
+                       <td className='id-details'>Collection Agent</td>
+                       <td  className='id-info'>- &nbsp;  Vijay</td>
+                      </tr>
+                      &nbsp;
+                      <tr>
+                       <td className='id-details'>Over Due</td>
+                       <td  className='id-info'>- &nbsp;  Rs.60,000</td>
+                      </tr>
+                      &nbsp;
+                      <tr>
+                       <td className='id-details'>Loan Status</td>
+                       <td  className='id-info'>- &nbsp;Active/3</td>
+                      </tr>
+                   </table>
                    </div>
+                   </div>
+                       <p className='loan-history'>Loan History</p>
+                       <div className='loanstatus-act-clo'>
+                       <div>
+                        <p className="loanstats">Loan Status</p>
+                       </div>
+                       &nbsp;
+                       <div>
+                       <button className='loanstatus-act'>Active/3 
+                       <img className="dropdown" src={dropdown} alt="dropdown" /> </button>
+                      
+                       </div>
+                       </div>
+                       <div>
+                        <table className='loanhistory-table'>
+                          <th>Serial Number</th>
+                          <th>Loan Amount</th>
+                          <th>Account Number</th>
+                          <th>Weekly Payment</th>
+                          <th>Due Date</th>
+                          <th>Tenure</th>
+                          <tr>
+                            <td>1234567</td>
+                            <td>2,50,000</td>
+                            <td>01123745678</td>
+                            <td>Rs.5000</td>
+                            <td>05-07-2023</td>
+                            <td className="tenure" style={{color:'#0859aa'}}>52/60</td>
+                          </tr>
+                         &nbsp;
+                          <tr>
+                            <td>1234567</td>
+                            <td>2,50,000</td>
+                            <td>01123745678</td>
+                            <td>Rs.5000</td>
+                            <td>05-07-2023</td>
+                            <td className="tenure" style={{color:'#0859aa'}}>52/60</td>
+                          </tr>
+                          &nbsp;
+                          <tr>
+                            <td>1234567</td>
+                            <td>2,50,000</td>
+                            <td>01123745678</td>
+                            <td>Rs.5000</td>
+                            <td>05-07-2023</td>
+                            <td> <div className="tenure" style={{color:'#0859aa'}}>52/60</div></td>
+                          </tr>
+                        </table>
+                       </div>
                         </div>
                       </div>
                      )}
