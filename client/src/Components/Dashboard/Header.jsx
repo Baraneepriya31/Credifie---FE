@@ -46,7 +46,7 @@ function Header() {
               <img src={calendar} alt="calendar" className="calendar-icon" />
               10:30 AM | 21st Dec,2023
               
-              <img src={basil_notification_icon} alt="image" className="icon-img" />
+              <img src={basil_notification_icon} alt="image1" className="icon-img" />
               <img onClick={profiletoggle} src={group} className="icon-img"/>
             </div>
             

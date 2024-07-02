@@ -27,7 +27,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
           </a>
         </li>
         <li className='sidebar-list-item'>
-          <a href="#" onClick={() => handleNavigate('/group')}>
+          <a href="#" onClick={() => handleNavigate('/Group')}>
             <p className='nav-menu'>Groups</p>
           </a>
         </li>

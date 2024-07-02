@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../AdminLogin/Login.css';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';

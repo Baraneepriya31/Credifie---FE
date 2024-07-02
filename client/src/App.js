@@ -8,7 +8,7 @@ import PasswordReset from './Components/PasswordReset/password-reset';
 import Header from './Components/Dashboard/Header';
 import Sidebar from './Components/Dashboard/sidebar';
 import Home from './Components/Dashboard/Home';
-import './App.css';
+import Group from './Components/Groups/Group';
 import ApplicationStatus from './Components/ApplicationStatus/applicationStatus';
 
 const App = () => {
@@ -41,6 +41,7 @@ const App = () => {
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/check-mail" element={<CheckMail />} />
                 <Route path="/password-reset" element={<PasswordReset />} />
+                <Route path="/group" element={<AuthenticatedRoute element={<Group />} />} />
                 <Route path="/applicationStatus" element={<ApplicationStatus />} />
             </Routes>
             </div>
