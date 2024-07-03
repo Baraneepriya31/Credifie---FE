@@ -19,6 +19,11 @@ import DoughnutChart from "./Doughnutchart";
   function Home() {
                     
     const [modal, setModal] = useState(false);
+    const [Openmodal, setOpenModal] = useState(false);
+    const [Openmodal2, setOpenModal2] = useState(false);
+    const [buttonText, setButtonText,] = useState('Submitted');
+    const [buttonColor, setButtonColor] = useState('#12c2e9');
+    const [report, setreportmodal] = useState(false);
 
     const toggleModal = () => {
       setModal(!modal);
@@ -30,9 +35,6 @@ import DoughnutChart from "./Doughnutchart";
       document.body.classList.remove('active-modal')
     }
       
-
-    const [Openmodal, setOpenModal] = useState(false);
-
     const OpenModal = () => {
       setOpenModal(!Openmodal);
     };
@@ -43,8 +45,6 @@ import DoughnutChart from "./Doughnutchart";
       document.body.classList.remove('active-modal')
     }
      
-    const [Openmodal2, setOpenModal2] = useState(false);
-
     const OpenModal2 = () => {
       setOpenModal2(!Openmodal2);
     };
@@ -55,8 +55,6 @@ import DoughnutChart from "./Doughnutchart";
       document.body.classList.remove('active-modal')
     }
 
-    const [report, setreportmodal] = useState(false);
-
     const reportmodal = () => {
       setreportmodal(!report);
     };
@@ -66,10 +64,7 @@ import DoughnutChart from "./Doughnutchart";
     } else {
       document.body.classList.remove('active-modal')
     }
-      
-    const [buttonText, setButtonText,] = useState('Submitted');
-  const [buttonColor, setButtonColor] = useState('#12c2e9');
-    
+       
   const handleRadioChange = (event) => {
     const { value } = event.target;
     if (value === 'approved') {
@@ -91,9 +86,7 @@ import DoughnutChart from "./Doughnutchart";
     }
 
   };
-
-      
-  
+ 
     return (
       <React.Fragment>
       <main className='main-container'>
@@ -209,8 +202,7 @@ import DoughnutChart from "./Doughnutchart";
   onClick={OpenModal} className="loan-status">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                  
                 </tr>
-               
-       
+          
               <div>
               {Openmodal && (
         <div className="openmodal">
@@ -324,9 +316,6 @@ import DoughnutChart from "./Doughnutchart";
                   </div>
             )}
              
-
-            
-           
               </table>
                  {modal && (
         <div className="modal">
@@ -410,7 +399,6 @@ import DoughnutChart from "./Doughnutchart";
             </div>
            
              </div>
-
 
       </main>
       </React.Fragment>

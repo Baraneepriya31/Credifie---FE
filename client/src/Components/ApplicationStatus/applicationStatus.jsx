@@ -5,7 +5,7 @@ import dropdown from './Vector.png';
 import pdf from './pdf-file 1.png';
 import dropdownblack from './dropdown black.png';
 import { CiSearch } from "react-icons/ci";
-import closeion from './ion_close.png';
+import closeicon from './ion_close.png';
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
 
@@ -24,6 +24,8 @@ function ApplicationStatus() {
   const [share, setopensuccess] =useState(false);
   const [email, setEmail] = useState('');
   const [fileType, setFileType] = useState('');
+  const [grouppopup, setGroupId] = useState(false); 
+
 
   const Popup = ()=>{
   setPopup(!openPopup);
@@ -96,6 +98,17 @@ function ApplicationStatus() {
     } else {
       document.body.classList.remove('active-modal')
     }
+
+    const GroupId = () => {
+      setGroupId(!grouppopup);
+    };
+  
+    if(grouppopup) {
+      document.body.classList.add('active-modal')
+    } else {
+      document.body.classList.remove('active-modal')
+    }
+         
 
     
     
@@ -256,7 +269,7 @@ function ApplicationStatus() {
         </div>
       )}
 
-            <table className='table1'>
+            <table className='table-ap'>
             <thead>
                 <tr>
                     <td>Application ID</td>
@@ -270,9 +283,9 @@ function ApplicationStatus() {
             </thead>
             <tbody>
                 <tr>
-                    <td><div style={{color:'#0087F3'}}>CRD110279</div></td>
+                    <td onClick={toggleModal} ><div style={{color:'#0087F3', cursor:'pointer'}} >CRD110279</div></td>
                     <td>28/08/ 2024</td>
-                    <td><div style={{color:'#0087F3' }} >Ambai Group</div></td>
+                    <td onClick={GroupId}><div style={{color:'#0087F3' ,cursor:'pointer'}} >Ambai Group</div></td>
                     <td>Kannan S</td>
                     <td>+91 97905 64324</td>
                     <td>2,50,000</td>
@@ -280,45 +293,9 @@ function ApplicationStatus() {
                 </tr>
 
                 <tr>
-                    <td><div style={{color:'#0087F3'}}>CRD110279</div></td>
+                    <td onClick={toggleModal} ><div style={{color:'#0087F3',cursor:'pointer'}}>CRD110279</div></td>
                     <td>28/08/ 2024</td>
-                    <td><div style={{color:'#0087F3' }} >Ambai Group</div></td>
-                    <td>Kannan S</td>
-                    <td>+91 97905 64324</td>
-                    <td>2,50,000</td>
-                    <td>submitted</td>
-                </tr>
-                <tr>
-                    <td><div style={{color:'#0087F3'}}>CRD110279</div></td>
-                    <td>28/08/ 2024</td>
-                    <td><div style={{color:'#0087F3'}}>Ambai Group</div></td>
-                    <td>Kannan S</td>
-                    <td>+91 97905 64324</td>
-                    <td>2,50,000</td>
-                    <td>submitted</td>
-                </tr>
-                <tr>
-                    <td><div style={{color:'#0087F3'}}>CRD110279</div></td>
-                    <td>28/08/ 2024</td>
-                    <td><div style={{color:'#0087F3' }}>Ambai Group</div></td>
-                    <td>Kannan S</td>
-                    <td>+91 97905 64324</td>
-                    <td>2,50,000</td>
-                    <td>submitted</td>
-                </tr>
-                <tr>
-                <td><div style={{color:'#0087F3'}}>CRD110279</div></td>
-                <td>28/08/ 2024</td>
-                <td><div style={{color:'#0087F3' }}>Ambai Group</div></td>
-                <td>Kannan S</td>
-                    <td>+91 97905 64324</td>
-                    <td>2,50,000</td>
-                    <td>submitted</td>
-                </tr>
-                <tr>
-                    <td><div style={{color:'#0087F3'}}>CRD110279</div></td>
-                    <td>28/08/ 2024</td>
-                    <td><div style={{color:'#0087F3'}}>Ambai Group</div></td>
+                    <td onClick={GroupId}><div style={{color:'#0087F3',cursor:'pointer'}}>Ambai Group</div></td>
                     <td>Kannan S</td>
                     <td>+91 97905 64324</td>
                     <td>2,50,000</td>
@@ -363,6 +340,123 @@ function ApplicationStatus() {
             )}
             </tbody>
         </table>
+        {grouppopup && (
+                      <div className='grouppopup'>
+                        <div onClick={GroupId} className='overlay'></div>
+                        <div className="groupid-content">
+                      <h5 className='group-id5'>Group Id</h5>
+                     
+                      <div className="group-member">
+                      <h5>Group Member  <span style={{background:' #044483',color:'white',width:'100vw'}}>0</span> </h5>
+                      <div className='application-status2'>
+                       <h4> Application Status</h4>
+                       <button className='pending'>Pending  
+                         <img className="dropdown" src={dropdown} alt="dropdown" /> </button>
+                      </div>
+                      </div>
+                      <button className="close-modal" onClick={GroupId}>
+              <img src={closeicon} alt="icon" />
+            </button>
+                   <div className='table-1'>
+                    <div>
+                    <table className='group-table'>
+                      <tr>
+                       <td className='id-details'>Group Id</td>
+                       <td className='id-info'>- &nbsp; G 401</td>
+                      </tr>
+                      &nbsp;
+                      <tr>
+                       <td className='id-details'>Group Name</td>
+                       <td  className='id-info'>- &nbsp;  Chennai Group</td>
+                      </tr>
+                      &nbsp;
+                      <tr>
+                       <td className='id-details'>Group Leader</td>
+                       <td  className='id-info'>- &nbsp;  Vijay</td>
+                      </tr>
+                      &nbsp;
+                      <tr>
+                       <td className='id-details'>Contact Number</td>
+                       <td  className='id-info'>- &nbsp;+ 91 7890123456</td>
+                      </tr>
+                    </table>
+                   </div> 
+                   <div className="table-2">
+                    <table className='group-table'>
+                      <tr>
+                      <td className='id-details'>Loan Amount</td>
+                      <td className='id-info'>- &nbsp; Rs.2,50,000</td>
+                      </tr>
+                     &nbsp;
+                      <tr>
+                       <td className='id-details'>Collection Agent</td>
+                       <td  className='id-info'>- &nbsp;  Vijay</td>
+                      </tr>
+                      &nbsp;
+                      <tr>
+                       <td className='id-details'>Over Due</td>
+                       <td  className='id-info'>- &nbsp;  Rs.60,000</td>
+                      </tr>
+                      &nbsp;
+                      <tr>
+                       <td className='id-details'>Loan Status</td>
+                       <td  className='id-info'>- &nbsp;Active/3</td>
+                      </tr>
+                   </table>
+                   </div>
+                   </div>
+                       <p className='loan-history'>Loan History</p>
+                       <div className='loanstatus-act-clo'>
+                       <div>
+                        <p className="loanstats">Loan Status</p>
+                       </div>
+                       &nbsp;
+                       <div>
+                       <button className='loanstatus-act'>Active/3 
+                       <img className="dropdown" src={dropdown} alt="dropdown" /> </button>
+                       </div>
+                       </div>
+                       <div>
+                        <table className='loanhistory-table'>
+                          <th>Serial Number</th>
+                          <th>Loan Amount</th>
+                          <th>Account Number</th>
+                          <th>Weekly Payment</th>
+                          <th>Due Date</th>
+                          <th>Tenure</th>
+                          <tr>
+                            <td>1234567</td>
+                            <td>2,50,000</td>
+                            <td>01123745678</td>
+                            <td>Rs.5000</td>
+                            <td>05-07-2023</td>
+                            <td className="tenure" style={{color:'#0859aa'}}>52/60</td>
+                          </tr>
+                         &nbsp;
+                          <tr>
+                            <td>1234567</td>
+                            <td>2,50,000</td>
+                            <td>01123745678</td>
+                            <td>Rs.5000</td>
+                            <td>05-07-2023</td>
+                            <td className="tenure" style={{color:'#0859aa'}}>52/60</td>
+                          </tr>
+                          &nbsp;
+                          <tr>
+                            <td>1234567</td>
+                            <td>2,50,000</td>
+                            <td>01123745678</td>
+                            <td>Rs.5000</td>
+                            <td>05-07-2023</td>
+                            <td> <div className="tenure" style={{color:'#0859aa'}}>52/60</div></td>
+                          </tr>
+                        </table>
+                       </div>
+                        </div>
+                      </div>
+                     )}
+
+
         {modal && (
         <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>
@@ -438,7 +532,7 @@ function ApplicationStatus() {
                 <button>ADD</button>
               </div>
             <button className="close-modal" onClick={toggleModal}>
-              <img src={closeion} alt="icon" />
+              <img src={closeicon} alt="icon" />
             </button>
           
           </div>

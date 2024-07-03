@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { BsSearch, BsDownload} from 'react-icons/bs';
+import { BsSearch} from 'react-icons/bs';
 import dropdown from './Vector.png';
 import closeicon from './ion_close.png';
 import groupicon from './grpmem.png';
@@ -7,93 +7,144 @@ import leadicon from './grplead.png';
 import contact from './contact.png'
 import member from './grpmembers.png'
 import alert from './alerticon.png'
-
+import { FiDownload } from "react-icons/fi";
+import { MdOutlineMailOutline } from "react-icons/md";
+import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
+import './Group.css';
 
 
 
 function Group() {
             
-        const [addmodal, setAddmodal] = useState(false);
-
-        const addgroup = () =>{
-          setAddmodal(!addmodal);
-        }
-        if(addmodal) {
-          document.body.classList.add('active-modal')
-        } else {
-          document.body.classList.remove('active-modal')
-        }
-             
-        
-          const [rows, setRows] = useState([{ member: '', contact: '', pan: '' }]);
-        
-       
-          const addrow = () => {
-            setRows([...rows, { member: '', contact: '', pan: '' }]);
-          };
-
-          const handleChange = (index, field, value) => {
-            const newRows = [...rows];
-            newRows[index][field] = value;
-            setRows(newRows);
-          };
-         
-          const [Openmodal, setOpenModal] = useState(false);
-
-          const OpenModal = () => {
-            setOpenModal(!Openmodal);
-          };
-        
-          if(Openmodal) {
-            document.body.classList.add('active-modal')
-          } else {
-            document.body.classList.remove('active-modal')
-          }
-           
-           
-          const [buttonText, setButtonText,] = useState('Pending');
-          const [buttonColor, setButtonColor] = useState('#12c2e9');
-
-          const handleRadioChange = (event) => {
-            const { value } = event.target;
-            if (value === 'approved') {
-              setButtonText('Approved');
-              setButtonColor(' #25AE7A');
-            } else if (value === 'aknowledged') {
-              setButtonText('Aknowledged');
-              setButtonColor(' #FFBE0B');
-            } else if (value === 'deadline') {
-              setButtonText('Deadline');
-              setButtonColor('orange');
-            }else if (value === 'inprogress') {
-              setButtonText('On-Process');
-              setButtonColor('#FFBE0B');
-              
-            }else if (value === 'pending') {
-              setButtonText('Pending');
-              setButtonColor('#62B8FC');
-            }
-          }
-           
-          const [disablemodal, setDisableModal] = useState(false);
-
-          const DisableModal = () => {
-            setDisableModal(!disablemodal);
-          };
-        
-          if(disablemodal) {
-            document.body.classList.add('active-modal')
-          } else {
-            document.body.classList.remove('active-modal')
-          }
-           
-          const [isConfirmed, setIsConfirmed] = useState(false);
-
-         const handleConfirm = () => {
-         setIsConfirmed(true);
-  };
-
+  const [addmodal, setAddmodal] = useState(false);
+  const [rows, setRows] = useState([{ member: '', contact: '', pan: '' }]);
+  const [buttonText, setButtonText,] = useState('Pending');
+  const [buttonColor, setButtonColor] = useState('#12c2e9');
+  const [disablemodal, setDisableModal] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [Openmodal, setOpenModal] = useState(false);
   const [grouppopup, setGroupId] = useState(false); 
+  const [openPopup, setPopup] =useState(false);
+  const [opensave, setopenDownload] =useState(false);
+  const [opensend, setopenShare]=useState(false);
+  const [share, setopensuccess] =useState(false);
+  const [email, setEmail] = useState('');
+  const [fileType, setFileType] = useState('');
+
+  const addgroup = () =>{
+    setAddmodal(!addmodal);
+  }
+  if(addmodal) {
+    document.body.classList.add('active-modal')
+  } else {
+    document.body.classList.remove('active-modal')
+  }
+      
+    const addrow = () => {
+      setRows([...rows, { member: '', contact: '', pan: '' }]);
+    };
+
+    const handleChange = (index, field, value) => {
+      const newRows = [...rows];
+      newRows[index][field] = value;
+      setRows(newRows);
+    };
+
+    const Popup = ()=>{
+      setPopup(!openPopup);
+      }
+      if(openPopup){
+      document.body.classList.add('active-model')
+      }
+      else{
+        document.body.classList.remove('active-model')
+    
+      }
+
+    const openDownload=()=>{
+      setopenDownload(true);
+      setPopup(false);
+    }
+  
+    const openShare =()=>{
+      setopenShare(true);
+      setPopup(false);
+    }
+  
+    const sendSuccess=()=>{
+      setopensuccess(true);
+      setopenShare(false);
+    }
+
+      const closeShare = () => {
+      setopenShare(false);
+      setopenDownload(false);
+      setopensuccess(false);
+    }
+  
+    const emailPdf = () => {
+      setFileType('PDF');
+    };
+  
+    const emailExcel = () => {
+      setFileType('Excel');
+    };
+  
+    const handleEmailChange = (e) => {
+      setEmail(e.target.value);
+    };
+  
+    const handleSend = (e) => {
+      e.preventDefault();
+      console.log(`Sending ${fileType} report to ${email}`);
+      closeShare(); 
+    };
+         
+    const OpenModal = () => {
+      setOpenModal(!Openmodal);
+    };
+  
+    if(Openmodal) {
+      document.body.classList.add('active-modal')
+    } else {
+      document.body.classList.remove('active-modal')
+    }
+
+    const handleRadioChange = (event) => {
+      const { value } = event.target;
+      if (value === 'approved') {
+        setButtonText('Approved');
+        setButtonColor(' #25AE7A');
+      } else if (value === 'aknowledged') {
+        setButtonText('Aknowledged');
+        setButtonColor(' #FFBE0B');
+      } else if (value === 'deadline') {
+        setButtonText('Deadline');
+        setButtonColor('orange');
+      }else if (value === 'inprogress') {
+        setButtonText('On-Process');
+        setButtonColor('#FFBE0B');
+        
+      }else if (value === 'pending') {
+        setButtonText('Pending');
+        setButtonColor('#62B8FC');
+      }
+    }
+      
+    const DisableModal = () => {
+      setDisableModal(!disablemodal);
+    };
+  
+    if(disablemodal) {
+      document.body.classList.add('active-modal')
+    } else {
+      document.body.classList.remove('active-modal')
+    }
+      
+
+    const handleConfirm = () => {
+    setIsConfirmed(true);
+  };
 
   const GroupId = () => {
     setGroupId(!grouppopup);
@@ -104,11 +155,10 @@ function Group() {
   } else {
     document.body.classList.remove('active-modal')
   }
-   
-       
+         
   return(
     <div className='group'>
-        <div className='total-group'>
+       <div className='total-group'>
             <h2>Total Group <span>0</span></h2>
         </div>
         <div className="group-container">
@@ -119,8 +169,102 @@ function Group() {
             <div>
               <button onClick={DisableModal} className='disable-btn'>Disable</button>
               <button onClick={addgroup} className="add-btn">Add Group   +</button>
-              <button className='download-btn'>Download  <BsDownload className='download-icon' /> </button>
+              <button className="download-button" onClick={Popup} >Download  <FiDownload /> </button>
             </div>
+            {/* First popup for download and share */}
+            {openPopup && (<div className="download-popup">
+                  <div onClick={Popup} className="overlay"></div>
+                  <div className="download-box">
+                    <div className="close-icon">&times;</div>
+                  <h5>Download & Share</h5>
+                   <form>
+                    <div>
+                     <div className="dwnl-ft">
+                      <div>
+                    <label for="date">From</label>
+                    <input type="date"></input>
+                    </div>
+                    <div>
+                    <label for="date">To</label>
+                    <input type="date"></input>
+                    </div>
+                    </div>
+                    <div className="radio-btn">
+                    <p>File type</p>
+                    <input type="radio"/>.xlsx
+                    &nbsp;
+                    <input type="radio"/>.pdf
+                    </div>
+                    <div className="dwnl-button">
+                    <button className="downloat-btn" onClick={openDownload}>Download</button>
+                    <button className="share-btn" onClick={openShare}>Share</button>
+                      </div>
+                    </div>
+                    </form>
+                  </div>
+                </div>)
+                }
+        
+      {/*Second popup for share*/ }
+
+     {opensend && (
+        <div className="share-popup">
+          <div onClick={closeShare} className="overlay-1"></div>
+          <div className="share-box">
+            <div className="close-icon" onClick={closeShare}>&times;</div>
+            <div className="share-rpt">
+              <p>Email report</p>
+              <span>Select The File Type You Would Like To Your Email</span>
+              <div className="pdfxl-btn">
+              <button onClick={emailPdf}>
+                  <FaFilePdf style={{ color: 'red' }} /> Pdf File
+                </button>
+                <button onClick={emailExcel}>
+                  <FaFileExcel style={{ color: 'green' }} /> Excel
+                </button>
+              </div>
+              <form onSubmit={handleSend}>
+                <div className="input-share">
+                <span>Email <MdOutlineMailOutline /></span>
+                <label htmlFor="email"></label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  value={email} 
+                  onChange={handleEmailChange} 
+                  required
+                />
+                </div>
+                <div className='send-button'>
+                <button type="submit" onClick={sendSuccess}>Send</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+       {share && (
+        <div className="share-popup">
+          <div onClick={closeShare} className="overlay-1"></div>
+          <div className="share-box">
+            <div className="loader">
+              <div className="circle"></div>
+              <div className="tick">&#10003;</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+{/*Popup for send successful message*/}
+      {opensave && (
+        <div className="share-popup">
+          <div onClick={closeShare} className="overlay"></div>
+          <div className="share-box">
+            
+          </div>
+        </div>
+      )}
             </div>
             <div>
               <table className='table2'>
@@ -209,7 +353,6 @@ function Group() {
               </table>
              
             </div>
-                      
                      {grouppopup && (
                       <div className='grouppopup'>
                         <div onClick={GroupId} className='overlay'></div>
@@ -284,7 +427,6 @@ function Group() {
                        <div>
                        <button className='loanstatus-act'>Active/3 
                        <img className="dropdown" src={dropdown} alt="dropdown" /> </button>
-                      
                        </div>
                        </div>
                        <div>
@@ -339,7 +481,6 @@ function Group() {
                              <input type="text" id="name" name="name" className="input-line1"/> 
                            
                           </div>
-                         
                           <div className="group-flex">
                           <div className="groupleader">
                             <p className='group-leader'>Group leader</p>
@@ -468,15 +609,13 @@ function Group() {
             
           </>
         )}
-                   </div>
-                 
-                    </div>
-                   )}    
+        </div>
+      
+        </div>
+       )}   
         </div>
     </div>
   )
 }
-
-
 
 export default Group;
