@@ -5,8 +5,7 @@ import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import login_ellipse1 from '../Assets/login-ellipse1.png';
 import login_top_icon from '../Assets/login-top.png';
 
-
-const AdminLogin = () => {
+const AdminLogin = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -26,8 +25,8 @@ const AdminLogin = () => {
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault(); 
-    
+        event.preventDefault();
+
         if (email === '' || password === '') {
             setErrorMessage('Email and Password are required.');
         } else {
@@ -40,21 +39,21 @@ const AdminLogin = () => {
                     },
                     body: JSON.stringify({ email, password }),
                 });
-    
+
                 if (!response.ok) {
                     const responseBody = await response.text();
                     console.error('Response status:', response.status);
                     console.error('Response message:', responseBody);
                     throw new Error('Network response was not ok');
                 }
-    
+
                 const data = await response.json();
-                console.log('Login data:', data); 
-                // navigate('/dashboard');
-    
-                if (data.message ==="Login successful") {
-                    console.log('Navigating to dashboard...'); 
-                    navigate('/dashboard');
+                console.log('Login data:', data);
+
+                if (data.message === "Login successful") {
+                    console.log('Navigating to dashboard...');
+                    onLogin();
+                    navigate('/Home');
                 } else {
                     setErrorMessage(data.message || 'Login failed');
                 }
@@ -64,8 +63,6 @@ const AdminLogin = () => {
             }
         }
     };
-    
-    
 
     return (
         <div id='admin-page'>
