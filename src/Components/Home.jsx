@@ -11,7 +11,6 @@
    import closeion from './ion_close.png'
    import dropdownblack from './dropdown black.png'
    import pdf from './pdf-file 1.png'
-   import chart from './Group 388.png'
    import elipse from './Ellipse 45.png'
    import elipse2 from './Ellipse 46.png'
    import elipse3 from './Ellipse 46 (1).png'
@@ -207,8 +206,9 @@ import DoughnutChart from "./Doughnutchart";
                   <td>Rs.2,50,000</td>
                   <td>+91 980765421</td>
                   <td>N/A</td>
-<td style={{ backgroundColor: buttonColor, color:'white' }}
-  onClick={OpenModal} className="loan-status">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+     <td style={{ backgroundColor: buttonColor, color:'white' }}
+         onClick={OpenModal} className="loan-status">{buttonText}
+      <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                  
                 </tr>
                
@@ -277,7 +277,8 @@ import DoughnutChart from "./Doughnutchart";
                   <td>Rs.2,50,000</td>
                   <td>+91 980765421</td>
                   <td>R.Mohammed</td>
-                  <td className="loan-status4">On-Process <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+                  <td className="loan-status4">On-Process 
+                    <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                   
                 </tr>
                 &nbsp;
@@ -287,7 +288,8 @@ import DoughnutChart from "./Doughnutchart";
                   <td>Rs.2,50,000</td>
                   <td>+91 980765421</td>
                   <td>N/A</td>
-                  <td onClick={OpenModal2} className="loan-status5">Submitted <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+                  <td onClick={OpenModal2} className="loan-status5">Submitted
+                     <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
 </tr>
                     
               {Openmodal2 && (
@@ -337,7 +339,7 @@ import DoughnutChart from "./Doughnutchart";
             
             <h4 className="appno-status">Application no SLK-123456</h4>
             <p className="status">Status</p>
-            <button className="btn"> Disbursed <img src={dropdown} /> </button>
+            <button className="btn"> Disbursed <img src={dropdown} alt="dropdown" /> </button>
             
             <h4 className="group-info">Group Info</h4>
             <div className="group-details">
@@ -361,7 +363,8 @@ import DoughnutChart from "./Doughnutchart";
               <h4>Loan Status <span>ACTIVE</span></h4>
               <p className="collection">Collection Agent</p>
             </div>
-             <button className="btn2">R.Suresh Krishna <img className="dropdown" src={dropdownblack} /> </button>
+             <button className="btn2">R.Suresh Krishna 
+              <img className="dropdown" src={dropdownblack}  /> </button>
               
               <div className="group-details">
               <div className="group-information">
