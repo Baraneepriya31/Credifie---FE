@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import zxcvbn from 'zxcvbn';
 import '../AdminLogin/Login.css';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import login_ellipse1 from '../Assets/login-ellipse1.png';
 import login_top_icon from '../Assets/login-top.png';
 import help_circle from '../Assets/help-circle.png';
-import { FaArrowLeft } from 'react-icons/fa6';
 
 const ResetPassword = () => {
     const { token } = useParams();
-    const [newPassword, setNewPassword] = useState('');
+    const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('');
@@ -17,9 +17,10 @@ const ResetPassword = () => {
     const navigate = useNavigate();
 
     const handlePasswordChange = (event) => {
-        const password = event.target.value;
-        setNewPassword(password);
-        setPasswordStrength(validatePasswordStrength(password));
+        const newPassword = event.target.value;
+        setPassword(newPassword);
+        const evaluation = zxcvbn(newPassword);
+        setPasswordStrength(evaluation.score);
     };
 
     const handleConfirmPasswordChange = (event) => {
@@ -31,50 +32,22 @@ const ResetPassword = () => {
     };
 
     const validatePassword = (password) => {
-        const lowerCaseRegex = /[a-z]/;
-        const upperCaseRegex = /[A-Z]/;
-        const numberRegex = /[0-9]/;
-        const specialCharRegex = /[$&+,:;=?@#|'<>.^*()%!-]/;
-
-        return (
-            password.length >= 8 &&
-            lowerCaseRegex.test(password) &&
-            upperCaseRegex.test(password) &&
-            numberRegex.test(password) &&
-            specialCharRegex.test(password)
-        );
-    };
-
-    const validatePasswordStrength = (password) => {
-        const lowerCaseRegex = /[a-z]/;
-        const upperCaseRegex = /[A-Z]/;
-        const numberRegex = /[0-9]/;
-        const specialCharRegex = /[$&+,:;=?@#|'<>.^*()%!-]/;
-
-        let strengthScore = 0;
-        if (lowerCaseRegex.test(password)) strengthScore += 1;
-        if (upperCaseRegex.test(password)) strengthScore += 1;
-        if (numberRegex.test(password)) strengthScore += 1;
-        if (specialCharRegex.test(password)) strengthScore += 1;
-
-        if (password.length >= 8 && strengthScore === 4) {
-            return 2; // Strong
-        } else if (password.length >= 8 && strengthScore >= 2) {
-            return 1; // Moderate
-        } else {
-            return 0; // Weak
-        }
+        const minLength = 8;
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        if (!validatePassword(newPassword)) {
+        if (!validatePassword(password)) {
             setMessage('Password must be at least 8 characters long and include uppercase letters, lowercase letters, numbers, and special characters.');
             return;
         }
 
-        if (newPassword !== confirmPassword) {
+        if (password !== confirmPassword) {
             setMessage('Passwords do not match.');
             return;
         }
@@ -84,13 +57,13 @@ const ResetPassword = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ newPassword }), 
+            body: JSON.stringify({ password }),
         })
         .then(response => response.json())
         .then(data => {
-            console.log("data", data);
-            if (data.message === "Password has been reset successfully") {
+            if (data.success) {
                 navigate('/password-reset');
+                setMessage('Password has been reset successfully.');
             } else {
                 setMessage(data.message || 'Password reset failed.');
             }
@@ -111,36 +84,31 @@ const ResetPassword = () => {
             <div className='admin-login'>
                 <h2>Set New Password</h2>
                 <div>Your new password must be different from the previously used password.</div>
-                {message && <p className="error-message">{message}</p>}
+                {message && <p>{message}</p>}
                 <form onSubmit={handleSubmit}>
-                    <div className="password-container">
-                        <label htmlFor='password'>New Password <a href='/reset-password' className="tooltip-container">
-                            <img src={help_circle} alt="question" className="tooltip-image" />
-                            <span className="tooltip-text">Password must be at least 8 characters long and include uppercase letters, lowercase letters, numbers, and special characters</span>
-                        </a></label>
-
+                    <div>
+                        
+                        <label htmlFor="password">New Password <img src={help_circle} alt='question'/></label>
                         <input
                             type={showPassword ? "text" : "password"}
                             id="password"
                             name="password"
-                            value={newPassword}
+                            value={password}
                             onChange={handlePasswordChange}
                             required
                         />
-                        {newPassword && (
+                        {password && (
                             <span className="eye-icon" onClick={togglePasswordVisibility}>
                                 {showPassword ? <BsEyeSlash /> : <BsEye />}
                             </span>
                         )}
-                        {newPassword && (
+                        {password && (
                             <div className="password-strength-bar">
-                                <div className={`strength-${passwordStrength}`}>
-                                    {passwordStrength === 0 ? 'Weak' : passwordStrength === 1 ? 'Moderate' : 'Strong'}
-                                </div>
+                                <div className={`strength-${passwordStrength}`} />
                             </div>
                         )}
                     </div>
-                    <div className="password-container">
+                    <div>
                         <label htmlFor="confirm-password">Confirm New Password</label>
                         <input
                             type={showPassword ? "text" : "password"}
@@ -157,7 +125,7 @@ const ResetPassword = () => {
                         )}
                     </div>
                     <button type="submit">RESET PASSWORD</button>
-                    <a href="/login" className="forgot-password-link"><FaArrowLeft />Back to login</a>
+                    <a href="/login" className="forgot-password-link">Back to login</a>
                 </form>
             </div>
         </div>

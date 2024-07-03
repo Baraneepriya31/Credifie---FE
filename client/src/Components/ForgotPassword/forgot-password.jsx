@@ -3,8 +3,6 @@ import '../AdminLogin/Login.css';
 import login_ellipse1 from '../Assets/login-ellipse1.png';
 import login_top_icon from '../Assets/login-top.png';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from "react-icons/fa6";
-
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -63,7 +61,7 @@ const ForgotPassword = () => {
                         />
                     </div>
                     <button type="submit">REQUEST NEW PASSWORD</button>
-                    <a href="/login" className="forgot-password-link"><FaArrowLeft/>Back to login</a>
+                    <a href="/login" className="forgot-password-link">Back to login</a>
                 </form>
             </div>
         </div>
