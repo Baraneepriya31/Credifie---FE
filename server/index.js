@@ -225,6 +225,39 @@ app.post('/resend-email', (req, res) => {
     );
 });
 
+// Add group route
+app.post('/addgroup', (req, res) => {
+    const { groupName, groupLeader, contactNumber, panNumber, subLeader, subContactNumber, subPanNumber, members } = req.body;
+
+    if (!groupName || !groupLeader || !contactNumber || !panNumber || !subLeader || !subContactNumber || !subPanNumber || !members) {
+        return res.status(400).send('All fields are required.');
+    }
+
+    // Add group to database
+    const groupQuery = 'INSERT INTO groups (group_name, group_leader, contact_number, pan_number, sub_leader, sub_contact_number, sub_pan_number) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    connection.query(groupQuery, [groupName, groupLeader, contactNumber, panNumber, subLeader, subContactNumber, subPanNumber], (err, result) => {
+        if (err) {
+            console.error('Error inserting group:', err);
+            return res.status(500).send('Error adding group to database');
+        }
+
+        const groupId = result.insertId;
+
+        // Add group members to database
+        const memberQuery = 'INSERT INTO group_members (group_id, member_name, contact_number, pan_number) VALUES ?';
+        const memberValues = members.map(member => [groupId, member.name, member.contact, member.pan]);
+
+        connection.query(memberQuery, [memberValues], (err, result) => {
+            if (err) {
+                console.error('Error inserting members:', err);
+                return res.status(500).send('Error adding members to database');
+            }
+            res.send('Group and members added successfully!');
+        });
+    });
+});
+
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
