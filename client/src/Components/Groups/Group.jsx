@@ -37,7 +37,7 @@ function Group() {
   const [subLeader, setSubLeader] = useState('');
   const [subContactNumber, setSubContactNumber] = useState('');
   const [subPanNumber, setSubPanNumber] = useState('');
-  const [members, setMembers] = useState([{ name: '', contact: '', pan: '' }]);
+  const [members, setMembers] = useState([{ member: '', contact: '', pan: '' }]);
 
    const addGroup = () => {
     setAddmodal(!addmodal);
@@ -56,7 +56,7 @@ function Group() {
   };
 
   const addMember = () => {
-    setMembers([...members, { name: '', contact: '', pan: '' }]);
+    setMembers([...members, { member: '', contact: '', pan: '' }]);
   };
 
   const handleSubmit = (e) => {
@@ -86,7 +86,7 @@ function Group() {
         setSubLeader('');
         setSubContactNumber('');
         setSubPanNumber('');
-        setMembers([{ name: '', contact: '', pan: '' }]);
+        setMembers([{ member: '', contact: '', pan: '' }]);
         addGroup(); // Toggle the modal visibility after adding the group
       })
       .catch(error => {
@@ -515,23 +515,23 @@ function Group() {
                           <div>
                             <p className='group-name'>Group Name</p>
                     <img src={groupicon} alt='group' className='name-icon' />
-                             <input type="text" id="name" name="name" className="input-line1"/> 
+                             <input type="text" id="name" name="name" className="input-line1" value={groupName} onChange={(e) => setGroupName(e.target.value)}/> 
                            
                           </div>
                           <div className="group-flex">
                           <div className="groupleader">
                             <p className='group-leader'>Group leader</p>
                             <img src={leadicon} alt='group' className='name-icon2'   />
-                            <input type="text" id="name" name="name" className="input-line2"/>
+                            <input type="text" id="name" name="name" className="input-line2" value={groupLeader} onChange={(e) => setGroupLeader(e.target.value)}/>
                           </div>
                           <div className='contactnumber'>
                             <p className='group-leader'>Contact number </p>
                             <img src={contact} alt='group' className='name-icon2'   />
-                            <input type="number" id="name" name="name" className="input-line2"/>
+                            <input type="number" id="name" name="name" className="input-line2" value={contactNumber} onChange={(e) => setContactNumber(e.target.value)}/>
                           </div>
                           <div>
                             <p className='group-leader'>Pan number </p>
-                     <input type="text" id="name" name="name" className="input-line"/>
+                     <input type="text" id="name" name="name" className="input-line" value={panNumber} onChange={(e) => setPanNumber(e.target.value)}/>
                            
                           </div>
                           </div>
@@ -539,52 +539,17 @@ function Group() {
                           <div className="groupleader">
                             <p className='group-leader'>Sub leader</p>
                             <img src={leadicon} alt='group' className='name-icon2'   />
-                            <input type="text" id="name" name="name" className="input-line2"/>
+                            <input type="text" id="name" name="name" className="input-line2" value={subLeader} onChange={(e) => setSubLeader(e.target.value)}/>
                           </div>
                           <div className='contactnumber'>
                             <p className='group-leader'>Contact number </p>
                             <img src={contact} alt='group' className='name-icon2'   />
-                            <input type="number" id="name" name="name" className="input-line2"/>
+                            <input type="number" id="name" name="name" className="input-line2"  value={subContactNumber} onChange={(e) => setSubContactNumber(e.target.value)}/>
                           </div>
                           <div>
                             <p className='group-leader'>Pan number </p>
-                     <input type="text" id="name" name="name" className="input-line"/>
+                     <input type="text" id="name" name="name" className="input-line" value={subPanNumber} onChange={(e) => setSubPanNumber(e.target.value)}/>
                            
-                          </div>
-                          </div>
-                          <div className="group-flex2">
-                          <div className="groupleader">
-                            <p className='group-leader'>Group member</p>
-                            <img src={member} alt='group' className='name-icon2'   />
-                            <input type="text" id="name" name="name" className="input-line2"/>
-                          </div>
-                          <div className='contactnumber'>
-                            <p className='group-leader'>Contact number </p>
-                            <img src={contact} alt='group' className='name-icon2'   />
-                            <input type="number" id="name" name="name" className="input-line2"/>
-                          </div>
-                          <div>
-                            <p className='group-leader'>Pan number </p>
-                            <div></div>
-                            <input type="text" id="name" name="name" className="input-line"/>
-                          </div>
-                          </div>
-                         
-                          <div className="group-flex">
-                          <div className="groupleader">
-                            <p className='group-leader'>Group member</p>
-                            <img src={member} alt='group' className='name-icon2'   />
-                            <input type="text" id="name" name="name" className="input-line2"/>
-                          </div>
-                          <div className='contactnumber'>
-                            <p className='group-leader'>Contact number </p>
-                            <img src={contact} alt='group' className='name-icon2'   />
-                            <input type="number" id="name" name="name" className="input-line2"/>
-                          </div>
-                          <div>
-                            <p className='group-leader'>Pan number </p>
-                            <div></div>
-                            <input type="text" id="name" name="name" className="input-line"/>
                           </div>
                           </div>
                           {members.map((row,index) => (
