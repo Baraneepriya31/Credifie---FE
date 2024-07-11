@@ -10,10 +10,6 @@ import alert from './alerticon.png'
 import { FiDownload } from "react-icons/fi";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
-<<<<<<< HEAD
-import axios from 'axios';
-=======
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 import './Group.css';
 
 
@@ -21,10 +17,7 @@ import './Group.css';
 function Group() {
             
   const [addmodal, setAddmodal] = useState(false);
-<<<<<<< HEAD
-=======
   const [rows, setRows] = useState([{ member: '', contact: '', pan: '' }]);
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
   const [buttonText, setButtonText,] = useState('Pending');
   const [buttonColor, setButtonColor] = useState('#12c2e9');
   const [disablemodal, setDisableModal] = useState(false);
@@ -37,76 +30,6 @@ function Group() {
   const [share, setopensuccess] =useState(false);
   const [email, setEmail] = useState('');
   const [fileType, setFileType] = useState('');
-<<<<<<< HEAD
-  const [groupName, setGroupName] = useState('');
-  const [groupLeader, setGroupLeader] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
-  const [panNumber, setPanNumber] = useState('');
-  const [subLeader, setSubLeader] = useState('');
-  const [subContactNumber, setSubContactNumber] = useState('');
-  const [subPanNumber, setSubPanNumber] = useState('');
-  const [members, setMembers] = useState([{ member: '', contact: '', pan: '' }]);
-
-
-   const addGroup = () => {
-    setAddmodal(!addmodal);
-  };
-
-  if (addmodal) {
-    document.body.classList.add('active-modal');
-  } else {
-    document.body.classList.remove('active-modal');
-  }
-
-  const handleMemberChange = (index, field, value) => {
-    const updatedMembers = [...members];
-    updatedMembers[index][field] = value;
-    setMembers(updatedMembers);
-  };
-
-  const addMember = () => {
-    setMembers([...members, { member: '', contact: '', pan: '' }]);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const data = {
-      groupName,
-      groupLeader,
-      contactNumber,
-      panNumber,
-      subLeader,
-      subContactNumber,
-      subPanNumber,
-      members
-    };
-
-    console.log('Submitting the following data:', data);
-
-    axios.post('http://localhost:3008/addgroup', data)
-      .then(response => {
-        console.log('Group added successfully:', response.data);
-        // Reset form fields
-        setGroupName('');
-        setGroupLeader('');
-        setContactNumber('');
-        setPanNumber('');
-        setSubLeader('');
-        setSubContactNumber('');
-        setSubPanNumber('');
-        setMembers([{ member: '', contact: '', pan: '' }]);
-        addGroup(); // Toggle the modal visibility after adding the group
-      })
-      .catch(error => {
-        console.error('There was an error adding the group!', error);
-      });
-  };
-
-    const Popup = ()=>{
-      openPopup(true);
-    }
-=======
 
   const addgroup = () =>{
     setAddmodal(!addmodal);
@@ -137,7 +60,6 @@ function Group() {
         document.body.classList.remove('active-model')
     
       }
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 
     const openDownload=()=>{
       setopenDownload(true);
@@ -238,10 +160,7 @@ function Group() {
     <div className='group'>
        <div className='total-group'>
             <h2>Total Group <span>0</span></h2>
-<<<<<<< HEAD
-=======
            
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
         </div>
         <div className="group-container">
           <div className="group-btn">
@@ -250,22 +169,15 @@ function Group() {
             </div>
             <div>
               <button onClick={DisableModal} className='disable-btn'>Disable</button>
-<<<<<<< HEAD
-              <button onClick={addGroup} className="add-btn">Add Group   +</button>
-=======
               <button onClick={addgroup} className="add-btn">Add Group   +</button>
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
               <button className="download-button" onClick={Popup} >Download  <FiDownload /> </button>
             </div>
+          </div>
             {/* First popup for download and share */}
             {openPopup && (<div className="download-popup">
                   <div onClick={Popup} className="overlay"></div>
                   <div className="download-box">
-<<<<<<< HEAD
-                    <div className="close-icon">&times;</div>
-=======
                     <div onClick={Popup} className="close-icon">&times;</div>
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
                   <h5>Download & Share</h5>
                    <form>
                     <div>
@@ -387,29 +299,9 @@ function Group() {
                  
                     <td><input type='checkbox'/></td>
                   </tr>
-<<<<<<< HEAD
-                  &nbsp;
-                  <tr>
-                    <td  className="application-no">G.401</td>
-                    <td>Chennai Group</td>
-                    <td>Vijay</td>
-                    <td>+91 8907654321 </td>
-                    <td>Rs.3,50,000</td>
-                    <td>B. Vijay</td>
-                    <td>Rs.25,000</td>
-                    <td className='active-status'>*Active/3</td>
-                    <td style={{ backgroundColor: buttonColor, color:'white' }}
-         onClick={OpenModal} className="loan-status">{buttonText}
-      <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
-                 
-                    <td><input type='checkbox'/></td>
-                  </tr>
-
-=======
                  
                  
                   
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
                   {Openmodal && (
         <div className="openmodal3">
           <div className="modal-list">
@@ -567,50 +459,30 @@ function Group() {
 
                    {addmodal && (
                     <div className='addmodal'>
-<<<<<<< HEAD
-                     <div  onClick={addGroup} className="overlay"></div>
-=======
                      <div  onClick={addgroup} className="overlay"></div>
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
                      <div className='add-group'>
                           <h4>Add Group</h4>
                           <hr className='add-line'/>
                           <div>
                             <p className='group-name'>Group Name</p>
                     <img src={groupicon} alt='group' className='name-icon' />
-<<<<<<< HEAD
-                             <input type="text" id="name" name="name" className="input-line1" value={groupName} onChange={(e) => setGroupName(e.target.value)}/> 
-=======
                              <input type="text" id="name" name="name" className="input-line1"/> 
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
                            
                           </div>
                           <div className="group-flex">
                           <div className="groupleader">
                             <p className='group-leader'>Group leader</p>
                             <img src={leadicon} alt='group' className='name-icon2'   />
-<<<<<<< HEAD
-                            <input type="text" id="name" name="name" className="input-line2" value={groupLeader} onChange={(e) => setGroupLeader(e.target.value)}/>
-=======
                             <input type="text" id="name" name="name" className="input-line2"/>
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
                           </div>
                           <div className='contactnumber'>
                             <p className='group-leader'>Contact number </p>
                             <img src={contact} alt='group' className='name-icon2'   />
-<<<<<<< HEAD
-                            <input type="number" id="name" name="name" className="input-line2" value={contactNumber} onChange={(e) => setContactNumber(e.target.value)}/>
-                          </div>
-                          <div>
-                            <p className='group-leader'>Pan number </p>
-                     <input type="text" id="name" name="name" className="input-line" value={panNumber} onChange={(e) => setPanNumber(e.target.value)}/>
-=======
                             <input type="text" id="name" name="name" className="input-line2"/>
                           </div>
                           <div>
                             <p className='group-leader'>Pan number </p>
                      <input type="text" id="name" name="name" className="input-line"/>
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
                            
                           </div>
                           </div>
@@ -618,26 +490,11 @@ function Group() {
                           <div className="groupleader">
                             <p className='group-leader'>Sub leader</p>
                             <img src={leadicon} alt='group' className='name-icon2'   />
-<<<<<<< HEAD
-                            <input type="text" id="name" name="name" className="input-line2" value={subLeader} onChange={(e) => setSubLeader(e.target.value)}/>
-=======
                             <input type="text" id="name" name="name" className="input-line2"/>
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
                           </div>
                           <div className='contactnumber'>
                             <p className='group-leader'>Contact number </p>
                             <img src={contact} alt='group' className='name-icon2'   />
-<<<<<<< HEAD
-                            <input type="number" id="name" name="name" className="input-line2"  value={subContactNumber} onChange={(e) => setSubContactNumber(e.target.value)}/>
-                          </div>
-                          <div>
-                            <p className='group-leader'>Pan number </p>
-                     <input type="text" id="name" name="name" className="input-line" value={subPanNumber} onChange={(e) => setSubPanNumber(e.target.value)}/>
-                           
-                          </div>
-                          </div>
-                          {members.map((row,index) => (
-=======
                             <input type="text" id="name" name="name" className="input-line2"/>
                           </div>
                           <div>
@@ -682,53 +539,25 @@ function Group() {
                           </div>
                           </div>
                           {rows.map((row,index) => (
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
                           <div className="group-flex" key={index}>
                           <div className="groupleader">
                             <p className='group-leader'>Group member</p>
                             <img src={member} alt='group' className='name-icon2'   />
                             <input type="text" id="name" name="name" className="input-line2"
-<<<<<<< HEAD
-                            value={row.member} onChange={(e) => handleMemberChange(index, 'member', 
-=======
                             value={row.member} onChange={(e) => handleChange(index, 'member', 
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
                               e.target.value )}/>
                           </div>
                           <div className='contactnumber'>
                             <p className='group-leader'>Contact number </p>
                             <img src={contact} alt='group' className='name-icon2'   />
-<<<<<<< HEAD
-                            <input type="number" id="name" name="name" className="input-line2"
-                            value={row.contact} onChange={(e) => handleMemberChange(index, 'contact',
-=======
                             <input type="text" id="name" name="name" className="input-line2"
                             value={row.contact} onChange={(e) => handleChange(index, 'contact',
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
                               e.target.value )}/>
                           </div>
                           <div>
                             <p className='group-leader'>Pan number </p>
                             <div></div>
                             <input type="text" id="name" name="name" className="input-line"
-<<<<<<< HEAD
-                            value={row.pan} onChange={(e) => handleMemberChange(index, 'pan', e.target.value)}/>
-                          </div>
-                          </div>
-                        ))}
-                          <button className='add-more' onClick={addMember}>+ Add more</button>
-                          <form onSubmit={handleSubmit}> 
-                           <button className='add'>Add</button>
-                           </form>
-                          <button className="close-modal" onClick={addGroup}>
-              <img src={closeicon} alt="icon" />
-            </button>
-            
-            </div>
-          </div>
-          )}
-    
-=======
                             value={row.pan} onChange={(e) => handleChange(index, 'pan', e.target.value)}/>
                           </div>
                           </div>
@@ -742,7 +571,6 @@ function Group() {
                      </div>
                     </div>
                    )}
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 
                    {disablemodal && (
                     <div className='disablemodal'>
@@ -762,28 +590,18 @@ function Group() {
                            </div>
                            {isConfirmed && (
           <>
-<<<<<<< HEAD
-            <label>Reason*</label>
-=======
             <label className="label-reason">Reason*</label>
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
             <input type='textarea' className="reason-input" />
             <br />
             <button className="disable-button">Disable</button>
             
           </>
         )}
-        </div>
       
         </div>
-       )}   
         </div>
-    </div>
-  )
-<<<<<<< HEAD
- }
-=======
-}
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
+        )}
+        </div>
+)}
 
 export default Group;

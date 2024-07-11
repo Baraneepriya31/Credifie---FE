@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
-=======
-import React, { useState } from "react";
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 import './application-status.css';
 import { FiDownload } from "react-icons/fi";
 import dropdown from './Vector.png';
@@ -112,7 +108,6 @@ function ApplicationStatus() {
     } else {
       document.body.classList.remove('active-modal')
     }
-<<<<<<< HEAD
 
     const [counter, setCounter] = useState(0);
 
@@ -142,8 +137,7 @@ function ApplicationStatus() {
       }
     }
   }, [counter]);
-=======
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
+
          
 
     
@@ -266,11 +260,7 @@ function ApplicationStatus() {
                 <div className="input-share">
                 <span>Email <MdOutlineMailOutline /></span>
                 <label htmlFor="email"></label>
-<<<<<<< HEAD
                 <input
-=======
-                <input 
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
                   type="email" 
                   id="email" 
                   value={email} 
@@ -286,7 +276,6 @@ function ApplicationStatus() {
           </div>
         </div>
       )}
-<<<<<<< HEAD
        {opensave && (
         <div className="circular-progress">
         <div onClick={openDownload} className="overlay-2"></div>
@@ -312,17 +301,6 @@ function ApplicationStatus() {
           <span className="progress-text">Report send successfully</span>
           </div>
           </div>
-=======
-       {share && (
-        <div className="share-popup">
-          <div onClick={closeShare} className="overlay-1"></div>
-          <div className="share-box">
-            <div className="loader">
-              <div className="circle"></div>
-              <div className="tick">&#10003;</div>
-            </div>
-          </div>
-        </div>
       )}
 
 
@@ -334,10 +312,9 @@ function ApplicationStatus() {
             
           </div>
         </div>
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
       )}
 
-            <table className='table-ap'>
+        <table className='table-ap'>
             <thead>
                 <tr>
                     <td>Application ID</td>
@@ -350,8 +327,6 @@ function ApplicationStatus() {
                 </tr>
             </thead>
             <tbody>
-<<<<<<< HEAD
-=======
                 <tr>
                     <td onClick={toggleModal} ><div style={{color:'#0087F3', cursor:'pointer'}} >CRD110279</div></td>
                     <td>28/08/ 2024</td>
@@ -361,7 +336,6 @@ function ApplicationStatus() {
                     <td>2,50,000</td>
                     <td>submitted</td>
                 </tr>
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 
                 <tr>
                     <td onClick={toggleModal} ><div style={{color:'#0087F3',cursor:'pointer'}}>CRD110279</div></td>
@@ -371,13 +345,8 @@ function ApplicationStatus() {
                     <td>+91 97905 64324</td>
                     <td>2,50,000</td>
                     <td style={{ backgroundColor: buttonColor, color:'white' }}
-<<<<<<< HEAD
-  onClick={OpenModal} className="loan-status1">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
-=======
   onClick={OpenModal} className="status-popup">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
                 </tr>
-                
               {Openmodal && (
         <div className="openmodal">
           <div className="modal-list">
@@ -412,9 +381,12 @@ function ApplicationStatus() {
             
                   </div>
                   </div>
+                  
             )}
-            </tbody>
-        </table>
+  
+         </tbody>
+      </table>
+        
         {grouppopup && (
                       <div className='grouppopup'>
                         <div onClick={GroupId} className='overlay'></div>
@@ -615,9 +587,9 @@ function ApplicationStatus() {
         </div>
       )}
       </div>
-      </div>
-    </div>
-    );
-}
+     
+     </div>
+     </div>
+)}
 
 export default ApplicationStatus;

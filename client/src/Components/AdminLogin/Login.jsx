@@ -5,25 +5,12 @@
 // import login_ellipse1 from '../Assets/login-ellipse1.png';
 // import login_top_icon from '../Assets/login-top.png';
 
-<<<<<<< HEAD
 const AdminLogin = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
-=======
-// const AdminLogin = ({ onLogin }) => {
-//     const [email, setEmail] = useState('');
-//     const [password, setPassword] = useState('');
-//     const [showPassword, setShowPassword] = useState(false);
-//     const [errorMessage, setErrorMessage] = useState('');
-//     const navigate = useNavigate();
-
-//     const handleEmailChange = (event) => {
-//         setEmail(event.target.value);
-//     };
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 
 //     const handlePasswordChange = (event) => {
 //         setPassword(event.target.value);
@@ -36,7 +23,6 @@ const AdminLogin = ({ onLogin }) => {
 //     const handleSubmit = async (event) => {
 //         event.preventDefault();
 
-<<<<<<< HEAD
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -122,27 +108,6 @@ const AdminLogin = ({ onLogin }) => {
         </div>
     );
 };
-=======
-//         if (email === '' || password === '') {
-//             setErrorMessage('Email and Password are required.');
-//         } else {
-//             setErrorMessage('');
-//             try {
-//                 const response = await fetch('http://localhost:3008/login', {
-//                     method: 'POST',
-//                     headers: {
-//                         'Content-Type': 'application/json',
-//                     },
-//                     body: JSON.stringify({ email, password }),
-//                 });
-
-//                 if (!response.ok) {
-//                     const responseBody = await response.text();
-//                     console.error('Response status:', response.status);
-//                     console.error('Response message:', responseBody);
-//                     throw new Error('Network response was not ok');
-//                 }
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 
 //                 const data = await response.json();
 //                 console.log('Login data:', data);

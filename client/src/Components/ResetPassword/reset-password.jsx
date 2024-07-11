@@ -1,13 +1,11 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import '../AdminLogin/Login.css';
-import { BsEye, BsEyeSlash } from 'react-icons/bs';
-import login_ellipse1 from '../Assets/login-ellipse1.png';
-import login_top_icon from '../Assets/login-top.png';
-import help_circle from '../Assets/help-circle.png';
-import { FaArrowLeft } from 'react-icons/fa6';
-=======
+// import React, { useState } from 'react';
+// import { useParams, useNavigate } from 'react-router-dom';
+// import '../AdminLogin/Login.css';
+// import { BsEye, BsEyeSlash } from 'react-icons/bs';
+// import login_ellipse1 from '../Assets/login-ellipse1.png';
+// import login_top_icon from '../Assets/login-top.png';
+// import help_circle from '../Assets/help-circle.png';
+// import { FaArrowLeft } from 'react-icons/fa6';
 // import React, { useState } from 'react';
 // import { useParams, useNavigate } from 'react-router-dom';
 // import zxcvbn from 'zxcvbn';
@@ -16,7 +14,6 @@ import { FaArrowLeft } from 'react-icons/fa6';
 // import login_ellipse1 from '../Assets/login-ellipse1.png';
 // import login_top_icon from '../Assets/login-top.png';
 // import help_circle from '../Assets/help-circle.png';
->>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 
 // const ResetPassword = () => {
 //     const { token } = useParams();
