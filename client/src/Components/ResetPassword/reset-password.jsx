@@ -1,20 +1,20 @@
-// import React, { useState } from 'react';
-// import { useParams, useNavigate } from 'react-router-dom';
-// import zxcvbn from 'zxcvbn';
-// import '../AdminLogin/Login.css';
-// import { BsEye, BsEyeSlash } from 'react-icons/bs';
-// import login_ellipse1 from '../Assets/login-ellipse1.png';
-// import login_top_icon from '../Assets/login-top.png';
-// import help_circle from '../Assets/help-circle.png';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import '../AdminLogin/Login.css';
+import { BsEye, BsEyeSlash } from 'react-icons/bs';
+import login_ellipse1 from '../Assets/login-ellipse1.png';
+import login_top_icon from '../Assets/login-top.png';
+import help_circle from '../Assets/help-circle.png';
+import { FaArrowLeft } from 'react-icons/fa6';
 
-// const ResetPassword = () => {
-//     const { token } = useParams();
-//     const [password, setPassword] = useState('');
-//     const [showPassword, setShowPassword] = useState(false);
-//     const [confirmPassword, setConfirmPassword] = useState('');
-//     const [message, setMessage] = useState('');
-//     const [passwordStrength, setPasswordStrength] = useState(0);
-//     const navigate = useNavigate();
+const ResetPassword = () => {
+    const { token } = useParams();
+    const [newPassword, setNewPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const [passwordStrength, setPasswordStrength] = useState(0);
+    const navigate = useNavigate();
 
 //     const handlePasswordChange = (event) => {
 //         const newPassword = event.target.value;

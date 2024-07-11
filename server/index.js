@@ -225,6 +225,49 @@ app.post('/resend-email', (req, res) => {
     );
 });
 
+
+// POST endpoint to add group data
+app.post('/addGroup', (req, res) => {
+    const { groupName, groupLeader, contactNumber, panNumber, subLeader, subContactNumber, subPanNumber, members } = req.body;
+
+    // Log the request body
+    console.log('Received data:', req.body);
+
+    if (!groupName || !groupLeader || !contactNumber || !panNumber || !subLeader || !subContactNumber || !subPanNumber || !members) {
+        res.status(400).send('Missing required fields');
+        return;
+    }
+
+    const sql = `INSERT INTO groups (groupName, groupLeader, contactNumber, panNumber, subLeader, subContactNumber, subPanNumber, members)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    
+    connection.query(sql, [groupName, groupLeader, contactNumber, panNumber, subLeader, subContactNumber, subPanNumber, JSON.stringify(members)], (err, result) => {
+        if (err) {
+            console.error('Error inserting data:', err);
+            res.status(500).send('Error inserting data');
+            return;
+        }
+        res.status(200).send('Group added successfully!');
+    });
+});
+
+// app.get('/groups',async(req,res)=>{
+//     try{
+//         const sql ='SELECT * FROM groups';
+//         connection.query(sql,(error,results)=>{
+//             if(error){
+//                 console.error('Error fetching groups:', error);
+//                 return res.status(500).json({error:'Internal server error'});  
+//             }
+//             res.status(200).json(results);
+//         });
+//     } catch(error){
+//         console.error('Error fetching groups:',error);
+//         res.status(500).json({error: 'Internal server error'});
+//     }
+// });
+
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
