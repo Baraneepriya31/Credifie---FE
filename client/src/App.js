@@ -43,8 +43,7 @@ const App = () => {
             <div className="grid-container">
                 <Header />
                 <Sidebar />
-                 {/* {isLoggedIn && <Header onLogout={handleLogout} />}
-               {isLoggedIn && <Sidebar />}  */}
+                
             <Routes>
 
                 <Route path="/home" element={<Home />} />
