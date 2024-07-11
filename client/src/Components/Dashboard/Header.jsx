@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import basil_notification_icon from './basil_notification-on-outline.png'
 import group from './Group.png'
 import profile from './Profile icon.png'
@@ -23,6 +23,8 @@ function Header() {
      const [modals, setModals] = useState(false);
      const [openProfile, setOpenProfile] = useState(false);
      const [isEditing, setIsEditing] = useState(false);
+     const [activeSection, setActiveSection] = useState('primaryInfo');
+     const fileInputRef = useRef(null);
 
      const clickProfile = () =>{
         setOpenProfile(true);
@@ -40,6 +42,23 @@ function Header() {
       setIsEditing(false);
      }
 
+    const handleSectionClick=(section)=>{
+      setActiveSection(section);
+    }
+
+    const handleProfileBox =() =>{
+      fileInputRef.current.click();
+    }
+
+// eslint-disable-next-line
+    const handleFileChange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        console.log('Selected file:', file.name);
+        // Implement file handling logic here
+      }
+
+
      const profiletoggle = () => {
        setModals(!modals);
      };
@@ -49,7 +68,7 @@ function Header() {
      } else {
        document.body.classList.remove('active-modals')
      }
-      
+    
 
     return(
     
@@ -91,24 +110,32 @@ function Header() {
               <div className="profile-popup">
                 <div onClick={clickProfile} className="overlay"></div>
                   <div className="profile-box">
-                  <div className="close-icon1" onClick= {closePopup}>&times;</div>
                   <div className="profile-text">
                     <h3>PROFILE</h3>
+                    <div className="close-icon1" onClick= {closePopup}>&times;</div>
+
                     </div>
                     
                     <div className="profile-inner-box">
-                      <div className="profile-picture">
+                      <div clasname="profile-outline">
+                        <div className="profile-picture">
                       <div className="inside-profile-picture"></div>
-
                       </div>
-                      
+                      <p className="picture-text" onClick={handleProfileBox}>CHANGE IMAGE</p>
+                      </div>
+                      <input
+                      type="file"
+                      ref={fileInputRef}
+                      style={{display:'none'}}
+                      onChange={handleFileChange}
+                      />   
                       <div className="profile-info">
                         <div className="profile-head">
-                        <h3 className="primary-info">PRIMARY INFO</h3>
-                        <h3 className="account-password">ACCOUNT PASSWORD</h3>
-                        <h3 className="Secondary-info">SECONDARY INFO</h3>
+                        <h3 className="primary-info" onClick={()=>handleSectionClick('primaryInfo')}>PRIMARY INFO</h3>
+                        <h3 className="account-password" onClick={()=>handleSectionClick('accountPassword')}>ACCOUNT PASSWORD</h3>
+                        <h3 className="Secondary-info" onClick={()=>handleSectionClick('secondaryInfo')}>SECONDARY INFO</h3>
                         </div>
-
+                        {activeSection === 'primaryInfo' &&(
                         <div className="details-box">
                         <div>
                         <div className="profile-input">
@@ -167,16 +194,75 @@ function Header() {
                     </div>
                     </div>
                     {isEditing && (
+                      <div className="save-button">
                       <button onClick = {handleSaveClick} > SAVE </button>
+                      </div>
                     )}
                   </div>
+                )}
+
+{activeSection === 'accountPassword' &&(
+                        <div className="details-box">
+                        <div>
+                        <div className="profile-input">
+                        <label htmlFor="name">Account Password<span onClick={handleEditClick}>{isEditing? "CANCEL" :"CHANGE"}</span></label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            disabled={!isEditing}
+                        />
+                    </div>
+                    </div>
+                    {isEditing && (
+                      <div className="save-button">
+                      <button onClick = {handleSaveClick} > SAVE </button>
+                      </div>
+                    )}
+                    </div>
+                    )}
+
+{activeSection === 'secondaryInfo' &&(
+                        <div className="details-box">
+                        <div>
+                        <div className="profile-input">
+                        <label htmlFor="name">Secondary Mail ID<span onClick={handleEditClick}>{isEditing? "CANCEL" :"EDIT"}</span></label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            disabled={!isEditing}
+                        />
+                    </div>
+                    </div>
+                    <div>
+                    <div className="profile-input">
+                        <label htmlFor="email">Secondary Contact Number<span onClick={handleEditClick}>{isEditing? "CANCEL" :"EDIT"}</span></label>
+                        <input
+                            type="text"
+                            id="empId"
+                            name="empid"
+                            disabled={!isEditing}
+                        />
+                    </div>
+                    </div>
+                    {isEditing && (
+                      <div className="save-button">
+                      <button onClick = {handleSaveClick} > SAVE </button>
+                      </div>
+                    )}
+                    </div>
+                    )}
+
                 </div>
                   </div>
+                  
                   </div>
+                  
               </div>
             )}
         </header>
-    )
+    )}
 }
 
-export default Header
+export default Header;
