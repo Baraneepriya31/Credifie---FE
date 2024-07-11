@@ -32,7 +32,11 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
           </a>
         </li>
         <li className='sidebar-list-item'>
+<<<<<<< HEAD
           <a href="#" onClick={() => handleNavigate('/collection-agent')}>
+=======
+          <a href="#" onClick={() => handleNavigate('/collectionagent')}>
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
             <p className='nav-menu'>Collection Agent</p>
           </a>
         </li>

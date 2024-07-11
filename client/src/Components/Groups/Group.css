@@ -49,7 +49,11 @@
    right: 10px;
   padding-bottom: 5px;
   }
+<<<<<<< HEAD
   .disable-btn{
+=======
+   .disable-btn{
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
     border: 1px solid #25AE7A;
     color:  #25AE7A;
     margin-top: 40px;
@@ -60,7 +64,11 @@
     border-radius: 5px;
     background-color: #FFFFFF;
     cursor: pointer;
+<<<<<<< HEAD
   }
+=======
+  } 
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
   .add-btn{
     width: 150px;
     height: 35px;
@@ -70,6 +78,7 @@
     margin-top: 30px;
     margin-left: 20px;
     border-radius: 8px;
+<<<<<<< HEAD
     font-weight: 600;
     font-size: 16px;
     cursor: pointer;
@@ -87,6 +96,29 @@
     font-size: 16px;
     cursor: pointer;
   }
+=======
+    font-weight: 400;
+    font-family: roboto, sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .download-button {
+    width: 130px;
+    height: 40px;
+    margin-left: 30px;
+    padding: 5px;
+    color: #25AE7A;
+    border-radius: 10px;
+    border: 1px 0px 0px 0px;
+    background-color: #e0f1e4;
+    border: 1px solid #1F8B63;
+    font-size: 16px;
+    font-family: roboto, sans-serif;
+    cursor: pointer;
+}
+   
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
   .download-icon{
     color: #25AE7A;
     width: 20px;
@@ -112,6 +144,12 @@
   .active-status{
     color:#25AE7A;
   }
+<<<<<<< HEAD
+=======
+  .loan-status{
+    width: fit-content;
+  }
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
   .closed-status{
     color: #F84D4D;
   }
@@ -368,9 +406,15 @@
   }
   .openmodal3{
       position: absolute;
+<<<<<<< HEAD
         margin-left: 68%;   
       background-color:#FFFFFF;
       width: 90px;
+=======
+        margin-left: 69%;   
+      background-color:#FFFFFF;
+      width: fit-content;
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
       height: 210px;
       z-index: 10;
      box-shadow: 0px 15px 15px 0px #0000001A;
@@ -413,6 +457,12 @@
     font-size:13px;
     margin-left: 47%;
   }
+<<<<<<< HEAD
+=======
+  .label-reason{
+       margin-left: 10px;
+  }
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
   .disablepara{
     font-size: 13px;
     margin-left: 10%;

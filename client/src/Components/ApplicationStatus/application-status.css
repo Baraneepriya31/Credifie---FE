@@ -73,8 +73,13 @@
     padding: 10px;
     width: 1115px;
     margin-left: 15px;
+<<<<<<< HEAD
     height: 620px;
     background-color: #E7E7E7;
+=======
+    height: 570px;
+    /* background-color: #E7E7E7; */
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 }
 
 .application-status-text{
@@ -146,7 +151,11 @@
 .download-button{
     width: 130px;
     height: 40px;
+<<<<<<< HEAD
     margin-left: 30px;
+=======
+    margin-left: 25px;
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
     padding: 5px;
     color: #25AE7A;
     border-radius: 10px;
@@ -166,7 +175,10 @@
   background-color: #ffffff;
   height: 70%;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 .table-ap{
     width: 1050px;
     margin-top: 20px;
@@ -179,16 +191,24 @@
 
 
 table thead td{
+<<<<<<< HEAD
     width: 70px;
     padding: 5px;
     height: 10px;
     background-color: #E7E7E7;
     color: black;
     margin:5px;
+=======
+    width: 80px;
+    padding: 10px;
+    background-color: #E7E7E7;
+    color: black;
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 }
 
 table tbody td{
     padding: 10px;
+<<<<<<< HEAD
     margin: 5px;
 }
 
@@ -201,6 +221,20 @@ table tbody td{
 
 
 
+=======
+}
+
+.status-popup{
+    background-color: #62B8FC;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 50px;
+    height: 5px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 .download-popup {
     position: fixed;
     top: 0;
@@ -434,6 +468,20 @@ form button:hover {
 }
 
 
+<<<<<<< HEAD
+=======
+.share-box {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 .loader {
   position: relative;
   width: 100px;
@@ -463,6 +511,25 @@ form button:hover {
   animation: tickAppear 2s forwards 2s;
 }
 
+<<<<<<< HEAD
+=======
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes tickAppear {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
 .group-popup{
     top: 0;
     left: 0;
@@ -546,6 +613,7 @@ form button:hover {
   border: none;
   border-radius: 4px;
   margin-left: 200px;
+<<<<<<< HEAD
 }
 
 .progress-bar {
@@ -627,3 +695,6 @@ form button:hover {
 }
 
 
+=======
+}
+>>>>>>> e73372c3506687e6f3fb75f0c964e6e76c319f6b
