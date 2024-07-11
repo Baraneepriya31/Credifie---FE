@@ -14,7 +14,12 @@ body {
     'sidebar main main main';
     height: 100vh ;
 }
-
+ @media (min-width: 308px) {
+  .grid-container {
+    grid-template-columns: 200px 1fr ;
+    grid-template-rows: 0.1fr;
+   } 
+}
 /* Header */
 .header {
     grid-area: header;
@@ -27,10 +32,13 @@ body {
     height: 45px;
     /* top: -1px;
     left: 100px; */
-    
+}
+@media (min-width: 308px) {
+  .header {
+    text-align: left;
+  }
 }
 .header-left{
-   
     height: 15px;
     left: 230px;
     font-family: 'Roboto';
@@ -381,7 +389,7 @@ li{
   cursor: Pointer;
 }
 .due-date{
-    width: 230px;
+    width: 320px;
     height: 10px;
     left: 228px;
   font-family: 'Roboto';
@@ -403,7 +411,7 @@ li{
   padding: 8px 15px;
   border-radius: 5px;
   width: 280px;
-   height: 100px;
+   height: 90px;
   background-color: #FFFFFF;
   box-shadow: 0px 15px 15px 0px #0000001A;
   border-radius: 8px;
@@ -430,21 +438,22 @@ li{
   color: #393938;
 }
 .amount{
-  margin-left: 75px;
+  margin-left: 80px;
  font-size: 18px;
 }
 .due-from{
   color: #777675;
-  margin-left: 75px;
+  margin-left: 80px;
   font-size: 15px;
+  margin-top: 0;
 }
 .rectangle{
-  margin-top: 100px;
+  margin-top: 40px;
   position: relative;
   margin-right: 10px;
 }
 .card-icon{
-  margin-top: 100px;
+   margin-top: 40px; 
   position: absolute;
   margin-left: 10px;
 }
@@ -544,6 +553,33 @@ hr{
   color: #393938;
   font-size: 18px;
 }
+.application-search{
+  display: flex;
+  justify-content: space-between;
+}
+.input-search2{
+  margin-top: 10px;
+ position: relative;
+ margin-right: 10px;
+}  
+.input-search2 input{
+  border-radius: 20px;
+  background-color:#f1f1f4;
+  border:none;
+  width: 200px;
+  height: 30px;
+  position: relative;
+  padding-left: 10px;
+ 
+}
+.search-icon2{
+  position: absolute;
+  transform: translateY(-50%);
+  margin-top: 15px;
+ right: 10px;
+ width: 15px;
+ height: 15px;
+}
 .table{
   width: 780px;
   border-collapse: collapse;
@@ -560,6 +596,7 @@ hr{
 }
 .table td{
   text-align: center;
+ top: 20px;
 }
 .dropdown{
   color: #393938;
@@ -575,6 +612,7 @@ hr{
   width: 100px;
   height: 10px;
   color: #FFFFFF;
+  margin-right: 10px;
 }
 .loan-status2{
   background-color: #25AE7A; 

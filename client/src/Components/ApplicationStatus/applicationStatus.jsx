@@ -300,7 +300,7 @@ function ApplicationStatus() {
                     <td>+91 97905 64324</td>
                     <td>2,50,000</td>
                     <td style={{ backgroundColor: buttonColor, color:'white' }}
-  onClick={OpenModal} className="loan-status">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+  onClick={OpenModal} className="status-popup">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                 </tr>
                 
               {Openmodal && (

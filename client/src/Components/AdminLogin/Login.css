@@ -1,4 +1,4 @@
-/* Center the entire admin page content */
+  /* Center the entire admin page content */
 #admin-page {
     display: flex;
     justify-content: center;
@@ -122,7 +122,7 @@
     box-sizing: border-box;
 }
 
-/* Password container */
+ /* Password container  */
 .password-container {
     position: relative;
     width: 100%;
@@ -212,4 +212,4 @@
     width: 25%;
     background-color: green;
 }
-
+  

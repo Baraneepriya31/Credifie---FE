@@ -160,6 +160,7 @@ function Group() {
     <div className='group'>
        <div className='total-group'>
             <h2>Total Group <span>0</span></h2>
+           
         </div>
         <div className="group-container">
           <div className="group-btn">
@@ -175,7 +176,7 @@ function Group() {
             {openPopup && (<div className="download-popup">
                   <div onClick={Popup} className="overlay"></div>
                   <div className="download-box">
-                    <div className="close-icon">&times;</div>
+                    <div onClick={Popup} className="close-icon">&times;</div>
                   <h5>Download & Share</h5>
                    <form>
                     <div>
@@ -297,23 +298,9 @@ function Group() {
                  
                     <td><input type='checkbox'/></td>
                   </tr>
-                  &nbsp;
-                  <tr>
-                    <td  className="application-no">G.401</td>
-                    <td>Chennai Group</td>
-                    <td>Vijay</td>
-                    <td>+91 8907654321 </td>
-                    <td>Rs.3,50,000</td>
-                    <td>B. Vijay</td>
-                    <td>Rs.25,000</td>
-                    <td className='active-status'>*Active/3</td>
-                    <td style={{ backgroundColor: buttonColor, color:'white' }}
-         onClick={OpenModal} className="loan-status">{buttonText}
-      <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                  
-                    <td><input type='checkbox'/></td>
-                  </tr>
-
+                 
+                  
                   {Openmodal && (
         <div className="openmodal3">
           <div className="modal-list">
@@ -602,7 +589,7 @@ function Group() {
                            </div>
                            {isConfirmed && (
           <>
-            <label>Reason*</label>
+            <label className="label-reason">Reason*</label>
             <input type='textarea' className="reason-input" />
             <br />
             <button className="disable-button">Disable</button>

@@ -1,7 +1,7 @@
 
-  import React, { useState } from "react";
+  import React, { useState} from "react";
   
-  import { BsCalendar2Date} from 'react-icons/bs'
+  import { BsCalendar2Date, BsSearch} from 'react-icons/bs'
    import iconimage from './Group 385.png'
    import rectangle from './Rectangle 257.png'
    import rectangle2 from './Rectangle 258.png'
@@ -13,25 +13,9 @@
    import elipse from './Ellipse 45.png'
    import elipse2 from './Ellipse 46.png'
    import elipse3 from './Ellipse 46 (1).png'
-
-import React, { useState } from "react";
-import './App.css'
-
-import { BsCalendar2Date} from 'react-icons/bs'
-import iconimage from './Group 385.png'
-import rectangle from './Rectangle 257.png'
-import rectangle2 from './Rectangle 258.png'
-import rectangle3 from './Rectangle 259.png'
-import dropdown from './Vector.png'
-import closeion from './ion_close.png'
-import dropdownblack from './dropdown black.png'
-import pdf from './pdf-file 1.png'
-import elipse from './Ellipse 45.png'
-import elipse2 from './Ellipse 46.png'
-import elipse3 from './Ellipse 46 (1).png'
-import DoughnutChart from "./Doughnutchart";
+   import DoughnutChart from "./Doughnutchart";
+   import { useNavigate } from "react-router-dom";
    
-
   function Home() {
                     
     const [modal, setModal] = useState(false);
@@ -40,6 +24,12 @@ import DoughnutChart from "./Doughnutchart";
     const [buttonText, setButtonText,] = useState('Submitted');
     const [buttonColor, setButtonColor] = useState('#12c2e9');
     const [report, setreportmodal] = useState(false);
+    const navigate = useNavigate();     
+   
+
+    const loanpage = () => {  
+      navigate("/LoanCalculator");
+    }
 
     const toggleModal = () => {
       setModal(!modal);
@@ -110,6 +100,7 @@ import DoughnutChart from "./Doughnutchart";
               <h3>Current Months</h3>
             
               <h2 onClick={reportmodal} className="date">Detailed Report  <BsCalendar2Date className="date-icon"/></h2>
+              <h2  className="date" onClick={loanpage}>Loan Calculator </h2>
               </div>
               {report && (  
                  <div className="report-modal">
@@ -198,16 +189,23 @@ import DoughnutChart from "./Doughnutchart";
                 </div>
             </div>
             <div className="recent-application">
+              <div className="application-search">
               <h3 className="application-heading" >Recent Application</h3>
+              <div className="input-search2">
+            <input type='search' placeholder='Type here to search...' /> 
+            <BsSearch className="search-icon2" />
+            </div>
+              </div>
               <table className="table">
-              
+              <tr>
                  <th>Application No.</th>
                 <th>SHG Name</th>
                 <th>Loan Amount</th>
                 <th>Phone No.</th>
                 <th>Collection Agent</th>
                 <th>Loan Status</th>
-                
+                </tr>
+               
                 <tr>
                   <td className="application-no" onClick={toggleModal}>SLK-123456</td>
                   <td>Magalir Matum</td>
@@ -274,7 +272,8 @@ import DoughnutChart from "./Doughnutchart";
                   <td>Rs.2,50,000</td>
                   <td>+91 980765421</td>
                   <td>N/A</td>
-                  <td className="loan-status3">On-Process <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+                  <td className="loan-status3">On-Process 
+                    <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
 </tr>
      
                 &nbsp;
@@ -373,8 +372,9 @@ import DoughnutChart from "./Doughnutchart";
             </div>
 
              <button className="btn2">R.Suresh Krishna 
-              <img className="dropdown" src={dropdownblack}  /> </button>
-             <button className="btn2">R.Suresh Krishna <img className="dropdown" src={dropdownblack} alt="dropdown2"/> </button>
+              <img className="dropdown" src={dropdownblack} alt ="drodownblack"  /> </button>
+             <button className="btn2">R.Suresh Krishna
+               <img className="dropdown" src={dropdownblack} alt="dropdown"/> </button>
 
               
               <div className="group-details">

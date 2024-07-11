@@ -49,7 +49,7 @@
    right: 10px;
   padding-bottom: 5px;
   }
-  .disable-btn{
+   .disable-btn{
     border: 1px solid #25AE7A;
     color:  #25AE7A;
     margin-top: 40px;
@@ -60,7 +60,7 @@
     border-radius: 5px;
     background-color: #FFFFFF;
     cursor: pointer;
-  }
+  } 
   .add-btn{
     width: 150px;
     height: 35px;
@@ -70,23 +70,27 @@
     margin-top: 30px;
     margin-left: 20px;
     border-radius: 8px;
-    font-weight: 600;
+    font-weight: 400;
+    font-family: roboto, sans-serif;
     font-size: 16px;
     cursor: pointer;
   }
-  .download-btn{
-    width: 150px;
-    height: 35px;
-    background-color: #E0F1E4;                                                                                                                
-    color:#25AE7A;
-    border: 1px solid #25AE7A;
-    margin-left: 10px;
-    margin-top: 30px;
-    border-radius: 8px;
-    font-weight: 500;
+
+  .download-button {
+    width: 130px;
+    height: 40px;
+    margin-left: 30px;
+    padding: 5px;
+    color: #25AE7A;
+    border-radius: 10px;
+    border: 1px 0px 0px 0px;
+    background-color: #e0f1e4;
+    border: 1px solid #1F8B63;
     font-size: 16px;
+    font-family: roboto, sans-serif;
     cursor: pointer;
-  }
+}
+   
   .download-icon{
     color: #25AE7A;
     width: 20px;
@@ -111,6 +115,9 @@
   }
   .active-status{
     color:#25AE7A;
+  }
+  .loan-status{
+    width: fit-content;
   }
   .closed-status{
     color: #F84D4D;
@@ -368,9 +375,9 @@
   }
   .openmodal3{
       position: absolute;
-        margin-left: 68%;   
+        margin-left: 69%;   
       background-color:#FFFFFF;
-      width: 90px;
+      width: fit-content;
       height: 210px;
       z-index: 10;
      box-shadow: 0px 15px 15px 0px #0000001A;
@@ -412,6 +419,9 @@
     color: #F84D4D;
     font-size:13px;
     margin-left: 47%;
+  }
+  .label-reason{
+       margin-left: 10px;
   }
   .disablepara{
     font-size: 13px;
