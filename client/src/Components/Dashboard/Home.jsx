@@ -419,4 +419,4 @@ import DoughnutChart from "./Doughnutchart";
     )
   }
   
-  export default Home
+  export default Home;
