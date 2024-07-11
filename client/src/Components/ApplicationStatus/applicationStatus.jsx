@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './application-status.css';
 import { FiDownload } from "react-icons/fi";
 import dropdown from './Vector.png';
@@ -108,6 +108,35 @@ function ApplicationStatus() {
     } else {
       document.body.classList.remove('active-modal')
     }
+
+    const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    if (counter < 100) {
+      const interval = setInterval(() => {
+        setCounter((prevCounter) => {
+          if (prevCounter < 100) {
+            return prevCounter + 1;
+          } else {
+            clearInterval(interval);
+            return 100;
+          }
+        });
+      }, 80);
+
+      return () => clearInterval(interval);
+    }
+  }, [counter]);
+
+  useEffect(() => {
+    const progressBar = document.querySelector('.progress-bar');
+    if (progressBar) {
+      progressBar.style.background = `conic-gradient(#044483 ${counter * 3.6}deg, #ededed 0deg)`;
+      if (counter === 100) {
+        progressBar.classList.add('complete');
+      }
+    }
+  }, [counter]);
          
 
     
@@ -230,7 +259,7 @@ function ApplicationStatus() {
                 <div className="input-share">
                 <span>Email <MdOutlineMailOutline /></span>
                 <label htmlFor="email"></label>
-                <input 
+                <input
                   type="email" 
                   id="email" 
                   value={email} 
@@ -246,27 +275,31 @@ function ApplicationStatus() {
           </div>
         </div>
       )}
-       {share && (
-        <div className="share-popup">
-          <div onClick={closeShare} className="overlay-1"></div>
-          <div className="share-box">
-            <div className="loader">
-              <div className="circle"></div>
-              <div className="tick">&#10003;</div>
-            </div>
-          </div>
+       {opensave && (
+        <div className="circular-progress">
+        <div onClick={openDownload} className="overlay-2"></div>
+        <div className="progress-box">
+        <div className="progress-bar">
+        {/* <span className="progress-value">{counter}%</span> */}
+        <span className="tick">&#10004;</span>
         </div>
+        <span className="progress-text">Download successfully</span>
+        </div>
+      </div>
       )}
 
-
 {/*Popup for send successful message*/}
-      {opensave && (
-        <div className="share-popup">
-          <div onClick={closeShare} className="overlay"></div>
-          <div className="share-box">
-            
+      {share && (
+        <div className="circular-progress">
+        <div onClick={sendSuccess} className="overlay-2"></div>
+          <div className="progress-box">
+            <div className="progress-bar">
+          {/* <span className="progress-value">{counter}%</span> */}
+          <span className="tick">&#10004;</span>
           </div>
-        </div>
+          <span className="progress-text">Report send successfully</span>
+          </div>
+          </div>
       )}
 
             <table className='table-ap'>
@@ -282,15 +315,6 @@ function ApplicationStatus() {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td onClick={toggleModal} ><div style={{color:'#0087F3', cursor:'pointer'}} >CRD110279</div></td>
-                    <td>28/08/ 2024</td>
-                    <td onClick={GroupId}><div style={{color:'#0087F3' ,cursor:'pointer'}} >Ambai Group</div></td>
-                    <td>Kannan S</td>
-                    <td>+91 97905 64324</td>
-                    <td>2,50,000</td>
-                    <td>submitted</td>
-                </tr>
 
                 <tr>
                     <td onClick={toggleModal} ><div style={{color:'#0087F3',cursor:'pointer'}}>CRD110279</div></td>
@@ -300,7 +324,7 @@ function ApplicationStatus() {
                     <td>+91 97905 64324</td>
                     <td>2,50,000</td>
                     <td style={{ backgroundColor: buttonColor, color:'white' }}
-  onClick={OpenModal} className="loan-status">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+  onClick={OpenModal} className="loan-status1">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                 </tr>
                 
               {Openmodal && (

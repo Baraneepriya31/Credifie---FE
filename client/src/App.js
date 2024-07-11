@@ -32,10 +32,10 @@ const App = () => {
            <Route path="/" element={<AdminLogin onLogin={handleLogin} />} />
            <Route path="/login" element={<AdminLogin onLogin={handleLogin} />} />
            <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/reset-password/:token" element={<ResetPassword />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/check-mail" element={<CheckMail />} />
-                <Route path="/password-reset" element={<PasswordReset />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/check-mail" element={<CheckMail />} />
+            <Route path="/password-reset" element={<PasswordReset />} />
             </Routes> 
             <div className="grid-container">
                 {isLoggedIn && <Header onLogout={handleLogout} />}
@@ -43,7 +43,6 @@ const App = () => {
             <Routes>
                 
                 <Route path="/home" element={<AuthenticatedRoute element={<Home />} />} />
-               
                 <Route path="/group" element={<AuthenticatedRoute element={<Group />} />} />
                 <Route path="/applicationStatus" element={<ApplicationStatus />} />
             </Routes>

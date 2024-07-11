@@ -251,6 +251,22 @@ app.post('/addGroup', (req, res) => {
     });
 });
 
+// app.get('/groups',async(req,res)=>{
+//     try{
+//         const sql ='SELECT * FROM groups';
+//         connection.query(sql,(error,results)=>{
+//             if(error){
+//                 console.error('Error fetching groups:', error);
+//                 return res.status(500).json({error:'Internal server error'});  
+//             }
+//             res.status(200).json(results);
+//         });
+//     } catch(error){
+//         console.error('Error fetching groups:',error);
+//         res.status(500).json({error: 'Internal server error'});
+//     }
+// });
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

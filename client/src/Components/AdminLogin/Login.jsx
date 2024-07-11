@@ -86,6 +86,7 @@ const AdminLogin = ({ onLogin }) => {
                             onChange={handleEmailChange}
                         />
                     </div>
+                    
                     <div className="password-container">
                         <label htmlFor="password">Password</label>
                         <input

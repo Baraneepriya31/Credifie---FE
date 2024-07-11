@@ -21,6 +21,24 @@ import './App.css';
 function Header() {
 
      const [modals, setModals] = useState(false);
+     const [openProfile, setOpenProfile] = useState(false);
+     const [isEditing, setIsEditing] = useState(false);
+
+     const clickProfile = () =>{
+        setOpenProfile(true);
+     }
+
+     const closePopup= () =>{
+      setOpenProfile(false);
+     }
+
+     const handleEditClick =()=>{
+      setIsEditing(!isEditing);
+     }
+
+     const handleSaveClick = () =>{
+      setIsEditing(false);
+     }
 
      const profiletoggle = () => {
        setModals(!modals);
@@ -53,7 +71,7 @@ function Header() {
            {modals && (  <div className="modals">
           <div className="profile">
             
-          <div className="profile-pic">
+          <div className="profile-pic" onClick={clickProfile}>
             
              <img className="profile-img" src={profile} alt="profile" />
              <p>Profile</p></div>
@@ -69,6 +87,94 @@ function Header() {
            
             
             )} 
+            {openProfile && (
+              <div className="profile-popup">
+                <div onClick={clickProfile} className="overlay"></div>
+                  <div className="profile-box">
+                  <div className="close-icon1" onClick= {closePopup}>&times;</div>
+                  <div className="profile-text">
+                    <h3>PROFILE</h3>
+                    </div>
+                    
+                    <div className="profile-inner-box">
+                      <div className="profile-picture">
+                      <div className="inside-profile-picture"></div>
+
+                      </div>
+                      
+                      <div className="profile-info">
+                        <div className="profile-head">
+                        <h3 className="primary-info">PRIMARY INFO</h3>
+                        <h3 className="account-password">ACCOUNT PASSWORD</h3>
+                        <h3 className="Secondary-info">SECONDARY INFO</h3>
+                        </div>
+
+                        <div className="details-box">
+                        <div>
+                        <div className="profile-input">
+                        <label htmlFor="name">Name<span onClick={handleEditClick}>{isEditing? "CANCEL" :"EDIT"}</span></label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            disabled={!isEditing}
+                        />
+                    </div>
+                    </div>
+                    <div>
+                    <div className="profile-input">
+                        <label htmlFor="email">EMP ID <span onClick={handleEditClick}>{isEditing? "CANCEL" :"EDIT"}</span></label>
+                        <input
+                            type="text"
+                            id="empId"
+                            name="empid"
+                            disabled={!isEditing}
+                        />
+                    </div>
+                    </div>
+                    <div>
+                    <div className="profile-input">
+                        <label htmlFor="email">E-Mail ID <span onClick={handleEditClick}>{isEditing? "CANCEL" :"EDIT"}</span></label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            disabled={!isEditing}
+                        />
+                    </div>
+                    </div>
+                    <div>
+                      <div className="profile-input">
+                        <label htmlFor="number">Contact Number<span onClick={handleEditClick}>{isEditing? "CANCEL" :"EDIT"}</span> </label>
+                        <input
+                            type="number"
+                            id="number"
+                            name="contact number"
+                            disabled={!isEditing}
+                        />
+                    </div>
+                    </div>
+                    <div>
+                      <div className="profile-input">
+                        <label htmlFor="text">Base Location<span onClick={handleEditClick}>{isEditing? "CANCEL" :"EDIT"}</span> </label>
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            disabled={!isEditing}
+                        />
+                        {/* <span>Edit</span> */}
+                    </div>
+                    </div>
+                    {isEditing && (
+                      <button onClick = {handleSaveClick} > SAVE </button>
+                    )}
+                  </div>
+                </div>
+                  </div>
+                  </div>
+              </div>
+            )}
         </header>
     )
 }
