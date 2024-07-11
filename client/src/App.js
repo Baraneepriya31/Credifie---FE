@@ -1,18 +1,11 @@
 
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import AdminLogin from './Components/AdminLogin/Login';
 // import ForgotPassword from './Components/ForgotPassword/forgot-password';
 // import ResetPassword from './Components/ResetPassword/reset-password';
 // import CheckMail from './Components/CheckMail/check-mail';
 // import PasswordReset from './Components/PasswordReset/password-reset';
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import AdminLogin from './Components/AdminLogin/Login';
-import ForgotPassword from './Components/ForgotPassword/forgot-password';
-import ResetPassword from './Components/ResetPassword/reset-password';
-import CheckMail from './Components/CheckMail/check-mail';
-import PasswordReset from './Components/PasswordReset/password-reset';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './Components/Dashboard/Header';
 import Sidebar from './Components/Dashboard/sidebar';
 import Home from './Components/Dashboard/Home';
@@ -61,7 +54,7 @@ const App = () => {
                 <Route path="/loancalculator" element={<LoanCalculator />} />
 
 
-const App = () => {
+{/* const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleLogin = () => {
@@ -70,36 +63,17 @@ const App = () => {
 
     const handleLogout = () => {
         setIsLoggedIn(false);
-    };
+    }; */}
 
-    const AuthenticatedRoute = ({ element }) => {
-        return isLoggedIn ? element : <Navigate to="/login" />;
-    };
+     {/* const AuthenticatedRoute = ({ element }) => { */}
+        {/* return isLoggedIn ? element : <Navigate to="/login" />; */}
+     {/* }; */}
 
-    return (
-        <Router>
-           <Routes>
-           <Route path="/" element={<AdminLogin onLogin={handleLogin} />} />
-           <Route path="/login" element={<AdminLogin onLogin={handleLogin} />} />
-           <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password/:token" element={<ResetPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/check-mail" element={<CheckMail />} />
-            <Route path="/password-reset" element={<PasswordReset />} />
-            </Routes> 
-            <div className="grid-container">
-                {isLoggedIn && <Header onLogout={handleLogout} />}
-               {isLoggedIn && <Sidebar />}
-            <Routes>
-                
-                <Route path="/home" element={<AuthenticatedRoute element={<Home />} />} />
-                <Route path="/group" element={<AuthenticatedRoute element={<Group />} />} />
-                <Route path="/applicationStatus" element={<ApplicationStatus />} />
-              
+    
             </Routes>
             </div>
         </Router>
     );
-};
+}
 
 export default App;

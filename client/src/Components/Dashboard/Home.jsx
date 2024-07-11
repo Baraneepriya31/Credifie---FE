@@ -11,7 +11,6 @@
    import closeion from './ion_close.png'
    import dropdownblack from './dropdown black.png'
    import pdf from './pdf-file 1.png'
-   import chart from './Group 388.png'
    import elipse from './Ellipse 45.png'
    import elipse2 from './Ellipse 46.png'
    import elipse3 from './Ellipse 46 (1).png'
@@ -180,13 +179,13 @@ import DoughnutChart from "./Doughnutchart";
                <DoughnutChart />
                 {/* <img className="circularprogress" src={chart} /> */}
                 <div className="application-elipse">
-                <img className="elipse" src={elipse} />
+                <img className="elipse" src={elipse} alt="elipse"/>
                 <p className="elipse-status">Application Verified</p>
-                <img className="elipse2" src={elipse2} />
+                <img className="elipse2" src={elipse2} alt="elipse"/>
                 <p className="elipse-status2">On Process</p>
                 </div>
                 <div className="application-elipse">
-                <img className="elipse3" src={elipse3}  />
+                <img className="elipse3" src={elipse3} alt="elipse"  />
                 <p className="elipse-status3">Application Rejected</p>
                 </div>
             </div>
@@ -337,7 +336,7 @@ import DoughnutChart from "./Doughnutchart";
             
             <h4 className="appno-status">Application no SLK-123456</h4>
             <p className="status">Status</p>
-            <button className="btn"> Disbursed <img src={dropdown} /> </button>
+            <button className="btn"> Disbursed <img src={dropdown} alt="dropdown" /> </button>
             
             <h4 className="group-info">Group Info</h4>
             <div className="group-details">
@@ -361,7 +360,8 @@ import DoughnutChart from "./Doughnutchart";
               <h4>Loan Status <span>ACTIVE</span></h4>
               <p className="collection">Collection Agent</p>
             </div>
-             <button className="btn2">R.Suresh Krishna <img className="dropdown" src={dropdownblack} /> </button>
+             <button className="btn2">R.Suresh Krishna
+               <img className="dropdown" src={dropdownblack} alt="dropdown" /> </button>
               
               <div className="group-details">
               <div className="group-information">

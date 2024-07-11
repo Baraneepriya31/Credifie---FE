@@ -47,7 +47,7 @@ function Header() {
               10:30 AM | 21st Dec,2023
               
               <img src={basil_notification_icon} alt="image1" className="icon-img" />
-              <img onClick={profiletoggle} src={group} className="icon-img"/>
+              <img onClick={profiletoggle} src={group} className="icon-img" alt ="icon"/>
             </div>
             
            {modals && (  <div className="modals">
