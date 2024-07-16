@@ -1,8 +1,8 @@
-  import React, { useState } from "react";
+
+
+  import React, { useState} from "react";
   
-  import 
-  { BsCalendar2Date}
-   from 'react-icons/bs'
+  import { BsCalendar2Date, BsSearch} from 'react-icons/bs'
    import iconimage from './Group 385.png'
    import rectangle from './Rectangle 257.png'
    import rectangle2 from './Rectangle 258.png'
@@ -14,12 +14,24 @@
    import elipse from './Ellipse 45.png'
    import elipse2 from './Ellipse 46.png'
    import elipse3 from './Ellipse 46 (1).png'
-import DoughnutChart from "./Doughnutchart";
+   import DoughnutChart from "./Doughnutchart";
+   import { useNavigate } from "react-router-dom";
    
-
   function Home() {
                     
     const [modal, setModal] = useState(false);
+    const [Openmodal, setOpenModal] = useState(false);
+    const [Openmodal2, setOpenModal2] = useState(false);
+    const [buttonText, setButtonText,] = useState('Submitted');
+    const [buttonColor, setButtonColor] = useState('#12c2e9');
+    const [report, setreportmodal] = useState(false);
+    const navigate = useNavigate();
+
+   
+
+    const loanpage = () => {  
+      navigate("/LoanCalculator");
+    }
 
     const toggleModal = () => {
       setModal(!modal);
@@ -31,9 +43,6 @@ import DoughnutChart from "./Doughnutchart";
       document.body.classList.remove('active-modal')
     }
       
-
-    const [Openmodal, setOpenModal] = useState(false);
-
     const OpenModal = () => {
       setOpenModal(!Openmodal);
     };
@@ -44,8 +53,6 @@ import DoughnutChart from "./Doughnutchart";
       document.body.classList.remove('active-modal')
     }
      
-    const [Openmodal2, setOpenModal2] = useState(false);
-
     const OpenModal2 = () => {
       setOpenModal2(!Openmodal2);
     };
@@ -56,8 +63,6 @@ import DoughnutChart from "./Doughnutchart";
       document.body.classList.remove('active-modal')
     }
 
-    const [report, setreportmodal] = useState(false);
-
     const reportmodal = () => {
       setreportmodal(!report);
     };
@@ -67,10 +72,7 @@ import DoughnutChart from "./Doughnutchart";
     } else {
       document.body.classList.remove('active-modal')
     }
-      
-    const [buttonText, setButtonText,] = useState('Submitted');
-  const [buttonColor, setButtonColor] = useState('#12c2e9');
-    
+       
   const handleRadioChange = (event) => {
     const { value } = event.target;
     if (value === 'approved') {
@@ -96,7 +98,6 @@ import DoughnutChart from "./Doughnutchart";
       
   
     return (
-      <React.Fragment>
       <main className='main-container'>
           <div className='main-title'>
               <h3>Current Months</h3>
@@ -336,7 +337,9 @@ import DoughnutChart from "./Doughnutchart";
             
             <h4 className="appno-status">Application no SLK-123456</h4>
             <p className="status">Status</p>
-            <button className="btn"> Disbursed <img src={dropdown} alt="dropdown" /> </button>
+
+            <button className="btn"> Disbursed <img src={dropdown} alt="dropdown"/> </button>
+
             
             <h4 className="group-info">Group Info</h4>
             <div className="group-details">
@@ -360,12 +363,12 @@ import DoughnutChart from "./Doughnutchart";
               <h4>Loan Status <span>ACTIVE</span></h4>
               <p className="collection">Collection Agent</p>
             </div>
-             <button className="btn2">R.Suresh Krishna
-               <img className="dropdown" src={dropdownblack} alt="dropdown" /> </button>
+
+               <img className="dropdown" src={dropdownblack} alt="dropdown"/>
+
               
               <div className="group-details">
               <div className="group-information">
-              <p >Loan Amount</p>
             <p>Loan Account Number</p>
             <p>Tenure</p>
             <p>Interest</p>
@@ -400,23 +403,16 @@ import DoughnutChart from "./Doughnutchart";
                 <hr className="attachments-line" />
                 </div>
               </div>
+              </div>
             <button className="close-modal" onClick={toggleModal}>
 
               <img src={closeion} alt="icon" />
             </button>
           
           </div>
-   
+        )}
         </div>
-      )}
-            </div>
-           
-             </div>
-
-
-      </main>
-      </React.Fragment>
-    )
-  }
-  
-  export default Home
+        </div>
+        </main>
+  )}
+  export default Home;

@@ -172,6 +172,7 @@ function Group() {
               <button onClick={addgroup} className="add-btn">Add Group   +</button>
               <button className="download-button" onClick={Popup} >Download  <FiDownload /> </button>
             </div>
+          </div>
             {/* First popup for download and share */}
             {openPopup && (<div className="download-popup">
                   <div onClick={Popup} className="overlay"></div>
@@ -299,6 +300,9 @@ function Group() {
                     <td><input type='checkbox'/></td>
                   </tr>
                  
+                 
+                 
+                  
                   {Openmodal && (
         <div className="openmodal3">
           <div className="modal-list">
@@ -594,10 +598,10 @@ function Group() {
             
           </>
         )}
-        </div>
       
         </div>
-       )}   
+        </div>
+        )}
         </div>
     </div>
   )
@@ -606,5 +610,6 @@ function Group() {
 
 
 
+)}
 
 export default Group;

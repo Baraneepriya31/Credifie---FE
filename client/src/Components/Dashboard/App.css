@@ -115,6 +115,9 @@ span{
   width: 100%;
   height: 70px;
   position: absolute;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 }
 
 .close-icon1{
@@ -131,6 +134,13 @@ span{
   flex-direction: row;
 }
 
+.picture-text {
+    color: #0088F3;
+    border: 0.5px;
+    margin-left: 50px;
+    text-decoration: underline;
+    cursor: pointer;
+}
 
 .profile-text h3{
 font-family: Roboto, sans-serif;
@@ -139,7 +149,6 @@ font-weight: 200;
 text-align: left;
 color: #fff;
 margin-left: 20px;
-cursor: pointer;
 }
 
 .profile-info{
@@ -214,7 +223,9 @@ margin-left: 50px;
   border-radius: 50%;
   background-color: #044483;
   position: relative;
+
 }
+
 
 /* .profile-picture::before{
   width: 120px;
@@ -239,6 +250,16 @@ margin-left: 50px;
   content: "";
   margin-left: 10px;
   margin-top: 10px;
+}
+
+.save-button button{
+  background-color: #25AE7A;
+  width: 150px;
+  height: 30px;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  
 }
 
 
