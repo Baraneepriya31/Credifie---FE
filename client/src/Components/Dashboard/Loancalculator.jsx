@@ -2,14 +2,20 @@ import React from 'react';
 import './LoanCalculator.css'
 import Back from './back.png'
 import { IoIosArrowDropright } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
+
 
 function LoanCalculator () {
-              
+  const navigate = useNavigate();
+
+  const Homepage = () => {  
+    navigate("/Home");
+  }
    return(
     <div className="loancalculator">
     <div className="loan-calculator">
    <h4 className='loan'>Loan Calculator</h4>
-   <img className='back-button' src={Back} alt="back" />
+   <img onClick={Homepage} className='back-button' src={Back} alt="back" />
     </div>
     <div className='loan-container'>
     <div className="loan-amount">

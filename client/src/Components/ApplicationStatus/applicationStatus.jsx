@@ -190,15 +190,16 @@ function ApplicationStatus() {
                 <span className="application-label">Loan Disbursed</span>
             </button>
             </div>
-            <div className="table-container">
-             <div className="application-status-text">
+            <div className="application-status-text">
                 <p>Total Application</p>
             </div> 
-
+            
+            <div className="table-container">
             <div className="box-header">
                 <div className="box1">
-                  <div className="search-container">
-                <input type="text" className="search-box" placeholder="Type here to search..." /><CiSearch className="search-icon"/>
+                <div className="search-container">
+                <input type="text" className="search-box" placeholder="Type here to search..." />
+                <CiSearch className="search-icon"/>
                 </div>
                 <button className="add-application-button" onClick={toggleModal}>Add Loan Application +</button>
                 <button className="download-button" onClick={Popup} >Download  <FiDownload /> </button>
@@ -314,7 +315,7 @@ function ApplicationStatus() {
         </div>
       )}
 
-        <table className='table-ap'>
+        <table className='table2'>
             <thead>
                 <tr>
                     <td>Application ID</td>
@@ -345,10 +346,10 @@ function ApplicationStatus() {
                     <td>+91 97905 64324</td>
                     <td>2,50,000</td>
                     <td style={{ backgroundColor: buttonColor, color:'white' }}
-  onClick={OpenModal} className="status-popup">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+  onClick={OpenModal} className="loan-status">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                 </tr>
               {Openmodal && (
-        <div className="openmodal">
+        <div className="openmodal-2">
           <div className="modal-list">
             <div className="submitted">
             <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
@@ -392,13 +393,11 @@ function ApplicationStatus() {
                         <div onClick={GroupId} className='overlay'></div>
                         <div className="groupid-content">
                       <h5 className='group-id5'>Group Id</h5>
-                     
                       <div className="group-member">
                       <h5>Group Member  <span style={{background:' #044483',color:'white',width:'100vw'}}>0</span> </h5>
                       <div className='application-status2'>
                        <h4> Application Status</h4>
-                       <button className='pending'>Pending  
-                         <img className="dropdown" src={dropdown} alt="dropdown" /> </button>
+                       <button className='pending'>Pending</button>
                       </div>
                       </div>
                       <button className="close-modal" onClick={GroupId}>

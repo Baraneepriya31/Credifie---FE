@@ -57,7 +57,7 @@ function Header() {
         console.log('Selected file:', file.name);
         // Implement file handling logic here
       }
-
+    }
 
      const profiletoggle = () => {
        setModals(!modals);
@@ -69,7 +69,7 @@ function Header() {
        document.body.classList.remove('active-modals')
      }
     
-
+    
     return(
     
         <header className="header">
@@ -90,7 +90,7 @@ function Header() {
            {modals && (  <div className="modals">
           <div className="profile">
             
-          <div className="profile-pic" onClick={clickProfile}>
+          <div className="profile-pic" onClick={clickProfile}  >
             
              <img className="profile-img" src={profile} alt="profile" />
              <p>Profile</p></div>
@@ -190,7 +190,7 @@ function Header() {
                             name="location"
                             disabled={!isEditing}
                         />
-                        {/* <span>Edit</span> */}
+                         {/* <span>Edit</span>  */}
                     </div>
                     </div>
                     {isEditing && (
@@ -260,9 +260,10 @@ function Header() {
                   </div>
                   
               </div>
-            )}
+            )} 
+          
         </header>
     )}
-}
+
 
 export default Header;

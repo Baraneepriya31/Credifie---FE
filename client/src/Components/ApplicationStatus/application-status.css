@@ -13,7 +13,7 @@
     font-size: 30px;
     font-weight: 400;
     line-height: 30px;
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 .application-label{
@@ -30,8 +30,8 @@
 
 .application-status-button {
     display: flex;
-    width: 170px;
-    height: 120px;
+    width: 160px;
+    height: 90px;
     flex-direction: column;
     align-items: center;
     background-color: #ffffff;
@@ -43,7 +43,7 @@
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    margin-right: 10px;
+    margin-right: 30px;
     transition: background-color 0.3s ease;
     border: 1px solid #25AE7A;
 }
@@ -52,7 +52,9 @@
     background-color: #1F8B63;
     color: white;
 }
-
+.application-status-button span:hover{
+  color: white;
+}
 .application-count {
     font-size: 24px;
     font-weight: 700;
@@ -79,10 +81,12 @@
 
 .application-status-text{
     font-family: Roboto;
-    font-size: 26px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 600;
     padding-left: 5px;
-    padding-top: 5px;
+    margin-top: 0;
+    color: #393938;
+    margin-left: 20px;
 }
 
 .box-header{
@@ -105,13 +109,13 @@
     position: relative;
     width: 100%;
     max-width: 300px;
+    margin-top:10px;
 }
 
 .search-icon {
     position: absolute;
     width: 20px;
     height: 20px;
-    right: 10px;
     top:10%;
     transform: translateY(-50%);
     cursor: pointer;
@@ -119,7 +123,7 @@
 
 
 .search-box{
-    width: 300px;
+    width: 285px;
     height: 30px;
     border-radius: 20px;
     background: #F3F3F9;
@@ -141,6 +145,7 @@
     font-family: roboto, sans-serif;
     border: 1px solid #25AE7A;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 .download-button{
@@ -156,6 +161,7 @@
     font-size:16px;
     font-family: roboto, sans-serif;
     cursor: pointer;
+    margin-top: 10px;
 }
 
 /* .add-application-button:hover, .download-button:hover{
@@ -164,20 +170,16 @@
 
 .table-container{
   background-color: #ffffff;
-  height: 70%;
+  height: fit-content;
 }
 
-.table-ap{
+/* .table-ap{
     width: 1050px;
     margin-top: 20px;
     padding: 10px;
     border-collapse: collapse;
-    box-shadow: 0px 0px 5px #aaaaaa;
     border-radius: 8px;
-
-}
-
-
+} */
 table thead td{
     width: 80px;
     padding: 10px;
@@ -196,19 +198,24 @@ table tbody td{
     width: 80px;
     height: 10px;
 }
-
-
-
-.status-popup{
-    background-color: #62B8FC;
-    border-radius: 20px;
-    cursor: pointer;
-    width: 50px;
-    height: 5px;
-    color: #FFFFFF;
-    text-align: center;
+.openmodal-2{
+  position: absolute;
+    margin-left: 70%;   
+  background-color:#FFFFFF;
+  width: 90px;
+  height: 210px;
+  z-index: 10;
+ box-shadow: 0px 15px 15px 0px #0000001A;
+ } 
+ .loan-status{
+  background-color: #62B8FC;  
+border-radius: 20px;
+cursor: pointer;
+width: 100px;
+height: 10px;
+color: #FFFFFF;
+margin-right: 10px;
 }
-
 .download-popup {
     position: fixed;
     top: 0;

@@ -41,6 +41,7 @@
 .loan-text{
     color: #777675;
     margin-top: 30px;
+    
 }
 .progressbar-1{
     width:61%;
@@ -115,20 +116,20 @@
     justify-content: space-between;
 }
 .principal-amount2{
-    width: 120px;
+    width: 130px;
     height: 3px;
     background-color: #033466;
     border-radius: 6px;
-    margin-left: 250px;
+    margin-left: 215px;
     margin-top: 0;
 }
 .totalinterest2{
-    width: 120px;
+    width: 130px;
     height: 3px;
     background-color: #033466;
     border-radius: 6px;
     margin-top: 0;
-    margin-right: 190px;
+    margin-right: 155px;
 }
 .calculate{
     width: 130px;

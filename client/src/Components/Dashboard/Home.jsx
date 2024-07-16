@@ -103,6 +103,7 @@
               <h3>Current Months</h3>
             
               <h2 onClick={reportmodal} className="date">Detailed Report  <BsCalendar2Date className="date-icon"/></h2>
+              <h2  className="date" onClick={loanpage}>Loan Calculator </h2>
               </div>
               {report && (  
                  <div className="report-modal">
