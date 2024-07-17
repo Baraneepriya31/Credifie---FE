@@ -1,22 +1,19 @@
+import React, { useState} from "react";
+import { BsCalendar2Date, BsSearch} from 'react-icons/bs'
+import iconimage from './Group 385.png'
+import rectangle from './Rectangle 257.png'
+import rectangle2 from './Rectangle 258.png'
+import rectangle3 from './Rectangle 259.png'
+import dropdown from './Vector.png'
+import closeion from './ion_close.png'
+import dropdownblack from './dropdown black.png'
+import pdf from './pdf-file 1.png'
+import elipse from './Ellipse 45.png'
+import elipse2 from './Ellipse 46.png'
+import elipse3 from './Ellipse 46 (1).png'
+import DoughnutChart from "./Doughnutchart";
+import { useNavigate } from "react-router-dom";
 
-
-  import React, { useState} from "react";
-  
-  import { BsCalendar2Date, BsSearch} from 'react-icons/bs'
-   import iconimage from './Group 385.png'
-   import rectangle from './Rectangle 257.png'
-   import rectangle2 from './Rectangle 258.png'
-   import rectangle3 from './Rectangle 259.png'
-   import dropdown from './Vector.png'
-   import closeion from './ion_close.png'
-   import dropdownblack from './dropdown black.png'
-   import pdf from './pdf-file 1.png'
-   import elipse from './Ellipse 45.png'
-   import elipse2 from './Ellipse 46.png'
-   import elipse3 from './Ellipse 46 (1).png'
-   import DoughnutChart from "./Doughnutchart";
-   import { useNavigate } from "react-router-dom";
-   
   function Home() {
                     
     const [modal, setModal] = useState(false);
@@ -93,7 +90,7 @@
     }
 
   };
- 
+
     return (
       <main className='main-container'>
           <div className='main-title'>
@@ -296,8 +293,7 @@
                   <td>N/A</td>
                   <td onClick={OpenModal2} className="loan-status5">Submitted
                      <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
-</tr>
-                    
+</tr>       
               {Openmodal2 && (
         <div className="openmodal">
           <div className="modal-list">

@@ -51,13 +51,13 @@ function Header() {
     }
 
 // eslint-disable-next-line
-    const handleFileChange = (e) => {
-      const file = e.target.files[0];
+    const handleFileChange = (event) => {
+      const file = event.target.files[0];
       if (file) {
         console.log('Selected file:', file.name);
         // Implement file handling logic here
       }
-
+    }
 
      const profiletoggle = () => {
        setModals(!modals);
@@ -190,7 +190,6 @@ function Header() {
                             name="location"
                             disabled={!isEditing}
                         />
-                        {/* <span>Edit</span> */}
                     </div>
                     </div>
                     {isEditing && (
@@ -263,6 +262,6 @@ function Header() {
             )}
         </header>
     )}
-}
+  
 
 export default Header;

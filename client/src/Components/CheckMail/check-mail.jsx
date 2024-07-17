@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './checkMail.css';
 import login_ellipse1 from '../Assets/login-ellipse1.png';
 import login_top_icon from '../Assets/login-top.png';
 import mail from '../Assets/mail.png';
+import { useLocation } from 'react-router-dom';
 
-const CheckMail = ({ email }) => {
-    const [message, setMessage] = useState('');
+const CheckMail = () => {
+    const location = useLocation();
+    const { email, message: initialMessage } = location.state || {};
+    const [message, setMessage] = useState(initialMessage || '');
     const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        if (!email && !initialMessage) {
+            setErrorMessage('No account with that email address exists');
+        }
+    }, [email, initialMessage]);
 
     const handleResend = async () => {
         setMessage('');
@@ -43,7 +52,7 @@ const CheckMail = ({ email }) => {
             <div className='admin-login'>
                 <img src={mail} id='lock'/>
                 <h2>Check Your Email</h2>
-                <div>We have sent a password reset link to your registered mail ID</div>
+                <div>{errorMessage || 'We have sent a password reset link to your registered mail ID'}</div>
                 {message && <p className="success-message">{message}</p>}
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
                 <form>

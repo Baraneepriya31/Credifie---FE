@@ -13,12 +13,13 @@ body {
     'sidebar main main main';
     height: 100vh ;
 }
- @media (min-width: 308px) {
+ /* @media (min-width: 308px) {
   .grid-container {
     grid-template-columns: 200px 1fr ;
     grid-template-rows: 0.1fr;
    } 
-}
+} */
+ 
 /* Header */
 .header {
     grid-area: header;
@@ -32,11 +33,11 @@ body {
     /* top: -1px;
     left: 100px; */
 }
-@media (min-width: 308px) {
+/* @media (min-width: 308px) {
   .header {
     text-align: left;
   }
-}
+} */
 .header-left{
     height: 15px;
     left: 230px;
@@ -1104,6 +1105,7 @@ color:#FFFFFF;
   font-size: 16px;
   cursor: pointer;
 }
+
 .download-btn{
   width: 150px;
   height: 35px;
@@ -1117,31 +1119,37 @@ color:#FFFFFF;
   font-size: 16px;
   cursor: pointer;
 }
+
 .download-icon{
   color: #25AE7A;
   width: 20px;
   height: 15px;
  
 }
+
 .table2{
   margin-top: 13px;
   width: 1080px;
   border-collapse: collapse;
 }
+
 .table2 tr{
   padding-top: 20px;
 }
+
 .table2 th{
   font-size: 13px;
   background: #F7F7F7;
   color: #393938;
 }
+
 .table2 td{
   text-align: center;
 }
 .active-status{
   color:#25AE7A;
 }
+
 .closed-status{
   color: #F84D4D;
 }
@@ -1151,6 +1159,7 @@ color:#FFFFFF;
  top: 50%;
  height: 100vh;
 }
+
 .addmodal, .overlay {
   width: 100vw;
   top: 0px;

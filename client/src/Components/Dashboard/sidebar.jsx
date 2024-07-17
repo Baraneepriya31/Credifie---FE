@@ -22,22 +22,22 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
 
       <ul className='sidebar-list'>
         <li className='sidebar-list-item'>
-          <a href="#" onClick={() => handleNavigate('/Home')}>
+          <a href="#h" onClick={() => handleNavigate('/Home')}>
             <p className='nav-menu'>Dashboard</p>
           </a>
         </li>
         <li className='sidebar-list-item'>
-          <a href="#" onClick={() => handleNavigate('/Group')}>
+          <a href="#g" onClick={() => handleNavigate('/Group')}>
             <p className='nav-menu'>Groups</p>
           </a>
         </li>
         <li className='sidebar-list-item'>
-          <a href="#" onClick={() => handleNavigate('/collectionagent')}>
+          <a href="#c" onClick={() => handleNavigate('/collectionagent')}>
             <p className='nav-menu'>Collection Agent</p>
           </a>
         </li>
         <li className='sidebar-list-item'>
-          <a href="#" onClick={() => handleNavigate('/applicationStatus')}>
+          <a href="#a" onClick={() => handleNavigate('/applicationStatus')}>
             <p className='nav-menu'>Application Status</p>
           </a>
         </li>

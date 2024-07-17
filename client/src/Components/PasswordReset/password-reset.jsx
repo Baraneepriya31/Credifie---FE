@@ -6,6 +6,10 @@ import lock from '../Assets/lock.png';
 
 const PasswordReset = () => {
 
+    const handleBacktoLogin=()=>{
+        navigate('/login')
+    }
+
     return (
         <div id="admin-page">
             <img src={login_ellipse1} id="image-eli1" alt="ellipse" />
@@ -19,7 +23,7 @@ const PasswordReset = () => {
                 <div>We have sent a password reset link to your registered mail ID</div>
             
             <form>
-            <button>BACK TO LOGIN</button>
+            <button onClick={handleBacktoLogin}>BACK TO LOGIN</button>
 
         </form>
         </div>
