@@ -2,7 +2,7 @@
 
   import React, { useState} from "react";
   
-  import { BsCalendar2Date, BsSearch} from 'react-icons/bs'
+  import { BsCalendar2Date} from 'react-icons/bs'
    import iconimage from './Group 385.png'
    import rectangle from './Rectangle 257.png'
    import rectangle2 from './Rectangle 258.png'
@@ -359,7 +359,7 @@
                 <p>Colombo,Sri Lanka</p>
               </div>
               </div>
-              <hr className="popup-line" />
+              
              <div className="loanstatus-active">
               <h4>Loan Status <span>ACTIVE</span></h4>
               <p className="collection">Collection Agent</p>
@@ -383,7 +383,7 @@
               <p>15%</p>
               </div>
               </div>
-              <hr className="popup-line" />
+             
               <h4 className="group-info">Attachments</h4>
               <div className="group-details">
                 <div className="group-information">

@@ -2,8 +2,6 @@ body {
     background-color:#F7F7F7;
     font-family: 'Roboto';
 }
-
-
 .grid-container{
     display: grid;
     grid-template-columns: 200px 1fr 1fr 1fr ;
@@ -27,7 +25,7 @@ body {
      justify-content: space-between;
      padding: 0 30px 0 30px;  
     background-color: #FFFFFF;
-    width: 1105px;
+    width: 94.8%;
     height: 45px;
     /* top: -1px;
     left: 100px; */
