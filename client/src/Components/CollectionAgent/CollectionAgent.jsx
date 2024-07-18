@@ -11,6 +11,7 @@ function CollectionAgent () {
 
    
     const [addmodal, setAddmodal] = useState(false);
+    const [editmodal, setEditmodal] = useState(false);
     const [openPopup, setPopup] =useState(false);
     const [opensave, setopenDownload] =useState(false);
     const [opensend, setopenShare]=useState(false);
@@ -19,10 +20,20 @@ function CollectionAgent () {
     const [fileType, setFileType] = useState('');
     const [selects, setSelects] = useState();
     const [selects2, setSelects2] = useState();
+    const [isEditMode, setIsEditMode] = useState(true);
     const addagent = () =>{
         setAddmodal(!addmodal);
       }
       if(addmodal) {
+        document.body.classList.add('active-modal')
+      } else {
+        document.body.classList.remove('active-modal')
+      }
+
+      const editagent = () =>{
+        setEditmodal(!editmodal);
+      }
+      if(editmodal) {
         document.body.classList.add('active-modal')
       } else {
         document.body.classList.remove('active-modal')
@@ -78,7 +89,9 @@ function CollectionAgent () {
         closeShare(); 
       };
            
-  
+      const handleButtonClick = () => {
+        setIsEditMode(!isEditMode);
+      };
          
   
        return (
@@ -287,7 +300,7 @@ function CollectionAgent () {
                 <th>Select</th>
                 &nbsp;
                 <tr>
-                    <td className="application-no">CRDE101</td>
+                    <td className="application-no" onClick={editagent}>CRDE101</td>
                     <td>Vijay</td>
                     <td>India</td>
                     <td>+91 8907654321 </td>
@@ -310,6 +323,95 @@ function CollectionAgent () {
               </table>
                 </div> 
           </div>
+          {editmodal && (
+                    <div className='addmodal'>
+                     <div  onClick={editagent} className="overlay"></div>
+                     <div className='add-agent'>
+                          <h4>Add Agent</h4>
+                          <hr className='add-line'/>
+                          <div className="group-flex">
+                          <div className="agent-info">
+                            <p className='first-name'>First Name</p>
+                            <input type="text" id="name" name="name" className="input-line2"/>
+                          </div>
+                          <div className='agent-info'>
+                            <p className='last-name'>Last Name </p>
+                            <input type="text" id="name" name="name" className="input-line2"/>
+                          </div>
+                         
+                          </div>
+                          <div className="agent-flex">
+                          <div className="agent-info">
+                            <p className='last-name'>Contact number</p>
+                            <input type="number" id="name" name="number" className="input-line2"/>
+                          </div>
+                          <div className='agent-info' >
+                            <p className='last-name'>Pan number </p>
+                           
+                            <input type="number" id="name" name="name" className="input-line2"/>
+                          </div>
+                         
+                          </div>
+                          <div className="agent-flex2">
+                          <div className="agent-info">
+                            <p className='agent-info'>Date of Birth</p>
+                            <input type="text" id="name" name="name" className="input-line2"/>
+                          </div>
+                          <div className='last-name'>
+                            <p className='agent-info'>Gender </p>
+                            {/* <img src={dropdowngrey} alt="gender" /> */}
+                            <select className="gender-select" value={selects} onChange={e => setSelects (e.target.value)} >
+                                  <option></option>
+                                   <option>Male</option>
+                                   <option>Female</option>
+                                   </select>
+                          </div>
+                          </div>
+                          
+                          <div className="agent-flex">
+                          <div className="agent-info">
+                            <p className='agent-info'>Email id</p>
+                            <input type="text" id="name" name="name" className="input-line2"/>
+                          </div>
+                          <div className='last-name'>
+                            <p className='agent-info'>Marital Status </p>
+                            <select className="gender-select2" value={selects2} onChange={e => setSelects2 (e.target.value)} >
+                                  <option></option>
+                                   <option>Single</option>
+                                   <option>Married</option>
+                                   <option>Unmarried</option>
+                                   </select>
+                          </div>
+                          </div>
+                         
+                          <div className="agent-flex" >
+                          <div className="agent-info">
+                            <p className='agent-info'>Total experience</p>
+                           
+                            <input type="text" id="name" name="name" className="input-line2"
+                          />
+                          </div>
+                          <div className='last-name'>
+                            <p className='agent-info'>Highest Education Degree </p>
+                           
+                             <input type="text" id="name" name="name" className="input-line2"
+                             />
+                           </div>
+                           
+                           </div>
+                        
+                       
+                           <button className='add' onClick={handleButtonClick}>
+                            {isEditMode ? 'Edit' : 'Save'}</button> 
+                          <button className="close-modal" onClick={editagent}>
+                       <img src={closeicon} alt="icon" />
+            </button>
+                   
+                     </div>
+                     </div>
+                   
+                    )}
+
          </div>
        )
 

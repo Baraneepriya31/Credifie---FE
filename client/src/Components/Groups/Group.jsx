@@ -267,7 +267,7 @@ function Group() {
           </div>
         </div>
       )}
-            </div>
+            
             <div>
               <table className='table2'>
               
@@ -299,6 +299,7 @@ function Group() {
                  
                     <td><input type='checkbox'/></td>
                   </tr>
+                 
                  
                  
                   
@@ -339,7 +340,7 @@ function Group() {
             &nbsp;
                   
               </table>
-             
+              </div>
             </div>
                      {grouppopup && (
                       <div className='grouppopup'>
@@ -351,8 +352,7 @@ function Group() {
                       <h5>Group Member  <span style={{background:' #044483',color:'white',width:'100vw'}}>0</span> </h5>
                       <div className='application-status2'>
                        <h4> Application Status</h4>
-                       <button className='pending'>Pending  
-                         <img className="dropdown" src={dropdown} alt="dropdown" /> </button>
+                       <button className='pending'>Pending</button>
                       </div>
                       </div>
                       <button className="close-modal" onClick={GroupId}>
@@ -602,6 +602,12 @@ function Group() {
         </div>
         )}
         </div>
-)}
+    
+  )
+
+ }
+
+
+
 
 export default Group;
