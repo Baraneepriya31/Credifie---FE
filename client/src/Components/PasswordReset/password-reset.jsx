@@ -1,10 +1,12 @@
-import React  from 'react';
+import React, {useNavigate}  from 'react';
 import '../CheckMail/checkMail.css';
 import login_ellipse1 from '../Assets/login-ellipse1.png';
 import login_top_icon from '../Assets/login-top.png';
 import lock from '../Assets/lock.png';
 
+
 const PasswordReset = () => {
+    const navigate = useNavigate();
 
     const handleBacktoLogin=()=>{
         navigate('/login')
@@ -16,7 +18,7 @@ const PasswordReset = () => {
             <div id='credi'>
                 <img src={login_top_icon} alt='hand' />
                 <div><span>Cred</span>ifie</div>
-            </div>
+            </div>2
             <div className='admin-login'>
                 <img src={lock} id='lock' alt='lock'/>
                 <h2>Password reset</h2>

@@ -1,6 +1,6 @@
 import React from 'react';
-import './LoanCalculator.css'
-import Back from './back.png'
+import './LoanCalculator.css';
+import Back from './back.png';
 import { IoIosArrowDropright } from "react-icons/io";
 
 function LoanCalculator () {
@@ -57,4 +57,4 @@ function LoanCalculator () {
 }
 
 
-export default LoanCalculator
+export default LoanCalculator;
