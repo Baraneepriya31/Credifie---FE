@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './CollectionAgent.css';
-import { BsSearch} from 'react-icons/bs';
+import { CiSearch} from 'react-icons/ci';
 import closeicon from './ion_close.png';
 import { FiDownload } from "react-icons/fi";
 import { MdOutlineMailOutline } from "react-icons/md";
@@ -103,7 +103,8 @@ function CollectionAgent () {
          <div className="agent-container">
           <div className="agents-btn">
             <div className="input-search">
-            <input type='search' placeholder='Type here to search...' /> <BsSearch className="search-icon" />
+            <input type="text"  placeholder="Type here to search..."/>
+            <CiSearch className="search-icon"/>
             </div>
             <div>
               <button onClick={addagent}  className="add-button">Add Agent   +</button>

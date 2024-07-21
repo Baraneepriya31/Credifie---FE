@@ -20,7 +20,7 @@ db.once('open', async function() {
 
   const Admin = mongoose.model('Admin', adminSchema);
 
-  const email = 'karthika8849@gmail.com'; 
+  const email = 'sandhiyasundharesan29@gmail.com'; 
   const plainPassword = 'Password@123'; 
 
   const salt = await bcrypt.genSalt(10);

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { BsSearch} from 'react-icons/bs';
+import { CiSearch } from "react-icons/ci";
 import dropdown from './Vector.png';
 import closeicon from './ion_close.png';
 import groupicon from './grpmem.png';
@@ -28,9 +28,16 @@ function Group() {
   const [opensave, setopenDownload] =useState(false);
   const [opensend, setopenShare]=useState(false);
   const [share, setopensuccess] =useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('');    
   const [fileType, setFileType] = useState('');
-
+  const [selectedRows, setSelectedRows] = useState([]); // Row indexes to select
+  const [disabledRows, setDisabledRows] = useState([]); 
+  const [searchQuery, setSearchQuery] = useState('');       
+              
+  const data = [
+    { id: 1, name: 'John Doe', age: 28 },
+  ];
+                  
   const addgroup = () =>{
     setAddmodal(!addmodal);
   }
@@ -43,12 +50,22 @@ function Group() {
     const addrow = () => {
       setRows([...rows, { member: '', contact: '', pan: '' }]);
     };
-
+        
     const handleChange = (index, field, value) => {
       const newRows = [...rows];
       newRows[index][field] = value;
       setRows(newRows);
     };
+          
+    const handleSearchChange = (event) => {
+      setSearchQuery(event.target.value);
+    };
+  
+    const filteredData = data.filter(row => 
+      row.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      row.age.toString().includes(searchQuery)
+    );
+  
 
     const Popup = ()=>{
       setPopup(!openPopup);
@@ -155,7 +172,27 @@ function Group() {
   } else {
     document.body.classList.remove('active-modal')
   }
+                
+           
+  const handleCheckboxChange = (index) => {
+    setSelectedRows(prevState => {
+      if (prevState.includes(index)) {
+        return prevState.filter(i => i !== index);
+      } else {
+        return [...prevState, index];
+      }
+    });
+  };
+
+  const disableSelectedRows = () => {
+    setDisabledRows(prevState => [...new Set([...prevState, ...selectedRows])]);
+    setSelectedRows([]); // Clear selected rows after disabling
+  };
+
+
          
+  
+
   return(
     <div className='group'>
        <div className='total-group'>
@@ -165,7 +202,11 @@ function Group() {
         <div className="group-container">
           <div className="group-btn">
             <div className="input-search">
-            <input type='search' placeholder='Type here to search...' /> <BsSearch className="search-icon" />
+            <input type="text"  placeholder="Type here to search..."
+            value={searchQuery}
+            onChange={handleSearchChange}  />
+            <CiSearch className="search-icon"/>
+            
             </div>
             <div>
               <button onClick={DisableModal} className='disable-btn'>Disable</button>
@@ -283,12 +324,19 @@ function Group() {
                 <th>Application Status</th>
                 <th>Select</th>
                 &nbsp;
-               
-                  <tr>
+               {filteredData.map((row, index) => (
+                  <tr key={row.id}
+                  className={disabledRows.includes(index) ? 'disabled' : ''}
+                  style={{ backgroundColor: disabledRows.includes(index)
+                     ? '#d1d1d5' : 'transparent' }}>
                     <td onClick={GroupId} className="application-no">G.401</td>
                     <td>Chennai Group</td>
-                    <td>Vijay</td>
-                    <td>+91 8907654321 </td>
+                    <td value={row.name} disabled={disabledRows.includes(index)} readOnly>
+                      B.Vijay
+                    </td>
+                    <td type="number" value={row.age} disabled={disabledRows.includes(index)} readOnly>
+                    9087654321
+                    </td>
                     <td>Rs.3,50,000</td>
                     <td>B. Vijay</td>
                     <td>Rs.25,000</td>
@@ -297,11 +345,14 @@ function Group() {
          onClick={OpenModal} className="loan-status">{buttonText}
       <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                  
-                    <td><input type='checkbox'/></td>
+                    <td><input  type="checkbox"
+                  checked={selectedRows.includes(index)}
+                  onChange={() => handleCheckboxChange(index)}
+                  disabled={disabledRows.includes(index)}/></td>
                   </tr>
                  
-                 
-                 
+                ))}
+                 &nbsp;&nbsp;
                   
                   {Openmodal && (
         <div className="openmodal3">
@@ -337,7 +388,7 @@ function Group() {
             </div>
                   </div>
             )} 
-            &nbsp;
+           
                   
               </table>
               </div>
@@ -593,7 +644,7 @@ function Group() {
             <label className="label-reason">Reason*</label>
             <input type='textarea' className="reason-input" />
             <br />
-            <button className="disable-button">Disable</button>
+            <button className="disable-button" onClick={disableSelectedRows}>Disable</button>
             
           </>
         )}
