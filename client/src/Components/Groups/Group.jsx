@@ -32,7 +32,8 @@ function Group() {
   const [fileType, setFileType] = useState('');
   const [selectedRows, setSelectedRows] = useState([]); // Row indexes to select
   const [disabledRows, setDisabledRows] = useState([]); 
-  const [searchQuery, setSearchQuery] = useState('');       
+  const [searchQuery, setSearchQuery] = useState('');
+         
               
   const data = [
     { id: 1, name: 'John Doe', age: 28 },
@@ -145,19 +146,24 @@ function Group() {
       }else if (value === 'pending') {
         setButtonText('Pending');
         setButtonColor('#62B8FC');
+      }else if (value === 'submitted') {
+        setButtonText('Submitted');
+        setButtonColor('#62B8FC');
+      }else if (value === 'disbursed') {
+        setButtonText('Disbursed');
+        setButtonColor('#2CBA00');
       }
     }
       
     const DisableModal = () => {
-      setDisableModal(!disablemodal);
+      setDisableModal(true);
+    };
+    const Closedisable = () => {
+      setDisableModal(false);
     };
   
-    if(disablemodal) {
-      document.body.classList.add('active-modal')
-    } else {
-      document.body.classList.remove('active-modal')
-    }
-      
+    
+    
 
     const handleConfirm = () => {
     setIsConfirmed(true);
@@ -186,7 +192,7 @@ function Group() {
 
   const disableSelectedRows = () => {
     setDisabledRows(prevState => [...new Set([...prevState, ...selectedRows])]);
-    setSelectedRows([]); // Clear selected rows after disabling
+    setSelectedRows([]); 
   };
 
 
@@ -358,7 +364,7 @@ function Group() {
         <div className="openmodal3">
           <div className="modal-list">
             <div className="submitted">
-            <input   className="radio-button" type="radio" name="status" value="pending" onChange={handleRadioChange} />
+            <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
             <p className="submit" >Submitted</p>
             </div>
             <div className="submitted">
@@ -374,9 +380,10 @@ function Group() {
             <p className="submit">Deadline</p>
             </div>
             <div className="submitted">
-            <input className="radio-button" type="radio" />
+            <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
             <p className="submit">Disbursed</p>
-            </div> <div className="submitted">
+            </div>
+            <div className="submitted">
             <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
             onChange={handleRadioChange} />
             <p className="submit">In-Progress</p>
@@ -637,7 +644,7 @@ function Group() {
                            <div className="disable-buttons">
                           
             <button onClick={handleConfirm} className="confirm-button">Confirm</button>
-            <button onClick={DisableModal} className='cancel-button'> {isConfirmed ? 'Exit' : 'Cancel'}</button>
+            <button onClick={Closedisable} className='cancel-button'> {isConfirmed ? 'Exit' : 'Cancel'}</button>
                            </div>
                            {isConfirmed && (
           <>

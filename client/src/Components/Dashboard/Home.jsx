@@ -26,9 +26,7 @@
     const [buttonColor, setButtonColor] = useState('#12c2e9');
     const [report, setreportmodal] = useState(false);
     const navigate = useNavigate();
-
-   
-
+    
     const loanpage = () => {  
       navigate("/LoanCalculator");
     }
@@ -91,11 +89,13 @@
     }else if (value === 'submitted') {
       setButtonText('Submitted');
       setButtonColor('#62B8FC');
+    }else if (value === 'disbursed') {
+      setButtonText('Disbursed');
+      setButtonColor('#2CBA00');
     }
 
   };
-
-      
+  
   
     return (
       <main className='main-container'>
@@ -235,9 +235,10 @@
             <p className="submit">Deadline</p>
             </div>
             <div className="submitted">
-            <input className="radio-button" type="radio" />
+            <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
             <p className="submit">Disbursed</p>
-            </div> <div className="submitted">
+            </div>
+             <div className="submitted">
             <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
             onChange={handleRadioChange} />
             <p className="submit">In-Progress</p>

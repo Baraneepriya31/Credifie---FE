@@ -9,9 +9,6 @@ import closeicon from './ion_close.png';
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
 
-
-
-
 function ApplicationStatus() {
 
   const [modal, setModal] = useState(false);
@@ -160,6 +157,9 @@ function ApplicationStatus() {
     }else if (value === 'submitted') {
       setButtonText('Submitted');
       setButtonColor('#62B8FC');
+    }else if (value === 'disbursed') {
+      setButtonText('Disbursed');
+      setButtonColor('#2CBA00');
     }
 };
     return (
@@ -368,7 +368,7 @@ function ApplicationStatus() {
             <p className="submit">Deadline</p>
             </div>
             <div className="submitted">
-            <input className="radio-button" type="radio" />
+            <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
             <p className="submit">Disbursed</p>
             </div> <div className="submitted">
             <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
