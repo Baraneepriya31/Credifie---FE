@@ -1,4 +1,3 @@
-import { FaArrowLeft } from 'react-icons/fa6';
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import zxcvbn from 'zxcvbn';
@@ -7,6 +6,7 @@ import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import login_ellipse1 from '../Assets/login-ellipse1.png';
 import login_top_icon from '../Assets/login-top.png';
 import help_circle from '../Assets/help-circle.png';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const ResetPassword = () => {
     const { token } = useParams();
@@ -91,7 +91,7 @@ const ResetPassword = () => {
                 <div>Your new password must be different from the previously used password.</div>
                 {message && <p>{message}</p>}
                 <form onSubmit={handleSubmit}>
-                    <div>
+                    <div className="password-input-container">
                         <label htmlFor="password">New Password <img src={help_circle} alt='question'/></label>
                         <input
                             type={showPassword ? "text" : "password"}
@@ -108,11 +108,11 @@ const ResetPassword = () => {
                         )}
                         {password && (
                             <div className="password-strength-bar">
-                                <div className={`strength-${passwordStrength}`} />
+                                <div className={`strength-fill strength-${passwordStrength}`} />
                             </div>
                         )}
                     </div>
-                    <div>
+                    <div className="password-input-container">
                         <label htmlFor="confirm-password">Confirm New Password</label>
                         <input
                             type={showPassword ? "text" : "password"}
@@ -129,7 +129,7 @@ const ResetPassword = () => {
                         )}
                     </div>
                     <button type="submit">RESET PASSWORD</button>
-                    <a href="/login" className="forgot-password-link"><FaArrowLeft/>Back to login</a>
+                    <a href="/login" className="forgot-password-link"><FaArrowLeft />Back to login</a>
                 </form>
             </div>
         </div>

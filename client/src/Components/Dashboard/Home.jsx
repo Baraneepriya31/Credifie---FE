@@ -359,7 +359,6 @@ import { useNavigate } from "react-router-dom";
                 <p>Colombo,Sri Lanka</p>
               </div>
               </div>
-              <hr className="popup-line" />
              <div className="loanstatus-active">
               <h4>Loan Status <span>ACTIVE</span></h4>
               <p className="collection">Collection Agent</p>
@@ -383,7 +382,6 @@ import { useNavigate } from "react-router-dom";
               <p>15%</p>
               </div>
               </div>
-              <hr className="popup-line" />
               <h4 className="group-info">Attachments</h4>
               <div className="group-details">
                 <div className="group-information">

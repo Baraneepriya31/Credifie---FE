@@ -50,7 +50,7 @@ const CheckMail = () => {
                 <div><span>Cred</span>ifie</div>
             </div>
             <div className='admin-login'>
-                <img src={mail} id='lock'/>
+                <img src={mail} id='lock' alt="lock"/>
                 <h2>Check Your Email</h2>
                 <div>{errorMessage || 'We have sent a password reset link to your registered mail ID'}</div>
                 {message && <p className="success-message">{message}</p>}

@@ -6,17 +6,7 @@ import settings from './Settings icon.png'
 import logout from './Frame 1126.png'
 import calendar from './calendar.png'
 import './App.css';
-
- //var datetime = () => {
-    //var showdate = new Date();
-   // var displaytodaysdate=showdate.getDate()+'/'+showdate.getMonth()+'/'+showdate.getFullYear();
-   // return(
-      //  <div>
-
-      //  </div>
-   // )
-//}
-
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
 
@@ -25,9 +15,14 @@ function Header() {
      const [isEditing, setIsEditing] = useState(false);
      const [activeSection, setActiveSection] = useState('primaryInfo');
      const fileInputRef = useRef(null);
+     const navigate = useNavigate();
+
 
      const clickProfile = () =>{
         setOpenProfile(true);
+     }
+     const handleLogout = () =>{
+        navigate('/login')
      }
 
      const closePopup= () =>{
@@ -97,7 +92,7 @@ function Header() {
           <div className="settings-pic">
              <img className="settings-img" src={settings} alt="settings" />
              <p>Settings</p></div>
-          <div className="logout-pic"> 
+          <div onClick={handleLogout} className="logout-pic"> 
             <img className="logout-img" src={logout} alt="logout" />
             <p>Logout</p></div>
             

@@ -1,8 +1,9 @@
-import React, {useNavigate}  from 'react';
+import React  from 'react';
 import '../CheckMail/checkMail.css';
 import login_ellipse1 from '../Assets/login-ellipse1.png';
 import login_top_icon from '../Assets/login-top.png';
 import lock from '../Assets/lock.png';
+import { useNavigate } from 'react-router-dom';
 
 
 const PasswordReset = () => {

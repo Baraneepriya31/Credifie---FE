@@ -39,6 +39,29 @@ db.once('open', function() {
 
   const Admin = mongoose.model('Admin', adminSchema);
 
+  const groupSchema = new mongoose.Schema({
+    groupName: String,
+    groupLeader: {
+      name: String,
+      contactNumber: String,
+      panNumber: String,
+    },
+    subLeader: {
+      name: String,
+      contactNumber: String,
+      panNumber: String,
+    },
+    members: [
+      {
+        name: String,
+        contactNumber: String,
+        panNumber: String,
+      },
+    ],
+  });
+
+  const Group = mongoose.model('Group', groupSchema);
+
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
@@ -189,6 +212,26 @@ db.once('open', function() {
       res.status(500).json({ message: 'An error occurred. Please try again.' });
     }
   });
+
+  app.post('/add-group', async (req, res) => {
+    const { groupName, groupLeader, subLeader, members } = req.body;
+
+    const newGroup = new Group({
+      groupName,
+      groupLeader,
+      subLeader,
+      members,
+    });
+
+    try {
+      await newGroup.save();
+      res.status(200).json({ message: 'Group added successfully' });
+    } catch (error) {
+      console.error('Error adding group:', error);
+      res.status(500).json({ message: 'Failed to add group' });
+    }
+  });
+
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
