@@ -244,7 +244,11 @@ const handleSubmit = async () => {
         <div className="group-container">
           <div className="group-btn">
             <div className="input-search">
-            <input type='search' placeholder='Type here to search...' /> <BsSearch className="search-icon" />
+          <input type="text"  placeholder="Type here to search..."
+            value={searchQuery}
+            onChange={handleSearchChange}  />
+            <CiSearch className="search-icon"/>
+            
             </div>
             <div>
               <button onClick={DisableModal} className='disable-btn'>Disable</button>
@@ -362,8 +366,12 @@ const handleSubmit = async () => {
                 <th>Application Status</th>
                 <th>Select</th>
                 &nbsp;
-               
-                  <tr>
+                {filteredData.map((row, index) => (
+                  <tr key={row.id}
+                  className={disabledRows.includes(index) ? 'disabled' : ''}
+                  style={{ backgroundColor: disabledRows.includes(index)
+                     ? '#d1d1d5' : 'transparent' }}>
+                
                     <td onClick={GroupId} className="application-no">G.401</td>
                     <td>Chennai Group</td>
                     <td>Vijay</td>
@@ -376,7 +384,10 @@ const handleSubmit = async () => {
          onClick={OpenModal} className="loan-status">{buttonText}
       <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                  
-                    <td><input type='checkbox'/></td>
+                    <td><input  type="checkbox"
+                  checked={selectedRows.includes(index)}
+                  onChange={() => handleCheckboxChange(index)}
+                  disabled={disabledRows.includes(index)}/></td>
                   </tr>
                  
                  
@@ -401,10 +412,11 @@ const handleSubmit = async () => {
             <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
             <p className="submit">Deadline</p>
             </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" />
+             <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
             <p className="submit">Disbursed</p>
-            </div> <div className="submitted">
+            </div>
+            <div className="submitted">
             <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
             onChange={handleRadioChange} />
             <p className="submit">In-Progress</p>
