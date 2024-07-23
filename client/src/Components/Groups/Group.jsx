@@ -390,9 +390,9 @@ const handleSubmit = async () => {
                   disabled={disabledRows.includes(index)}/></td>
                   </tr>
                  
-                 
-                 
-                  
+                  ))}
+                   &nbsp;&nbsp;
+                          
                   {Openmodal && (
         <div className="openmodal3">
           <div className="modal-list">
