@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import './CollectionAgent.css';
 import { BsSearch} from 'react-icons/bs';
 import closeicon from './ion_close.png';
 import { FiDownload } from "react-icons/fi";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
+import axios from "axios";
 
 
 function CollectionAgent () {
@@ -21,6 +22,8 @@ function CollectionAgent () {
     const [selects, setSelects] = useState();
     const [selects2, setSelects2] = useState();
     const [isEditMode, setIsEditMode] = useState(true);
+    const [agentData,setAgentData] = useState([]);
+    
     const addagent = () =>{
         setAddmodal(!addmodal);
       }
@@ -92,7 +95,55 @@ function CollectionAgent () {
       const handleButtonClick = () => {
         setIsEditMode(!isEditMode);
       };
-         
+
+
+      const [agentDetails,setAgentDetails] = useState({
+        firstName:'',
+        lastName:'',
+        contactnumber:'',
+        pannumber:'',
+        dateofbirth:'',
+        gender:'',
+        emailid:'',
+        maritalstatus:'',
+        totalexperience:'',
+        highesteducation:'',
+      });
+      const handleChange = (e, role, field ) => {
+        const { value } = e.target;
+        console.log("Handle change working")
+    
+        if (role === 'agent') {
+          setAgentDetails(prevDetails => ({
+            ...prevDetails,
+            [field]: value,
+          }));
+        } 
+      };
+      
+      const handleSubmit = async () => {
+        try {
+            await axios.post('http://localhost:3008/add-agent', agentDetails);
+            console.log(agentDetails);
+            alert('agent added successfully');
+            addagent();
+        } catch (error) {
+            console.error('Error adding agent:', error);
+        }
+      };
+
+      useEffect(() =>{
+      const fetchAgentData = async () => {
+      try{
+         const response = await axios.get('http://localhost:3008/getagents');
+         setAgentData(response.data);
+        } catch(error){
+        console.error('Error fetching agent data:',error)
+        }
+      };
+      fetchAgentData();
+      }, []);
+    
   
        return (
         
@@ -111,6 +162,7 @@ function CollectionAgent () {
                </button>
               <button  className='remove-btn'>Remove</button>
             </div>
+            
             {addmodal && (
                     <div className='addmodal'>
                      <div  onClick={addagent} className="overlay"></div>
@@ -120,54 +172,54 @@ function CollectionAgent () {
                           <div className="group-flex">
                           <div className="agent-info">
                             <p className='first-name'>First Name</p>
-                            <input type="text" id="name" name="name" className="input-line2"/>
+                            <input type="text" name="firstname" className="input-line2" value={agentDetails.firstName} onChange={(e) => handleChange(e, 'agent', 'firstName')}/> 
+                            
                           </div>
                           <div className='agent-info'>
                             <p className='last-name'>Last Name </p>
-                            <input type="text" id="name" name="name" className="input-line2"/>
+                            <input type="text" name="name" className="input-line2" value={agentDetails.lastName} onChange={(e) => handleChange(e, 'agent', 'lastName')}/>
                           </div>
                          
                           </div>
                           <div className="agent-flex">
                           <div className="agent-info">
                             <p className='last-name'>Contact number</p>
-                            <input type="number" id="name" name="number" className="input-line2"/>
+                            <input type="number" name="number" className="input-line2" value={agentDetails.contactnumber} onChange={(e) => handleChange(e, 'agent', 'contactnumber')}/>
                           </div>
                           <div className='agent-info' >
                             <p className='last-name'>Pan number </p>
-                           
-                            <input type="number" id="name" name="name" className="input-line2"/>
+                            <input type="text" name="name" className="input-line2" value={agentDetails.pannumber} onChange={(e) => handleChange(e, 'agent', 'pannumber')}/>
                           </div>
                          
                           </div>
                           <div className="agent-flex2">
                           <div className="agent-info">
                             <p className='agent-info'>Date of Birth</p>
-                            <input type="text" id="name" name="name" className="input-line2"/>
+                            <input type="text" name="name" className="input-line2" value={agentDetails.dateofbirth} onChange={(e) => handleChange(e, 'agent', 'dateofbirth')}/>
                           </div>
                           <div className='last-name'>
                             <p className='agent-info'>Gender </p>
-                            {/* <img src={dropdowngrey} alt="gender" /> */}
-                            <select className="gender-select" value={selects} onChange={e => setSelects (e.target.value)} >
-                                  <option></option>
-                                   <option>Male</option>
-                                   <option>Female</option>
-                                   </select>
+                            <select className="gender-select" name="gender" value={agentDetails.gender} onChange={(e) => handleChange(e, 'agent', 'gender')}>
+                           <option value="">Select</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                            </select>
                           </div>
                           </div>
                           
                           <div className="agent-flex">
                           <div className="agent-info">
                             <p className='agent-info'>Email id</p>
-                            <input type="text" id="name" name="name" className="input-line2"/>
+                            <input type="text" name="name" className="input-line2" value={agentDetails.emailid} onChange={(e) => handleChange(e, 'agent', 'emailid')}/>
                           </div>
                           <div className='last-name'>
                             <p className='agent-info'>Marital Status </p>
-                            <select className="gender-select2" value={selects2} onChange={e => setSelects2 (e.target.value)} >
-                                  <option></option>
-                                   <option>Single</option>
-                                   <option>Married</option>
-                                   <option>Unmarried</option>
+                     <select className="gender-select2" name="maritalstatus" value={agentDetails.maritalstatus} onChange={(e) => handleChange(e, 'agent', 'maritalstatus')}>
+                <option value="">Select</option>
+                <option value="Single">Single</option>
+                   <option value="Married">Married</option>
+                   <option value="Unmarried">Unmarried</option> 
+                            
                                    </select>
                           </div>
                           </div>
@@ -175,21 +227,18 @@ function CollectionAgent () {
                           <div className="agent-flex" >
                           <div className="agent-info">
                             <p className='agent-info'>Total experience</p>
-                           
-                            <input type="text" id="name" name="name" className="input-line2"
-                          />
+                    <input type="text" name="name" className="input-line2" value={agentDetails.totalexperience} onChange={(e) => handleChange(e, 'agent', 'totalexperience')}/>
                           </div>
                           <div className='last-name'>
                             <p className='agent-info'>Highest Education Degree </p>
-                           
-                             <input type="text" id="name" name="name" className="input-line2"
-                             />
+                   <input type="text" name="name" className="input-line2" value={agentDetails.highesteducation} onChange={(e) => handleChange(e, 'agent', 'highesteducation')}/>
+                             
                            </div>
                            
                            </div>
                         
                        
-                           <button className='add'>Add</button> 
+                           <button onClick={handleSubmit} className='add'>Add</button> 
                           <button className="close-modal" onClick={addagent}>
                        <img src={closeicon} alt="icon" />
             </button>
@@ -198,6 +247,7 @@ function CollectionAgent () {
                      </div>
                    
                     )}
+                  
 
              {openPopup && (<div className="download-popup">
                   <div onClick={Popup} className="overlay"></div>
@@ -299,27 +349,18 @@ function CollectionAgent () {
                 <th>Amount Collected</th>
                 <th>Select</th>
                 &nbsp;
-                <tr>
-                    <td className="application-no" onClick={editagent}>CRDE101</td>
-                    <td>Vijay</td>
-                    <td>India</td>
-                    <td>+91 8907654321 </td>
-                    <td>25</td>
-                    <td>Rs.2,50,000</td>
-                    <td>Rs.25,000</td>
-                    <td><input type='checkbox'/></td>
-                  </tr>
-                  &nbsp;
-                  <tr>
+                  {agentData.map((agent, index) =>(
+                  <tr key={index}>
                     <td className="application-no">CRDE101</td>
-                    <td>Vijay</td>
-                    <td>India</td>
-                    <td>+91 8907654321 </td>
-                    <td>25</td>
-                    <td>Rs.2,50,000</td>
-                    <td>Rs.25,000</td>
+                    <td>{agent.firstName}</td>
+                    <td>-</td>
+                    <td>{agent.contactnumber} </td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
                     <td><input type='checkbox'/></td>
                   </tr>
+                  ))}
               </table>
                 </div> 
           </div>

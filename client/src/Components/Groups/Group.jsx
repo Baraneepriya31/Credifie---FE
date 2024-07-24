@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { BsSearch} from 'react-icons/bs';
 import dropdown from './Vector.png';
@@ -12,6 +12,7 @@ import { FiDownload } from "react-icons/fi";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
 import './Group.css';
+
 
 
 
@@ -30,13 +31,30 @@ function Group() {
   const [share, setopensuccess] =useState(false);
   const [email, setEmail] = useState('');
   const [fileType, setFileType] = useState('');
-  const [selectedRows, setSelectedRows] = useState([]); 
-  const [disabledRows, setDisabledRows] = useState([]); 
-  const [searchQuery, setSearchQuery] = useState('');       
+  // const [selectedRows, setSelectedRows] = useState([]); 
+  // const [disabledRows, setDisabledRows] = useState([]); 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [groupData, setGroupData] = useState([]);
+
+  useEffect(() => {
+    const fetchGroupData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3008/getgroups');
+        setGroupData(response.data);
+      } catch (error) {
+        console.error('Error fetching group data:', error);
+      }
+    };
+
+    fetchGroupData();
+  }, []);
+
+
               
-  const data = [
-    { id: 1, name: 'John Doe', age: 28 },
-  ];
+  // const data = [
+  //   { id: 1, name: 'John Doe', age: 28 },
+  //
+  //];
 
   const addgroup = () =>{
     setAddmodal(!addmodal);
@@ -110,16 +128,14 @@ function Group() {
       setDisableModal(false);
     };
   
-    
-    
-
     const handleConfirm = () => {
     setIsConfirmed(true);
   };
-    const filteredData = data.filter(row => 
-      row.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      row.age.toString().includes(searchQuery)
-    );
+
+    // const filteredData = data.filter(row => 
+    //   row.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    //   row.age.toString().includes(searchQuery)
+    // );
          
     const OpenModal = () => {
       setOpenModal(!Openmodal);
@@ -173,32 +189,41 @@ function Group() {
     ]
   });
 
-  const handleChange = (e, role, field, index = null) => {
-    const { value } = e.target;
+  const handleChange = (e, role, field, index=null) => {
+  const { value } = e.target;
 
-    if (role === 'group') {
-      setGroupDetails(prevDetails => ({
-        ...prevDetails,
+  if (role === 'group') {
+    setGroupDetails(prevDetails => ({
+      ...prevDetails,
+      [field]: value,
+    }));
+  } else if (role === 'leader') {
+    setGroupDetails(prevDetails => ({
+      ...prevDetails,
+      groupLeader: {
+        ...prevDetails.groupLeader,
         [field]: value,
-      }));
-    } else if (role === 'leader' || role === 'subLeader') {
-      setGroupDetails(prevDetails => ({
-        ...prevDetails,
-        [role]: {
-          ...prevDetails[role],
-          [field]: value,
-        },
-      }));
-    } else if (role === 'member') {
-      const updatedMembers = [...groupDetails.members];
-      updatedMembers[index][field] = value;
+      },
+    }));
+  } else if (role === 'subLeader') {
+    setGroupDetails(prevDetails => ({
+      ...prevDetails,
+      subLeader: {
+        ...prevDetails.subLeader,
+        [field]: value,
+      },
+    }));
+  } else if (role === 'member') {
+    const updatedMembers = [...groupDetails.members];
+    updatedMembers[index][field] = value;
 
-      setGroupDetails(prevDetails => ({
-        ...prevDetails,
-        members: updatedMembers,
-      }));
-    }
-  };
+    setGroupDetails(prevDetails => ({
+      ...prevDetails,
+      members: updatedMembers,
+    }));
+  }
+};
+
 
 const addMemberRow = () => {
     setGroupDetails({
@@ -217,20 +242,20 @@ const handleSubmit = async () => {
     }
   };
 
-  const handleCheckboxChange = (index) => {
-    setSelectedRows(prevState => {
-      if (prevState.includes(index)) {
-        return prevState.filter(i => i !== index);
-      } else {
-        return [...prevState, index];
-      }
-    });
-  };
+  // const handleCheckboxChange = (index) => {
+  //   setSelectedRows(prevState => {
+  //     if (prevState.includes(index)) {
+  //       return prevState.filter(i => i !== index);
+  //     } else {
+  //       return [...prevState, index];
+  //     }
+  //   });
+  // };
 
-  const disableSelectedRows = () => {
-    setDisabledRows(prevState => [...new Set([...prevState, ...selectedRows])]);
-    setSelectedRows([]); 
-  };
+  // const disableSelectedRows = () => {
+  //   setDisabledRows(prevState => [...new Set([...prevState, ...selectedRows])]);
+  //   setSelectedRows([]); 
+  // };
 
   
 
@@ -244,7 +269,9 @@ const handleSubmit = async () => {
         <div className="group-container">
           <div className="group-btn">
             <div className="input-search">
-            <input type='search' placeholder='Type here to search...' /> <BsSearch className="search-icon" />
+            <input type="text"  placeholder="Type here to search..."
+            value={searchQuery}
+            onChange={handleSearchChange}  /> <BsSearch className="search-icon" />
             </div>
             <div>
               <button onClick={DisableModal} className='disable-btn'>Disable</button>
@@ -348,40 +375,44 @@ const handleSubmit = async () => {
       )}
             
             <div>
-              <table className='table2'>
+            <table className='table2'>
               
                  
-                <th>Group ID</th>
-                <th>Group Name</th>
-                <th>Group Leader</th>
-                <th>Contact No</th>
-                <th>Loan Amount</th>
-                <th>Collection Agent</th>
-                <th>Over Due</th>
-                <th>Loan Status</th>
-                <th>Application Status</th>
-                <th>Select</th>
-                &nbsp;
-               
-                  <tr>
-                    <td onClick={GroupId} className="application-no">G.401</td>
-                    <td>Chennai Group</td>
-                    <td>Vijay</td>
-                    <td>+91 8907654321 </td>
-                    <td>Rs.3,50,000</td>
-                    <td>B. Vijay</td>
-                    <td>Rs.25,000</td>
-                    <td className='active-status'>*Active/3</td>
-                    <td style={{ backgroundColor: buttonColor, color:'white' }}
-         onClick={OpenModal} className="loan-status">{buttonText}
-      <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
-                 
-                    <td><input type='checkbox'/></td>
-                  </tr>
-                 
-                 
-                 
+              <th>Group ID</th>
+              <th>Group Name</th>
+              <th>Group Leader</th>
+              <th>Contact No</th>
+              <th>Loan Amount</th>
+              <th>Collection Agent</th>
+              <th>Over Due</th>
+              <th>Loan Status</th>
+              <th>Application Status</th>
+              <th>Select</th>
+              &nbsp;
+              {groupData.map((group, index) => (
                   
+                    <tr key={index}>
+                      <td onClick={GroupId} className="application-no">G.401</td>
+                      <td>{group.groupName}</td>
+                      <td>{group.groupLeader.name}</td>
+                      <td>{group.groupLeader.contactNumber}</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td className='active-status'>*Active/3</td>
+                      <td style={{ backgroundColor: buttonColor, color: 'white' }}
+                        onClick={OpenModal} className="loan-status">
+                        {buttonText}
+                        <img className="dropdown" src={dropdown} alt="dropdown" />
+                      </td>
+                      <td>
+                        <input type="checkbox"/>
+                      </td>
+                    </tr>
+                  ))
+                }
+
+              
                   {Openmodal && (
         <div className="openmodal3">
           <div className="modal-list">
@@ -415,12 +446,11 @@ const handleSubmit = async () => {
             </div>
             </div>
                   </div>
-            )} 
-            &nbsp;
-                  
+            )}
+
               </table>
-              </div>
             </div>
+            
                      {grouppopup && (
                       <div className='grouppopup'>
                         <div onClick={GroupId} className='overlay'></div>
@@ -440,6 +470,7 @@ const handleSubmit = async () => {
                    <div className='table-1'>
                     <div>
                     <table className='group-table'>
+                    
                       <tr>
                        <td className='id-details'>Group Id</td>
                        <td className='id-info'>- &nbsp; G 401</td>
@@ -447,12 +478,12 @@ const handleSubmit = async () => {
                       &nbsp;
                       <tr>
                        <td className='id-details'>Group Name</td>
-                       <td  className='id-info'>- &nbsp;  Chennai Group</td>
+                       <td  className='id-info'>- &nbsp;  group.groupName</td>
                       </tr>
                       &nbsp;
                       <tr>
                        <td className='id-details'>Group Leader</td>
-                       <td  className='id-info'>- &nbsp;  Vijay</td>
+                       <td  className='id-info'>- &nbsp;  group.groupLeader</td>
                       </tr>
                       &nbsp;
                       <tr>
@@ -483,6 +514,7 @@ const handleSubmit = async () => {
                        <td  className='id-info'>- &nbsp;Active/3</td>
                       </tr>
                    </table>
+                   
                    </div>
                    </div>
                        <p className='loan-history'>Loan History</p>
@@ -531,9 +563,11 @@ const handleSubmit = async () => {
                             <td> <div className="tenure" style={{color:'#0859aa'}}>52/60</div></td>
                           </tr>
                         </table>
+                        
                        </div>
                         </div>
                       </div>
+                    
                      )}
 
     {addmodal && (
@@ -628,7 +662,7 @@ const handleSubmit = async () => {
             <label className="label-reason">Reason*</label>
             <input type='textarea' className="reason-input" />
             <br />
-            <button className="disable-button" onClick={disableSelectedRows}>Disable</button>
+            <button className="disable-button" >Disable</button>
             
           </>
         )}
@@ -636,10 +670,8 @@ const handleSubmit = async () => {
         </div>
         </div>
         )}
-        </div>
-    
-      )
-    }
-
+</div>
+</div>
+)}
 
 export default Group;

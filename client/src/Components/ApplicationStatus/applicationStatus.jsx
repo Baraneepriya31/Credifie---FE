@@ -68,6 +68,7 @@ function ApplicationStatus() {
       setopenShare(false);
       setopenDownload(false);
       setopensuccess(false);
+      setPopup(false);
     }
   
     const emailPdf = () => {

@@ -39,28 +39,6 @@ db.once('open', function() {
 
   const Admin = mongoose.model('Admin', adminSchema);
 
-  const groupSchema = new mongoose.Schema({
-    groupName: String,
-    groupLeader: {
-      name: String,
-      contactNumber: String,
-      panNumber: String,
-    },
-    subLeader: {
-      name: String,
-      contactNumber: String,
-      panNumber: String,
-    },
-    members: [
-      {
-        name: String,
-        contactNumber: String,
-        panNumber: String,
-      },
-    ],
-  });
-
-  const Group = mongoose.model('Group', groupSchema);
 
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -144,7 +122,7 @@ db.once('open', function() {
   app.post('/resend-email', async (req, res) => {
     const { email } = req.body;
     const token = crypto.randomBytes(20).toString('hex');
-    const expiration = Date.now() + 3600000; // 1 hour
+    const expiration = Date.now() + 3600000; 
 
     try {
       const admin = await Admin.findOneAndUpdate(
@@ -213,6 +191,29 @@ db.once('open', function() {
     }
   });
 
+  const groupSchema = new mongoose.Schema({
+    groupName: String,
+    groupLeader: {
+      name: String,
+      contactNumber: String,
+      panNumber: String,
+    },
+    subLeader: {
+      name: String,
+      contactNumber: String,
+      panNumber: String,
+    },
+    members: [
+      {
+        name: String,
+        contactNumber: String,
+        panNumber: String,
+      },
+    ],
+  });
+
+  const Group = mongoose.model('Group', groupSchema);
+
   app.post('/add-group', async (req, res) => {
     const { groupName, groupLeader, subLeader, members } = req.body;
 
@@ -231,6 +232,69 @@ db.once('open', function() {
       res.status(500).json({ message: 'Failed to add group' });
     }
   });
+
+
+  // API endpoint to get group details
+app.get('/getgroups', async (req, res) => {
+  try {
+    const groups = await Group.find();
+    res.json(groups);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.get('/getagents',async (req,res) => {
+  try{
+    const agents =await Agent.find();
+    res.json(agents);
+  } catch(err){
+    res.status(500).json({message: err.message});
+  }
+});
+
+const agentschema = new mongoose.Schema({
+  firstName: String,
+  lastName: String,
+  contactnumber: String,
+  pannumber: String,
+  dateofbirth: String,
+  gender: String,
+  emailid: String,
+  maritalstatus: String,
+  totalexperience: String,
+  highesteducation: String
+});  
+      
+
+
+const Agent = mongoose.model('Agent', agentschema);
+
+      
+app.post('/add-agent', async (req, res) => {
+  const { firstName, lastName, contactnumber, pannumber, dateofbirth, gender, emailid, maritalstatus, totalexperience, highesteducation} = req.body;
+
+  const newAgent = new Agent({
+    firstName,
+    lastName,
+    contactnumber,
+    pannumber,
+    dateofbirth,
+    gender,
+    emailid,
+    maritalstatus,
+    totalexperience,
+    highesteducation
+  });
+          
+  try {
+    await newAgent.save();
+    res.status(200).json({ message: 'Agent added successfully' });
+  } catch (error) {
+    console.error('Error adding agent:', error);
+    res.status(500).json({ message: 'Failed to add agent' });
+  }
+});
 
 
   app.listen(PORT, () => {
