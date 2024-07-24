@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import './CollectionAgent.css';
 import { CiSearch} from 'react-icons/ci';
 import closeicon from './ion_close.png';
@@ -19,7 +20,7 @@ function CollectionAgent () {
     const [email, setEmail] = useState('');
     const [fileType, setFileType] = useState('');
     const [selects, setSelects] = useState();
-    const [selects2, setSelects2] = useState();
+     const [selects2, setSelects2] = useState();
     const [isEditMode, setIsEditMode] = useState(true);
     const addagent = () =>{
         setAddmodal(!addmodal);
@@ -29,7 +30,40 @@ function CollectionAgent () {
       } else {
         document.body.classList.remove('active-modal')
       }
-
+      const [agentDetails,setAgentDetails] = useState({
+        firstName:'',
+        lastName:'',
+        contactnumber:'',
+        pannumber:'',
+        dateofbirth:'',
+        gender:'',
+        emailid:'',
+        maritalstatus:'',
+        totalexperience:'',
+        highesteducation:'',
+      });
+      const handleChange = (e, role, field ) => {
+        const { value } = e.target;
+    
+        if (role === 'agent') {
+          setAgentDetails(prevDetails => ({
+            ...prevDetails,
+            [field]: value,
+          }));
+        } 
+      };
+      
+      const handleSubmit = async () => {
+        try {
+            await axios.post('http://localhost:3008/add-agent', agentDetails);
+            console.log(agentDetails);
+            alert('agent added successfully');
+            addagent();
+        } catch (error) {
+            console.error('Error adding agent:', error);
+        }
+      };
+            
       const editagent = () =>{
         setEditmodal(!editmodal);
       }
@@ -93,7 +127,6 @@ function CollectionAgent () {
         setIsEditMode(!isEditMode);
       };
          
-  
        return (
         
         <div className='collectionagent'>
@@ -121,54 +154,62 @@ function CollectionAgent () {
                           <div className="group-flex">
                           <div className="agent-info">
                             <p className='first-name'>First Name</p>
-                            <input type="text" id="name" name="name" className="input-line2"/>
+                            <input type="text" name="firstname" className="input-line2"
+         value={agentDetails.firstName} onChange={(e) => handleChange(e, 'agent', 'firstName')}/> 
+                            
                           </div>
                           <div className='agent-info'>
                             <p className='last-name'>Last Name </p>
-                            <input type="text" id="name" name="name" className="input-line2"/>
+                            <input type="text" name="name" className="input-line2"
+                             value={agentDetails.lastName} onChange={(e) => handleChange(e, 'agent', 'lastName')}/>
                           </div>
                          
                           </div>
                           <div className="agent-flex">
                           <div className="agent-info">
                             <p className='last-name'>Contact number</p>
-                            <input type="number" id="name" name="number" className="input-line2"/>
+                            <input type="number" name="number" className="input-line2"
+                       value={agentDetails.contactnumber} onChange={(e) => handleChange(e, 'agent', 'contactnumber')}/>
                           </div>
                           <div className='agent-info' >
                             <p className='last-name'>Pan number </p>
-                           
-                            <input type="number" id="name" name="name" className="input-line2"/>
+                            <input type="text" name="name" className="input-line2"
+                       value={agentDetails.pannumber} onChange={(e) => handleChange(e, 'agent', 'pannumber')}/>
                           </div>
                          
                           </div>
                           <div className="agent-flex2">
                           <div className="agent-info">
                             <p className='agent-info'>Date of Birth</p>
-                            <input type="text" id="name" name="name" className="input-line2"/>
+                            <input type="text" name="name" className="input-line2"
+                       value={agentDetails.dateofbirth} onChange={(e) => handleChange(e, 'agent', 'dateofbirth')}/>
                           </div>
                           <div className='last-name'>
                             <p className='agent-info'>Gender </p>
-                            {/* <img src={dropdowngrey} alt="gender" /> */}
-                            <select className="gender-select" value={selects} onChange={e => setSelects (e.target.value)} >
-                                  <option></option>
-                                   <option>Male</option>
-                                   <option>Female</option>
-                                   </select>
+                            <select className="gender-select" name="gender" 
+                            value={agentDetails.gender} onChange={(e) => handleChange(e, 'agent', 'gender')}>
+                           <option value="">Select</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                            </select>
                           </div>
                           </div>
                           
                           <div className="agent-flex">
                           <div className="agent-info">
                             <p className='agent-info'>Email id</p>
-                            <input type="text" id="name" name="name" className="input-line2"/>
+                            <input type="text" name="name" className="input-line2"
+              value={agentDetails.emailid} onChange={(e) => handleChange(e, 'agent', 'emailid')}/>
                           </div>
                           <div className='last-name'>
                             <p className='agent-info'>Marital Status </p>
-                            <select className="gender-select2" value={selects2} onChange={e => setSelects2 (e.target.value)} >
-                                  <option></option>
-                                   <option>Single</option>
-                                   <option>Married</option>
-                                   <option>Unmarried</option>
+                     <select className="gender-select2" name="maritalstatus" 
+                    value={agentDetails.maritalstatus} onChange={(e) => handleChange(e, 'agent', 'maritalstatus')}>
+                <option value="">Select</option>
+                <option value="Single">Single</option>
+                   <option value="Married">Married</option>
+                   <option value="Unmarried">Unmarried</option> 
+                            
                                    </select>
                           </div>
                           </div>
@@ -176,21 +217,20 @@ function CollectionAgent () {
                           <div className="agent-flex" >
                           <div className="agent-info">
                             <p className='agent-info'>Total experience</p>
-                           
-                            <input type="text" id="name" name="name" className="input-line2"
-                          />
+                    <input type="text" name="name" className="input-line2"
+ value={agentDetails.totalexperience} onChange={(e) => handleChange(e, 'agent', 'totalexperience')}/>
                           </div>
                           <div className='last-name'>
                             <p className='agent-info'>Highest Education Degree </p>
-                           
-                             <input type="text" id="name" name="name" className="input-line2"
-                             />
+                   <input type="text" name="name" className="input-line2"
+ value={agentDetails.highesteducation} onChange={(e) => handleChange(e, 'agent', 'highesteducation')}/>
+                             
                            </div>
                            
                            </div>
                         
                        
-                           <button className='add'>Add</button> 
+                           <button onSubmit={handleSubmit} className='add'>Add</button> 
                           <button className="close-modal" onClick={addagent}>
                        <img src={closeicon} alt="icon" />
             </button>
@@ -253,12 +293,7 @@ function CollectionAgent () {
                 <span>Email <MdOutlineMailOutline /></span>
                 <label htmlFor="email"></label>
                 <input 
-                  type="email" 
-                  id="email" 
-                  value={email} 
-                  onChange={handleEmailChange} 
-                  required
-                />
+                  type="email" id="email" value={email} onChange={handleEmailChange} required />
                 </div>
                 <div className='send-button'>
                 <button type="submit" onClick={sendSuccess}>Send</button>
@@ -328,7 +363,7 @@ function CollectionAgent () {
                     <div className='addmodal'>
                      <div  onClick={editagent} className="overlay"></div>
                      <div className='add-agent'>
-                          <h4>Add Agent</h4>
+                          <h4>Edit Agent</h4>
                           <hr className='add-line'/>
                           <div className="group-flex">
                           <div className="agent-info">

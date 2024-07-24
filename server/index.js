@@ -39,6 +39,29 @@ db.once('open', function() {
 
   const Admin = mongoose.model('Admin', adminSchema);
 
+  const groupSchema = new mongoose.Schema({
+    groupName: String,
+    groupLeader: {
+      name: String,
+      contactNumber: String,
+      panNumber: String,
+    },
+    subLeader: {
+      name: String,
+      contactNumber: String,
+      panNumber: String,
+    },
+    members: [
+      {
+        name: String,
+        contactNumber: String,
+        panNumber: String,
+      },
+    ],
+  });
+
+  const Group = mongoose.model('Group', groupSchema);
+
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
@@ -190,7 +213,71 @@ db.once('open', function() {
     }
   });
 
+  app.post('/add-group', async (req, res) => {
+    const { groupName, groupLeader, subLeader, members } = req.body;
+
+    const newGroup = new Group({
+      groupName,
+      groupLeader,
+      subLeader,
+      members,
+    });
+
+    try {
+      await newGroup.save();
+      res.status(200).json({ message: 'Group added successfully' });
+    } catch (error) {
+      console.error('Error adding group:', error);
+      res.status(500).json({ message: 'Failed to add group' });
+    }
+  });
+        
+  const agentschema = new mongoose.Schema({
+    firstName: String,
+    lastName: String,
+    contactnumber: String,
+    pannumber: String,
+    dateofbirth: String,
+    gender: String,
+    emailid: String,
+    maritalstatus: String,
+    totalexperience: String,
+    highesteducation: String
+  });  
+        
+  
+
+  const Agent = mongoose.model('Agent', agentschema);
+
+        
+  app.post('/add-agent', async (req, res) => {
+    const { firstName, lastName, contactnumber,pannumber,dateofbirth,gender,emailid,maritalstatus,
+      totalexperience,highesteducation} = req.body;
+
+    const newAgent = new Agent({
+      firstName,
+      lastName,
+      contactnumber,
+      pannumber,
+      dateofbirth,
+      gender,
+      emailid,
+      maritalstatus,
+      totalexperience,
+      highesteducation,
+    });
+            
+    try {
+      await newAgent.save();
+      res.status(200).json({ message: 'Agent added successfully' });
+    } catch (error) {
+      console.error('Error adding agent:', error);
+      res.status(500).json({ message: 'Failed to add agent' });
+    }
+  });           
+
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
+
 });
