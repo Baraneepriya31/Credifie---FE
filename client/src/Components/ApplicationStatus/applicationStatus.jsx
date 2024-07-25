@@ -65,6 +65,7 @@ function ApplicationStatus() {
       setopenShare(false);
       setopenDownload(false);
       setopensuccess(false);
+      
     }
   
     const emailPdf = () => {
@@ -153,7 +154,6 @@ function ApplicationStatus() {
     }else if (value === 'inprogress') {
       setButtonText('On-Process');
       setButtonColor('#FFBE0B');
-      
     }else if (value === 'submitted') {
       setButtonText('Submitted');
       setButtonColor('#62B8FC');
@@ -209,7 +209,7 @@ function ApplicationStatus() {
                 {openPopup && (<div className="download-popup">
                   <div onClick={Popup} className="overlay"></div>
                   <div className="download-box">
-                    <div className="close-icon">&times;</div>
+                    <div onClick={Popup}  className="close-icon">&times;</div>
                   <h5>Download & Share</h5>
                    <form>
                     <div>

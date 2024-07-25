@@ -33,13 +33,16 @@ function Group() {
   const [selectedRows, setSelectedRows] = useState([]); 
   const [disabledRows, setDisabledRows] = useState([]); 
   const [searchQuery, setSearchQuery] = useState('');       
-              
+  const [groups, setGroups] = useState([]);
+            
   const data = [
     { id: 1, name: 'John Doe', age: 28 },
   ];
-
+  
   const addgroup = () =>{
     setAddmodal(!addmodal);
+    setGroups([...groups, `Group ${groups.length + 1}`]);
+  
   }
   if(addmodal) {
     document.body.classList.add('active-modal')
@@ -243,7 +246,7 @@ const handleSubmit = async () => {
   return(
     <div className='group'>
        <div className='total-group'>
-            <h2>Total Group <span>0</span></h2>
+            <h2>Total Groups<span>{groups.length}</span> </h2>
            
         </div>
         <div className="group-container">
@@ -562,7 +565,8 @@ const handleSubmit = async () => {
           <div>
             <p className='group-name'>Group Name</p>
             <img src={groupicon} alt='group' className='name-icon' />
-            <input type="text" id="name" name="name" className="input-line1" value={groupDetails.groupName} onChange={(e) => handleChange(e, 'group', 'groupName')}/>
+            <input type="text" id="name" name="name" className="input-line1" 
+            value={groupDetails.groupName} onChange={(e) => handleChange(e, 'group', 'groupName')}/>
           </div>
           <div className="group-flex">
             <div className="groupleader">

@@ -5,7 +5,6 @@ mongoose.connect('mongodb://localhost:27017/admindb', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -128,7 +127,6 @@ const newAgent = new Agent({
   totalexperience : '2 years',
   highesteducation : 'M.Com',
 });
-
 try {
      await newAgent.save();
      console.log('Agent added successfully');
@@ -137,44 +135,4 @@ try {
    } finally {
     mongoose.connection.close();
    }
-
-   //edit agent//
-
-// const editSchema = new mongoose.Schema({
-//   firstName : String,
-//   lastName : String,
-//   contactnumber : String,
-//   pannumber : String,
-//   dateofbirth : String,
-//   gender : String,
-//   emailid : String,
-//   maritalstatus : String,
-//   totalexperience: String,
-//   highesteducation: String,
-// });
-
-// const Edit = mongoose.model('edit', editSchema);
-
-
-// const newUpdate = new Edit({
-//   firstName: 'John',
-//   lastName : 'Doe',
-//   contactnumber : '9087654321',
-//   pannumber : 'QTVS234560',
-//   dateofbirth : '29/07/2002',
-//   gender : 'Male',
-//   emailid : 'johndoe@gmail.com',
-//   maritalstatus : 'Single',
-//   totalexperience : '2 years',
-//   highesteducation : 'M.Com',
-// });
-
-// try {
-//      await newUpdate.save();
-//      console.log('Agent updated successfully');
-//    } catch (error) {
-//     console.error('Error updating agent:', error);
-//    } finally {
-//     mongoose.connection.close();
-//    }
-// });
+});
