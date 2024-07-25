@@ -113,7 +113,7 @@ const agentSchema = new mongoose.Schema({
   highesteducation: String,
 });
 
-const Agent = mongoose.model('Group', agentSchema);
+const Agent = mongoose.model('Agent', agentSchema);
 
 const newAgent = new Agent({
   firstName: 'John',
