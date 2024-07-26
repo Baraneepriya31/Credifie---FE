@@ -7,7 +7,6 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const app = express();
 const PORT = 3008;
-
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -58,8 +57,9 @@ db.once('open', function() {
         panNumber: String,
       },
     ],
+    agents: [{ type: Schema.Types.ObjectId, ref: 'Agent' }]
   });
-
+  
   const Group = mongoose.model('Group', groupSchema);
 
   const transporter = nodemailer.createTransport({
@@ -212,6 +212,9 @@ db.once('open', function() {
       res.status(500).json({ message: 'An error occurred. Please try again.' });
     }
   });
+       
+  
+   
 
   app.post('/add-group', async (req, res) => {
     const { groupName, groupLeader, subLeader, members } = req.body;
@@ -231,7 +234,7 @@ db.once('open', function() {
       res.status(500).json({ message: 'Failed to add group' });
     }
   });
-        
+  
   const agentschema = new mongoose.Schema({
     firstName: String,
     lastName: String,
@@ -242,14 +245,24 @@ db.once('open', function() {
     emailid: String,
     maritalstatus: String,
     totalexperience: String,
-    highesteducation: String
+    highesteducation: String,
+
+    groups: [{ type: Schema.Types.ObjectId, ref: 'Group' }]
+
   });  
         
   
 
   const Agent = mongoose.model('Agent', agentschema);
 
-        
+  app.get('/api/agents', async (req, res) => {
+    try {
+      const agents = await Agent.find();
+      res.json(agents);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
   app.post('/add-agent', async (req, res) => {
     const { firstName, lastName, contactnumber,pannumber,dateofbirth,gender,emailid,maritalstatus,
       totalexperience,highesteducation} = req.body;

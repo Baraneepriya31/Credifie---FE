@@ -7,7 +7,6 @@ import { FiDownload } from "react-icons/fi";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
 
-
 function CollectionAgent () {
        
    
@@ -22,11 +21,13 @@ function CollectionAgent () {
     const [isEditMode, setIsEditMode] = useState(true);
     const [selectedRows, setSelectedRows] = useState([]); 
     const [deleteRows, setDelete] = useState([]); 
+    
+
     const addagent = () =>{
         setAddmodal(!addmodal);
       }
       if(addmodal) {
-        document.body.classList.add('active-modal')
+       document.body.classList.add('active-modal')
       } else {
         document.body.classList.remove('active-modal')
       }
@@ -393,7 +394,8 @@ function CollectionAgent () {
                 <th>Amount Collected</th>
                 <th>Select</th>
                 &nbsp;
-                <tr>
+              
+                <tr >
                     <td className="application-no" onClick={editagent}>CRDE101</td>
                     <td>Vijay</td>
                     <td>India</td>
@@ -406,6 +408,7 @@ function CollectionAgent () {
                  onChange={() => handleCheckboxChange()}
                  delete={deleteRows.includes()}   /></td>
                   </tr>
+                 
                   &nbsp;
                   <tr>
                     <td className="application-no">CRDE101</td>

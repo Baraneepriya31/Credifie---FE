@@ -172,14 +172,15 @@
   background-color: #ffffff;
   height: fit-content;
 }
-
-/* .table-ap{
-    width: 1050px;
-    margin-top: 20px;
-    padding: 10px;
-    border-collapse: collapse;
-    border-radius: 8px;
-} */
+.input-line {
+  border: none;
+   border-bottom: 0.2px solid #343433; 
+  outline: none;
+  width: 140px; 
+  display:flex;
+ flex-direction: column;
+ padding-bottom:3.5px;
+}
 table thead td{
     width: 80px;
     padding: 10px;

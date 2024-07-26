@@ -525,11 +525,21 @@ function ApplicationStatus() {
               <p>Location</p>
               </div>
               <div className="information">
-                <p>Kamala Self Help Group</p>
-                <p>Ezhisai Valli</p>
-                <p>+91 9876543210</p>
-                <p>25</p>
-                <p>Colombo,Sri Lanka</p>
+                <label>
+              <input type="text" id="name" name="name" className="input-line" />
+              </label>
+              <label>
+              <input type="text" id="name" name="name" className="input-line" />
+                </label>
+              <label>
+              <input type="text" id="name" name="name" className="input-line" />
+              </label>
+              <label>
+              <input type="text" id="name" name="name" className="input-line" />
+              </label>
+              <label>
+              <input type="text" id="name" name="name" className="input-line" />
+              </label>
               </div>
               </div>
              <div className="loanstatus-active">
@@ -547,11 +557,21 @@ function ApplicationStatus() {
             <p>Due Date</p>
               </div>
               <div className="information">
-              <p>Rs.1,50,000</p>
-              <p>IDFC2338K 230599D</p>
-              <p>52 Weeks</p>
-              <p>15%</p>
-              <p>15%</p>
+              <label>
+              <input type="text" id="name" name="name" className="input-line" />
+              </label>
+             <label>
+             <input type="text" id="name" name="name" className="input-line" />
+             </label>
+             <label>
+             <input type="text" id="name" name="name" className="input-line" />
+             </label>
+             <label>
+             <input type="text" id="name" name="name" className="input-line" />
+             </label>
+              <label>
+              <input type="date" id="name" name="name" className="input-line" />
+              </label>
               </div>
               </div>
               <h4 className="group-info">Attachments</h4>
@@ -565,13 +585,12 @@ function ApplicationStatus() {
                 </div>
                 <div>
                 <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
-                <hr className="attachments-line" />
+                <input type="text" id="name" name="name" className="input-line" />
                 <p className="not-attached">*Not Attached </p>
-                
-                <hr className="attachments-line" />
+                <input type="text" id="name" name="name" className="input-line" />
                 <br/>
                 <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
-                <hr className="attachments-line" />
+                <input type="text" id="name" name="name" className="input-line" />
                 </div>
               </div>
               <div className="add-loan-button">

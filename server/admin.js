@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
 
 mongoose.connect('mongodb://localhost:27017/admindb', {
     useNewUrlParser: true,
@@ -99,6 +101,16 @@ db.once('open', async function() {
 
 
 //add agentschema//
+router.get('/', async (req, res) => {
+  try {
+    const groups = await Group.find().populate('agents');
+    res.json(groups);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+module.exports = router;
 
 const agentSchema = new mongoose.Schema({
   firstName : String,
@@ -111,9 +123,23 @@ const agentSchema = new mongoose.Schema({
   maritalstatus : String,
   totalexperience: String,
   highesteducation: String,
+
+  groups: [{ type: Schema.Types.ObjectId, ref: 'Group' }]
 });
 
 const Agent = mongoose.model('Agent', agentSchema);
+
+
+router.get('/', async (req, res) => {
+  try {
+    const agents = await Agent.find().populate('groups');
+    res.json(agents);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+module.exports = router;
 
 const newAgent = new Agent({
   firstName: 'John',

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { CiSearch} from 'react-icons/ci';
 import dropdown from './Vector.png';
@@ -34,7 +34,9 @@ function Group() {
   const [disabledRows, setDisabledRows] = useState([]); 
   const [searchQuery, setSearchQuery] = useState('');       
   const [groups, setGroups] = useState([]);
-            
+  const [agents, setAgents] = useState([]);
+
+  
   const data = [
     { id: 1, name: 'John Doe', age: 28 },
   ];
@@ -114,8 +116,6 @@ function Group() {
     };
   
     
-    
-
     const handleConfirm = () => {
     setIsConfirmed(true);
   };
@@ -207,6 +207,19 @@ function Group() {
       }));
     }
   };
+  useEffect(() => {
+    const fetchAgents = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/agents');
+        setAgents(response.data);
+      } catch (error) {
+        console.error('Error fetching agents:', error);
+      }
+    };
+
+    fetchAgents();
+  }, []);
+               
 
 const addMemberRow = () => {
     setGroupDetails({
