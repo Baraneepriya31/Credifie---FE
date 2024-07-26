@@ -129,6 +129,7 @@ function CollectionAgent () {
 
 
       const [agentDetails,setAgentDetails] = useState({
+        
         firstName:'',
         lastName:'',
         contactnumber:'',
@@ -375,7 +376,7 @@ function CollectionAgent () {
                     <tbody>
                         {agents.map((agent, index) => (
                             <tr key={index}>
-                                <td className="application-no" onClick={() => editAgent(agent._id)}>CRDE101</td>
+                                <td className="application-no" onClick={() => editAgent(agent._id)}>{agent.agentID}</td>
                                 <td>{agent.firstName}</td>
                                 <td>-</td>
                                 <td>{agent.contactnumber}</td>

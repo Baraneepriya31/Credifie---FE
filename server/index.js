@@ -192,6 +192,7 @@ db.once('open', function() {
   });
 
   const groupSchema = new mongoose.Schema({
+    groupID: String,
     groupName: String,
     groupLeader: {
       name: String,
@@ -214,17 +215,34 @@ db.once('open', function() {
 
   const Group = mongoose.model('Group', groupSchema);
 
+  const groupcounterSchema = new mongoose.Schema({
+    name: String,
+    seq: Number,
+  });
+  const GroupCounter = mongoose.model('GroupCounter', groupcounterSchema);
+
+  async function getNextSequence(name) {
+    const grpcount = await GroupCounter.findOneAndUpdate(
+      { name },
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true }
+    );
+    return grpcount.seq;
+  }
+
   app.post('/add-group', async (req, res) => {
     const { groupName, groupLeader, subLeader, members } = req.body;
 
-    const newGroup = new Group({
-      groupName,
-      groupLeader,
-      subLeader,
-      members,
-    });
-
     try {
+      const grpid = await getNextSequence('groupID');
+      const newGroup = new Group({
+        groupID: `G.${grpid.toString().padStart(3, '100')}`,
+        groupName,
+        groupLeader,
+        subLeader,
+        members,
+      });
+
       await newGroup.save();
       res.status(200).json({ message: 'Group added successfully' });
     } catch (error) {
@@ -232,7 +250,6 @@ db.once('open', function() {
       res.status(500).json({ message: 'Failed to add group' });
     }
   });
-
 
   // API endpoint to get group details
 app.get('/getgroups', async (req, res) => {
@@ -253,7 +270,8 @@ app.get('/getagents',async (req,res) => {
   }
 });
 
-const agentschema = new mongoose.Schema({
+const agentSchema = new mongoose.Schema({
+  agentID: String,
   firstName: String,
   lastName: String,
   contactnumber: String,
@@ -263,18 +281,29 @@ const agentschema = new mongoose.Schema({
   emailid: String,
   maritalstatus: String,
   totalexperience: String,
-  highesteducation: String
-});  
-      
+  highesteducation: String,
+});
 
+const Agent = mongoose.model('Agent', agentSchema);
 
-const Agent = mongoose.model('Agent', agentschema);
+const counterSchema = new mongoose.Schema({
+  name: String,
+  seq: Number,
+});
 
-      
+const Counter = mongoose.model('Counter', counterSchema);
+
+async function getNextSequence(name) {
+  const counter = await Counter.findOneAndUpdate(
+    { name },
+    { $inc: { seq: 1 } },
+    { new: true, upsert: true }
+  );
+  return counter.seq;
+}
+
 app.post('/add-agent', async (req, res) => {
-  const { firstName, lastName, contactnumber, pannumber, dateofbirth, gender, emailid, maritalstatus, totalexperience, highesteducation} = req.body;
-
-  const newAgent = new Agent({
+  const {
     firstName,
     lastName,
     contactnumber,
@@ -284,10 +313,25 @@ app.post('/add-agent', async (req, res) => {
     emailid,
     maritalstatus,
     totalexperience,
-    highesteducation
-  });
-          
+    highesteducation,
+  } = req.body;
+
   try {
+    const id = await getNextSequence('agentId');
+    const newAgent = new Agent({
+      agentID: `CRDE${id.toString().padStart(3, '100')}`, // Generate the ID
+      firstName,
+      lastName,
+      contactnumber,
+      pannumber,
+      dateofbirth,
+      gender,
+      emailid,
+      maritalstatus,
+      totalexperience,
+      highesteducation,
+    });
+
     await newAgent.save();
     res.status(200).json({ message: 'Agent added successfully' });
   } catch (error) {
@@ -295,6 +339,7 @@ app.post('/add-agent', async (req, res) => {
     res.status(500).json({ message: 'Failed to add agent' });
   }
 });
+
 // Edit agent
 app.put('/update-agent/:id', async (req, res) => {
   const { id } = req.params;

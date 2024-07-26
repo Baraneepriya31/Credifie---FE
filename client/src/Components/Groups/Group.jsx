@@ -387,7 +387,7 @@ const handleSubmit = async () => {
               {groupData.map((group, index) => (
                   
                     <tr key={index}>
-                      <td onClick={GroupId} className="application-no">G.401</td>
+                      <td className="application-no" onClick={() => GroupId(group._id)}>{group.groupID}</td>
                       <td>{group.groupName}</td>
                       <td>{group.groupLeader.name}</td>
                       <td>{group.groupLeader.contactNumber}</td>
