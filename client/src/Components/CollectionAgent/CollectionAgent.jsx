@@ -9,20 +9,18 @@ import axios from "axios";
 
 
 function CollectionAgent () {
-
    
     const [addmodal, setAddmodal] = useState(false);
-    const [editmodal, setEditmodal] = useState(false);
     const [openPopup, setPopup] =useState(false);
     const [opensave, setopenDownload] =useState(false);
     const [opensend, setopenShare]=useState(false);
     const [share, setopensuccess] =useState(false);
     const [email, setEmail] = useState('');
     const [fileType, setFileType] = useState('');
-    const [selects, setSelects] = useState();
-    const [selects2, setSelects2] = useState();
-    const [isEditMode, setIsEditMode] = useState(true);
-    const [agentData,setAgentData] = useState([]);
+    // const [isEditMode, setIsEditMode] = useState(false);
+    const [agents, setAgents] = useState([]);
+    const [selectedAgent, setSelectedAgent] = useState(null);
+    const [editModal, setEditModal] = useState(false);
     
     const addagent = () =>{
         setAddmodal(!addmodal);
@@ -33,14 +31,37 @@ function CollectionAgent () {
         document.body.classList.remove('active-modal')
       }
 
-      const editagent = () =>{
-        setEditmodal(!editmodal);
-      }
-      if(editmodal) {
-        document.body.classList.add('active-modal')
-      } else {
-        document.body.classList.remove('active-modal')
-      }
+      useEffect(() => {
+        fetchAgents();
+    }, []);
+
+    const fetchAgents = async () => {
+        try {
+            const response = await axios.get('http://localhost:3008/getagents');
+            setAgents(response.data);
+        } catch (error) {
+            console.error('Error fetching agents:', error);
+        }
+    };
+
+    const editAgent = (id) => {
+      const agent = agents.find((agent) => agent._id === id);
+      setSelectedAgent(agent);
+      setEditModal(true);
+  };
+
+    const closeEditModal = () => {
+        setEditModal(false);
+        setSelectedAgent(null);
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setSelectedAgent(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
     
       const Popup = ()=>{
         setPopup(!openPopup);
@@ -92,9 +113,19 @@ function CollectionAgent () {
         closeShare(); 
       };
            
-      const handleButtonClick = () => {
-        setIsEditMode(!isEditMode);
-      };
+      const handleButtonClick = async () => {
+        if (selectedAgent) {
+            try {
+                const response = await axios.put(`http://localhost:3008/update-agent/${selectedAgent._id}`, selectedAgent);
+                if (response.data.message === 'Agent updated successfully') {
+                    fetchAgents();
+                    setEditModal(false);
+                }
+            } catch (error) {
+                console.error('Error updating agent:', error);
+            }
+        }
+    };
 
 
       const [agentDetails,setAgentDetails] = useState({
@@ -123,29 +154,31 @@ function CollectionAgent () {
       
       const handleSubmit = async () => {
         try {
-            await axios.post('http://localhost:3008/add-agent', agentDetails);
-            console.log(agentDetails);
-            alert('agent added successfully');
-            addagent();
+            const response = await axios.post('http://localhost:3008/add-agent', agentDetails);
+            if (response.data.message === 'Agent added successfully') {
+                fetchAgents();
+                setAddmodal(false);
+                setAgentDetails({
+                    firstName: '',
+                    lastName: '',
+                    contactnumber: '',
+                    pannumber: '',
+                    dateofbirth: '',
+                    gender: '',
+                    emailid: '',
+                    maritalstatus: '',
+                    totalexperience: '',
+                    highesteducation: ''
+                });
+            }
         } catch (error) {
             console.error('Error adding agent:', error);
         }
-      };
-
-      useEffect(() =>{
-      const fetchAgentData = async () => {
-      try{
-         const response = await axios.get('http://localhost:3008/getagents');
-         setAgentData(response.data);
-        } catch(error){
-        console.error('Error fetching agent data:',error)
-        }
-      };
-      fetchAgentData();
-      }, []);
-    
+    };
+      
   
        return (
+        
         
         <div className='collectionagent'>
         <div className='collection-agent'>
@@ -157,96 +190,83 @@ function CollectionAgent () {
             <input type='search' placeholder='Type here to search...' /> <BsSearch className="search-icon" />
             </div>
             <div>
-              <button onClick={addagent}  className="add-button">Add Agent   +</button>
-              <button  onClick={Popup} className="download-button"  >Download  <FiDownload />
-               </button>
-              <button  className='remove-btn'>Remove</button>
+                <button onClick={addagent} className="add-button">Add Agent +</button>
+                <button className="download-button">Download <FiDownload /></button>
+                <button className="remove-btn">Remove</button>
             </div>
-            
+
             {addmodal && (
-                    <div className='addmodal'>
-                     <div  onClick={addagent} className="overlay"></div>
-                     <div className='add-agent'>
-                          <h4>Add Agent</h4>
-                          <hr className='add-line'/>
-                          <div className="group-flex">
-                          <div className="agent-info">
-                            <p className='first-name'>First Name</p>
-                            <input type="text" name="firstname" className="input-line2" value={agentDetails.firstName} onChange={(e) => handleChange(e, 'agent', 'firstName')}/> 
-                            
-                          </div>
-                          <div className='agent-info'>
-                            <p className='last-name'>Last Name </p>
-                            <input type="text" name="name" className="input-line2" value={agentDetails.lastName} onChange={(e) => handleChange(e, 'agent', 'lastName')}/>
-                          </div>
-                         
-                          </div>
-                          <div className="agent-flex">
-                          <div className="agent-info">
-                            <p className='last-name'>Contact number</p>
-                            <input type="number" name="number" className="input-line2" value={agentDetails.contactnumber} onChange={(e) => handleChange(e, 'agent', 'contactnumber')}/>
-                          </div>
-                          <div className='agent-info' >
-                            <p className='last-name'>Pan number </p>
-                            <input type="text" name="name" className="input-line2" value={agentDetails.pannumber} onChange={(e) => handleChange(e, 'agent', 'pannumber')}/>
-                          </div>
-                         
-                          </div>
-                          <div className="agent-flex2">
-                          <div className="agent-info">
-                            <p className='agent-info'>Date of Birth</p>
-                            <input type="text" name="name" className="input-line2" value={agentDetails.dateofbirth} onChange={(e) => handleChange(e, 'agent', 'dateofbirth')}/>
-                          </div>
-                          <div className='last-name'>
-                            <p className='agent-info'>Gender </p>
-                            <select className="gender-select" name="gender" value={agentDetails.gender} onChange={(e) => handleChange(e, 'agent', 'gender')}>
-                           <option value="">Select</option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                            </select>
-                          </div>
-                          </div>
-                          
-                          <div className="agent-flex">
-                          <div className="agent-info">
-                            <p className='agent-info'>Email id</p>
-                            <input type="text" name="name" className="input-line2" value={agentDetails.emailid} onChange={(e) => handleChange(e, 'agent', 'emailid')}/>
-                          </div>
-                          <div className='last-name'>
-                            <p className='agent-info'>Marital Status </p>
-                     <select className="gender-select2" name="maritalstatus" value={agentDetails.maritalstatus} onChange={(e) => handleChange(e, 'agent', 'maritalstatus')}>
-                <option value="">Select</option>
-                <option value="Single">Single</option>
-                   <option value="Married">Married</option>
-                   <option value="Unmarried">Unmarried</option> 
-                            
-                                   </select>
-                          </div>
-                          </div>
-                         
-                          <div className="agent-flex" >
-                          <div className="agent-info">
-                            <p className='agent-info'>Total experience</p>
-                    <input type="text" name="name" className="input-line2" value={agentDetails.totalexperience} onChange={(e) => handleChange(e, 'agent', 'totalexperience')}/>
-                          </div>
-                          <div className='last-name'>
-                            <p className='agent-info'>Highest Education Degree </p>
-                   <input type="text" name="name" className="input-line2" value={agentDetails.highesteducation} onChange={(e) => handleChange(e, 'agent', 'highesteducation')}/>
-                             
-                           </div>
-                           
-                           </div>
-                        
-                       
-                           <button onClick={handleSubmit} className='add'>Add</button> 
-                          <button className="close-modal" onClick={addagent}>
-                       <img src={closeicon} alt="icon" />
-            </button>
-                   
-                     </div>
-                     </div>
-                   
-                    )}
+                <div className='addmodal'>
+                    <div onClick={addagent} className="overlay"></div>
+                    <div className='add-agent'>
+                        <h4>Add Agent</h4>
+                        <hr className='add-line' />
+                        <div className="group-flex">
+                            <div className="agent-info">
+                                <p className='first-name'>First Name</p>
+                                <input type="text" name="firstname" className="input-line2" value={agentDetails.firstName} onChange={(e) => handleChange(e, 'agent', 'firstName')} />
+                            </div>
+                            <div className='agent-info'>
+                                <p className='last-name'>Last Name</p>
+                                <input type="text" name="name" className="input-line2" value={agentDetails.lastName} onChange={(e) => handleChange(e, 'agent', 'lastName')} />
+                            </div>
+                        </div>
+                        <div className="agent-flex">
+                            <div className="agent-info">
+                                <p className='last-name'>Contact number</p>
+                                <input type="number" name="number" className="input-line2" value={agentDetails.contactnumber} onChange={(e) => handleChange(e, 'agent', 'contactnumber')} />
+                            </div>
+                            <div className='agent-info'>
+                                <p className='last-name'>Pan number</p>
+                                <input type="text" name="name" className="input-line2" value={agentDetails.pannumber} onChange={(e) => handleChange(e, 'agent', 'pannumber')} />
+                            </div>
+                        </div>
+                        <div className="agent-flex2">
+                            <div className="agent-info">
+                                <p className='agent-info'>Date of Birth</p>
+                                <input type="text" name="name" className="input-line2" value={agentDetails.dateofbirth} onChange={(e) => handleChange(e, 'agent', 'dateofbirth')} />
+                            </div>
+                            <div className='last-name'>
+                                <p className='agent-info'>Gender</p>
+                                <select className="gender-select" name="gender" value={agentDetails.gender} onChange={(e) => handleChange(e, 'agent', 'gender')}>
+                                    <option value="">Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="agent-flex">
+                            <div className="agent-info">
+                                <p className='agent-info'>Email id</p>
+                                <input type="text" name="name" className="input-line2" value={agentDetails.emailid} onChange={(e) => handleChange(e, 'agent', 'emailid')} />
+                            </div>
+                            <div className='last-name'>
+                                <p className='agent-info'>Marital Status</p>
+                                <select className="gender-select2" name="maritalstatus" value={agentDetails.maritalstatus} onChange={(e) => handleChange(e, 'agent', 'maritalstatus')}>
+                                    <option value="">Select</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Unmarried">Unmarried</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="agent-flex">
+                            <div className="agent-info">
+                                <p className='agent-info'>Total experience</p>
+                                <input type="text" name="name" className="input-line2" value={agentDetails.totalexperience} onChange={(e) => handleChange(e, 'agent', 'totalexperience')} />
+                            </div>
+                            <div className='last-name'>
+                                <p className='agent-info'>Highest Education Degree</p>
+                                <input type="text" name="name" className="input-line2" value={agentDetails.highesteducation} onChange={(e) => handleChange(e, 'agent', 'highesteducation')} />
+                            </div>
+                        </div>
+                        <button onClick={handleSubmit} className='add'>Add</button>
+                        <button className="close-modal" onClick={addagent}>
+                            <img src={closeicon} alt="icon" />
+                        </button>
+                    </div>
+                </div>
+            )}
                   
 
              {openPopup && (<div className="download-popup">
@@ -339,120 +359,110 @@ function CollectionAgent () {
       )}
           </div>
           <div>
-              <table className='table2'>
-                <th>Agent ID</th>
-                <th>Name</th>
-                <th>Location</th>
-                <th>Contact No</th>
-                <th>No of Grps.Assigned</th>
-                <th>Target for the week</th>
-                <th>Amount Collected</th>
-                <th>Select</th>
-                &nbsp;
-                  {agentData.map((agent, index) =>(
-                  <tr key={index}>
-                    <td className="application-no">CRDE101</td>
-                    <td>{agent.firstName}</td>
-                    <td>-</td>
-                    <td>{agent.contactnumber} </td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td><input type='checkbox'/></td>
-                  </tr>
-                  ))}
-              </table>
-                </div> 
-          </div>
-          {editmodal && (
-                    <div className='addmodal'>
-                     <div  onClick={editagent} className="overlay"></div>
-                     <div className='add-agent'>
-                          <h4>Add Agent</h4>
-                          <hr className='add-line'/>
-                          <div className="group-flex">
-                          <div className="agent-info">
-                            <p className='first-name'>First Name</p>
-                            <input type="text" id="name" name="name" className="input-line2"/>
-                          </div>
-                          <div className='agent-info'>
-                            <p className='last-name'>Last Name </p>
-                            <input type="text" id="name" name="name" className="input-line2"/>
-                          </div>
-                         
-                          </div>
-                          <div className="agent-flex">
-                          <div className="agent-info">
-                            <p className='last-name'>Contact number</p>
-                            <input type="number" id="name" name="number" className="input-line2"/>
-                          </div>
-                          <div className='agent-info' >
-                            <p className='last-name'>Pan number </p>
-                           
-                            <input type="number" id="name" name="name" className="input-line2"/>
-                          </div>
-                         
-                          </div>
-                          <div className="agent-flex2">
-                          <div className="agent-info">
-                            <p className='agent-info'>Date of Birth</p>
-                            <input type="text" id="name" name="name" className="input-line2"/>
-                          </div>
-                          <div className='last-name'>
-                            <p className='agent-info'>Gender </p>
-                            {/* <img src={dropdowngrey} alt="gender" /> */}
-                            <select className="gender-select" value={selects} onChange={e => setSelects (e.target.value)} >
-                                  <option></option>
-                                   <option>Male</option>
-                                   <option>Female</option>
-                                   </select>
-                          </div>
-                          </div>
-                          
-                          <div className="agent-flex">
-                          <div className="agent-info">
-                            <p className='agent-info'>Email id</p>
-                            <input type="text" id="name" name="name" className="input-line2"/>
-                          </div>
-                          <div className='last-name'>
-                            <p className='agent-info'>Marital Status </p>
-                            <select className="gender-select2" value={selects2} onChange={e => setSelects2 (e.target.value)} >
-                                  <option></option>
-                                   <option>Single</option>
-                                   <option>Married</option>
-                                   <option>Unmarried</option>
-                                   </select>
-                          </div>
-                          </div>
-                         
-                          <div className="agent-flex" >
-                          <div className="agent-info">
-                            <p className='agent-info'>Total experience</p>
-                           
-                            <input type="text" id="name" name="name" className="input-line2"
-                          />
-                          </div>
-                          <div className='last-name'>
-                            <p className='agent-info'>Highest Education Degree </p>
-                           
-                             <input type="text" id="name" name="name" className="input-line2"
-                             />
-                           </div>
-                           
-                           </div>
-                        
-                       
-                           <button className='add' onClick={handleButtonClick}>
-                            {isEditMode ? 'Edit' : 'Save'}</button> 
-                          <button className="close-modal" onClick={editagent}>
-                       <img src={closeicon} alt="icon" />
-            </button>
-                   
-                     </div>
-                     </div>
-                   
-                    )}
+                <table className='table2'>
+                    <thead>
+                        <tr>
+                            <th>Agent ID</th>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Contact No</th>
+                            <th>No of Grps.Assigned</th>
+                            <th>Target for the week</th>
+                            <th>Amount Collected</th>
+                            <th>Select</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {agents.map((agent, index) => (
+                            <tr key={index}>
+                                <td className="application-no" onClick={() => editAgent(agent._id)}>CRDE101</td>
+                                <td>{agent.firstName}</td>
+                                <td>-</td>
+                                <td>{agent.contactnumber}</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><input type='checkbox' /></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
+            {editModal && selectedAgent && (
+                <div className='addmodal'>
+                    <div onClick={closeEditModal} className="overlay"></div>
+                    <div className='add-agent'>
+                        <h4>Edit Agent</h4>
+                        <hr className='add-line' />
+                        <div className="group-flex">
+                            <div className="agent-info">
+                                <p className='first-name'>First Name</p>
+                                <input type="text" name="firstName" className="input-line2" value={selectedAgent.firstName} onChange={handleInputChange} />
+                            </div>
+                            <div className='agent-info'>
+                                <p className='last-name'>Last Name</p>
+                                <input type="text" name="lastName" className="input-line2" value={selectedAgent.lastName} onChange={handleInputChange} />
+                            </div>
+                        </div>
+                        <div className="agent-flex">
+                            <div className="agent-info">
+                                <p className='last-name'>Contact number</p>
+                                <input type="number" name="contactnumber" className="input-line2" value={selectedAgent.contactnumber} onChange={handleInputChange} />
+                            </div>
+                            <div className='agent-info'>
+                                <p className='last-name'>Pan number</p>
+                                <input type="text" name="pannumber" className="input-line2" value={selectedAgent.pannumber} onChange={handleInputChange} />
+                            </div>
+                        </div>
+                        <div className="agent-flex2">
+                            <div className="agent-info">
+                                <p className='agent-info'>Date of Birth</p>
+                                <input type="text" name="dateofbirth" className="input-line2" value={selectedAgent.dateofbirth} onChange={handleInputChange} />
+                            </div>
+                            <div className='last-name'>
+                                <p className='agent-info'>Gender</p>
+                                <select className="gender-select" name="gender" value={selectedAgent.gender} onChange={handleInputChange}>
+                                    <option value="">Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="agent-flex">
+                            <div className="agent-info">
+                                <p className='agent-info'>Email id</p>
+                                <input type="text" name="emailid" className="input-line2" value={selectedAgent.emailid} onChange={handleInputChange} />
+                            </div>
+                            <div className='last-name'>
+                                <p className='agent-info'>Marital Status</p>
+                                <select className="gender-select2" name="maritalstatus" value={selectedAgent.maritalstatus} onChange={handleInputChange}>
+                                    <option value="">Select</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Unmarried">Unmarried</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="agent-flex">
+                            <div className="agent-info">
+                                <p className='agent-info'>Total experience</p>
+                                <input type="text" name="totalexperience" className="input-line2" value={selectedAgent.totalexperience} onChange={handleInputChange} />
+                            </div>
+                            <div className='last-name'>
+                                <p className='agent-info'>Highest Education Degree</p>
+                                <input type="text" name="highesteducation" className="input-line2" value={selectedAgent.highesteducation} onChange={handleInputChange} />
+                            </div>
+                        </div>
+                        <button onClick={handleButtonClick} className='add'>SAVE</button>
+                        <button className="close-modal" onClick={closeEditModal}>
+                            <img src={closeicon} alt="icon" />
+                        </button>
+                    </div>
+                </div>
+            )}
+
+         </div>
          </div>
        )
 

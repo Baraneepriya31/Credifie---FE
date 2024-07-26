@@ -295,6 +295,36 @@ app.post('/add-agent', async (req, res) => {
     res.status(500).json({ message: 'Failed to add agent' });
   }
 });
+// Edit agent
+app.put('/update-agent/:id', async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+
+  try {
+    const updatedAgent = await Agent.findByIdAndUpdate(id, updateData, { new: true });
+    if (updatedAgent) {
+      res.status(200).json({ message: 'Agent updated successfully', updatedAgent });
+    } else {
+      res.status(404).json({ message: 'Agent not found' });
+    }
+  } catch (error) {
+    console.error('Error updating agent:', error);
+    res.status(500).json({ message: 'Failed to update agent' });
+  }
+});
+
+// Delete agent
+app.delete('/agents/:id', async (req, res) => {
+  try {
+    const agent = await Agent.findByIdAndDelete(req.params.id);
+    if (!agent) {
+      return res.status(404).send();
+    }
+    res.send(agent);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
 
 
   app.listen(PORT, () => {

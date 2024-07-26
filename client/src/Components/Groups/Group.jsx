@@ -50,11 +50,6 @@ function Group() {
   }, []);
 
 
-              
-  // const data = [
-  //   { id: 1, name: 'John Doe', age: 28 },
-  //
-  //];
 
   const addgroup = () =>{
     setAddmodal(!addmodal);
