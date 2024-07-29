@@ -246,9 +246,6 @@ db.once('open', function() {
     maritalstatus: String,
     totalexperience: String,
     highesteducation: String,
-
-    groups: [{ type: Schema.Types.ObjectId, ref: 'Group' }]
-
   });  
         
   
@@ -318,7 +315,47 @@ db.once('open', function() {
       res.status(500).send(error);
     }
   });
+  const loanschema = new mongoose.Schema({
+    location:String,
+    loanamount:String,
+    loanaccountnumber:String,
+    tenure:String,
+    interest:String,
+    duedate:String,
+  });  
+        
   
+
+  const Loan = mongoose.model('Agent', loanschema);
+
+  app.get('/api/loan', async (req, res) => {
+    try {
+      const loan = await Loan.find();
+      res.json(loan);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+  app.post('/add-loan', async (req, res) => {
+    const {location, loanamount,loanaccountnumber,tenure,interest,duedate} = req.body;
+
+    const newLoan = new Loan({
+      location,
+      loanamount,
+      loanaccountnumber,
+      tenure,
+      interest,
+      duedate,
+    });
+            
+    try {
+      await newLoan.save();
+      res.status(200).json({ message: 'loan added successfully' });
+    } catch (error) {
+      console.error('Error adding loan:', error);
+      res.status(500).json({ message: 'Failed to add loan' });
+    }
+  });          
   
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

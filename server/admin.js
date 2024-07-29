@@ -101,64 +101,70 @@ db.once('open', async function() {
 
 
 //add agentschema//
-router.get('/', async (req, res) => {
+
+// const agentSchema = new mongoose.Schema({
+//   firstName : String,
+//   lastName : String,
+//   contactnumber : String,
+//   pannumber : String,
+//   dateofbirth : String,
+//   gender : String,
+//   emailid : String,
+//   maritalstatus : String,
+//   totalexperience: String,
+//   highesteducation: String,
+
+// });
+
+// const Agent = mongoose.model('Agent', agentSchema);
+
+// const newAgent = new Agent({
+//   firstName: 'John',
+//   lastName : 'Doe',
+//   contactnumber : '9087654321',
+//   pannumber : 'QTVS234560',
+//   dateofbirth : '29/07/2002',
+//   gender : 'Male',
+//   emailid : 'johndoe@gmail.com',
+//   maritalstatus : 'Single',
+//   totalexperience : '2 years',
+//   highesteducation : 'M.Com',
+// });
+// try {
+//      await newAgent.save();
+//      console.log('Agent added successfully');
+//    } catch (error) {
+//     console.error('Error adding agent:', error);
+//    } finally {
+//     mongoose.connection.close();
+//    }
+
+   //add loan application//
+
+   const loanSchema = new mongoose.Schema({
+    location:String,
+    loanamount : String,
+    loanaccountnumber: String,
+    tenure:String,
+    interest:String,
+    duedate:String,
+  });
+  const Loan = mongoose.model('Agent', loanSchema);
+
+  const newLoan = new Loan({
+    location:'India',
+    loanamount:'2,50,000',
+    loanaccountnumber:'IBFC12345',
+    tenure:'15%',
+    interest:'15%',
+    duedate:'15-09-2024',
+  });
   try {
-    const groups = await Group.find().populate('agents');
-    res.json(groups);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    await newLoan.save();
+    console.log('Loan added successfully');
+  } catch (error) {
+   console.error('Error adding Loan:', error);
+  } finally {
+   mongoose.connection.close();
   }
-});
-
-module.exports = router;
-
-const agentSchema = new mongoose.Schema({
-  firstName : String,
-  lastName : String,
-  contactnumber : String,
-  pannumber : String,
-  dateofbirth : String,
-  gender : String,
-  emailid : String,
-  maritalstatus : String,
-  totalexperience: String,
-  highesteducation: String,
-
-  groups: [{ type: Schema.Types.ObjectId, ref: 'Group' }]
-});
-
-const Agent = mongoose.model('Agent', agentSchema);
-
-
-router.get('/', async (req, res) => {
-  try {
-    const agents = await Agent.find().populate('groups');
-    res.json(agents);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-module.exports = router;
-
-const newAgent = new Agent({
-  firstName: 'John',
-  lastName : 'Doe',
-  contactnumber : '9087654321',
-  pannumber : 'QTVS234560',
-  dateofbirth : '29/07/2002',
-  gender : 'Male',
-  emailid : 'johndoe@gmail.com',
-  maritalstatus : 'Single',
-  totalexperience : '2 years',
-  highesteducation : 'M.Com',
-});
-try {
-     await newAgent.save();
-     console.log('Agent added successfully');
-   } catch (error) {
-    console.error('Error adding agent:', error);
-   } finally {
-    mongoose.connection.close();
-   }
 });

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import './application-status.css';
 import { FiDownload } from "react-icons/fi";
 import dropdown from './Vector.png';
@@ -51,8 +52,9 @@ function ApplicationStatus() {
   }
 
 
-    const toggleModal = () => {
+    const toggleModal = ({ isOpen }) => {
       setModal(!modal);
+      if (!isOpen) return null;
     };
   
     if(modal) {
@@ -60,7 +62,8 @@ function ApplicationStatus() {
     } else {
       document.body.classList.remove('active-modal')
     }
-  
+   
+
     const closeShare = () => {
       setopenShare(false);
       setopenDownload(false);
@@ -106,6 +109,36 @@ function ApplicationStatus() {
     } else {
       document.body.classList.remove('active-modal')
     }
+        
+    const [loanDetails,setLoanDetails] = useState({
+      location:'',
+     loanamount:'',
+     loanaccountnumber:'',
+     tenure:'',
+     interest:'',
+     duedate:'',
+    });
+    const handleChange = (e, role, field ) => {
+      const { value } = e.target;
+  
+      if (role === 'loan') {
+        setLoanDetails(prevDetails => ({
+          ...prevDetails,
+          [field]: value,
+        }));
+      } 
+    };
+    
+    const handleSubmit = async () => {
+      try {
+          await axios.post('http://localhost:3008/add-loan', loanDetails);
+          console.log(loanDetails);
+          alert('loan added successfully');
+      } catch (error) {
+          console.error('Error adding loan:', error);
+      }
+    };
+          
 
     const [counter, setCounter] = useState(0);
 
@@ -526,19 +559,21 @@ function ApplicationStatus() {
               </div>
               <div className="information">
                 <label>
-              <input type="text" id="name" name="name" className="input-line" />
+              <input type="text" id="name" name="name" className="input-line"
+              value={loanDetails.loanamount} onChange={(e) => handleChange(e, 'loan', 'loanamount')} />
               </label>
               <label>
-              <input type="text" id="name" name="name" className="input-line" />
+              <input type="text" id="name" name="name" className="input-line"/>
                 </label>
               <label>
-              <input type="text" id="name" name="name" className="input-line" />
+              <input type="text" id="name" name="name" className="input-line"/>
               </label>
               <label>
-              <input type="text" id="name" name="name" className="input-line" />
+              <input type="text" id="name" name="name" className="input-line"/>
               </label>
               <label>
-              <input type="text" id="name" name="name" className="input-line" />
+              <input type="text" id="name" name="name" className="input-line"
+    value={loanDetails.location} onChange={(e) => handleChange(e, 'loan', 'location')} />
               </label>
               </div>
               </div>
@@ -558,19 +593,24 @@ function ApplicationStatus() {
               </div>
               <div className="information">
               <label>
-              <input type="text" id="name" name="name" className="input-line" />
+              <input type="text" id="name" name="name" className="input-line"
+       value={loanDetails.loanamount} onChange={(e) => handleChange(e, 'loan', 'loanamount')} />
               </label>
              <label>
-             <input type="text" id="name" name="name" className="input-line" />
+             <input type="text" id="name" name="name" className="input-line"
+        value={loanDetails.loanaccountnumber} onChange={(e) => handleChange(e, 'loan', 'loanaccountnumber')}/>
              </label>
              <label>
-             <input type="text" id="name" name="name" className="input-line" />
+             <input type="text" id="name" name="name" className="input-line"
+      value={loanDetails.tenure} onChange={(e) => handleChange(e, 'loan', 'tenure')} />
              </label>
              <label>
-             <input type="text" id="name" name="name" className="input-line" />
+             <input type="text" id="name" name="name" className="input-line" 
+        value={loanDetails.interest} onChange={(e) => handleChange(e, 'loan', 'tenure')}/>
              </label>
               <label>
-              <input type="date" id="name" name="name" className="input-line" />
+              <input type="date" id="name" name="name" className="input-line"
+              value={loanDetails.duedate} onChange={(e) => handleChange(e, 'loan', 'duedate')} />
               </label>
               </div>
               </div>
@@ -586,15 +626,13 @@ function ApplicationStatus() {
                 <div>
                 <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
                 <input type="text" id="name" name="name" className="input-line" />
-                <p className="not-attached">*Not Attached </p>
                 <input type="text" id="name" name="name" className="input-line" />
-                <br/>
                 <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
                 <input type="text" id="name" name="name" className="input-line" />
                 </div>
               </div>
               <div className="add-loan-button">
-                <button>ADD</button>
+                <button onClick={handleSubmit}>ADD</button>
               </div>
             <button className="close-modal" onClick={toggleModal}>
               <img src={closeicon} alt="icon" />

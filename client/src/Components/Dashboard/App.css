@@ -919,6 +919,7 @@ body.active-modal {
   padding-left: 15px;
   align-items: center;
   justify-content: center;
+  margin-top: 5px;
 }
 .img-pdf img{
   width: 10px;
@@ -947,7 +948,7 @@ body.active-modal {
 .overlay{
    background: rgba(49,49,49,0.8);  
 }
-.modal-content {
+.modal-content{
   position: absolute;
   top: 50%;
   left: 50%;
@@ -957,6 +958,16 @@ body.active-modal {
   border-radius: 3px;
    max-width: 500px;
   min-width: 300px; 
+  overflow:scroll;
+}
+.modal-content::-webkit-scrollbar{
+      width: 1rem;
+}
+.modal-content::-webkit-scrollbar-track{
+  background-color: #ece8e8;
+}
+.modal-content::-webkit-scrollbar-thumb{
+  background-color:#25AE7A;
 }
 .popup-line{
   border: 0.5px solid #777675;
