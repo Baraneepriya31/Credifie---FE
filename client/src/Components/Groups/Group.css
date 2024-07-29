@@ -116,18 +116,19 @@ padding-bottom: 5px;
   width: 1080px;
   border-collapse: collapse;
 }
-.table2 tr{
+.table2 tr {
   margin-top: 10px;
-  line-height: 30px;
-
+  line-height: 20px;
 }
 .table2 th{
   font-size: 13px;
   background: #F7F7F7;
   color: #393938;
+  
 }
 .table2 td{
   text-align: center;
+  padding: 10px;
 }
 .active-status{
   color:#25AE7A;

@@ -31,16 +31,18 @@ function Group() {
   const [share, setopensuccess] =useState(false);
   const [email, setEmail] = useState('');
   const [fileType, setFileType] = useState('');
-  // const [selectedRows, setSelectedRows] = useState([]); 
-  // const [disabledRows, setDisabledRows] = useState([]); 
+  const [selectedRows, setSelectedRows] = useState([]); 
+  const [disabledRows, setDisabledRows] = useState([]); 
   const [searchQuery, setSearchQuery] = useState('');
   const [groupData, setGroupData] = useState([]);
+  const [totalGroups, setTotalGroups] =useState(0);
 
   useEffect(() => {
     const fetchGroupData = async () => {
       try {
         const response = await axios.get('http://localhost:3008/getgroups');
         setGroupData(response.data);
+        setTotalGroups(response.data.length);
       } catch (error) {
         console.error('Error fetching group data:', error);
       }
@@ -127,11 +129,7 @@ function Group() {
     setIsConfirmed(true);
   };
 
-    // const filteredData = data.filter(row => 
-    //   row.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    //   row.age.toString().includes(searchQuery)
-    // );
-         
+
     const OpenModal = () => {
       setOpenModal(!Openmodal);
     };
@@ -227,30 +225,37 @@ const addMemberRow = () => {
     });
 };
 
+const filteredData = groupData.filter(group =>
+  group.groupName.toLowerCase().includes(searchQuery) ||
+  group.groupLeader.name.toLowerCase().includes(searchQuery) ||
+  group.groupLeader.contactNumber.toString().includes(searchQuery)
+  );
+
 const handleSubmit = async () => {
     try {
         await axios.post('http://localhost:3008/add-group', groupDetails);
         alert('Group added successfully');
-        addgroup();
+        setGroupData();
     } catch (error) {
         console.error('Error adding group:', error);
     }
   };
 
-  // const handleCheckboxChange = (index) => {
-  //   setSelectedRows(prevState => {
-  //     if (prevState.includes(index)) {
-  //       return prevState.filter(i => i !== index);
-  //     } else {
-  //       return [...prevState, index];
-  //     }
-  //   });
-  // };
+  const handleCheckboxChange = (index) => {
+    setSelectedRows(prevState => {
+      if (prevState.includes(index)) {
+        return prevState.filter(i => i !== index);
+      } else {
+        return [...prevState, index];
+      }
+    });
+  };
 
-  // const disableSelectedRows = () => {
-  //   setDisabledRows(prevState => [...new Set([...prevState, ...selectedRows])]);
-  //   setSelectedRows([]); 
-  // };
+  const disableSelectedRows = () => {
+    setDisabledRows(prevState => [...new Set([...prevState, ...selectedRows])]);
+    setSelectedRows([]); 
+    setDisableModal(false);
+  };
 
   
 
@@ -258,7 +263,7 @@ const handleSubmit = async () => {
   return(
     <div className='group'>
        <div className='total-group'>
-            <h2>Total Group <span>0</span></h2>
+            <h2>Total Group <span>{totalGroups}</span></h2>
            
         </div>
         <div className="group-container">
@@ -384,9 +389,8 @@ const handleSubmit = async () => {
               <th>Application Status</th>
               <th>Select</th>
               &nbsp;
-              {groupData.map((group, index) => (
-                  
-                    <tr key={index}>
+              {filteredData.map((group, index) => (
+                    <tr key={index} className ={disabledRows.includes(index) ? 'disabled': ''}>
                       <td className="application-no" onClick={() => GroupId(group._id)}>{group.groupID}</td>
                       <td>{group.groupName}</td>
                       <td>{group.groupLeader.name}</td>
@@ -401,7 +405,10 @@ const handleSubmit = async () => {
                         <img className="dropdown" src={dropdown} alt="dropdown" />
                       </td>
                       <td>
-                        <input type="checkbox"/>
+                        <input type="checkbox" 
+                        checked={selectedRows.includes(index)}
+                        onChange={() => handleCheckboxChange(index)}
+                        disabled={disabledRows.includes(index)}/>
                       </td>
                     </tr>
                   ))
@@ -657,7 +664,7 @@ const handleSubmit = async () => {
             <label className="label-reason">Reason*</label>
             <input type='textarea' className="reason-input" />
             <br />
-            <button className="disable-button" >Disable</button>
+            <button className="disable-button" onClick={disableSelectedRows}>Disable</button>
             
           </>
         )}

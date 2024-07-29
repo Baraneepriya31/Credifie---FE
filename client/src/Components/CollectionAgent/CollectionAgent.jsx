@@ -17,10 +17,14 @@ function CollectionAgent () {
     const [share, setopensuccess] =useState(false);
     const [email, setEmail] = useState('');
     const [fileType, setFileType] = useState('');
-    // const [isEditMode, setIsEditMode] = useState(false);
     const [agents, setAgents] = useState([]);
     const [selectedAgent, setSelectedAgent] = useState(null);
     const [editModal, setEditModal] = useState(false);
+    const [totalCollectionAgents, setTotalCollectionAgents ] = useState(0);
+    const [searchQuery, setSearchQuery]=useState([]);
+    const [selectedRows, setSelectedRows] = useState([]);
+    // const [deleteRows, setDelete] = useState([]); 
+
     
     const addagent = () =>{
         setAddmodal(!addmodal);
@@ -39,6 +43,7 @@ function CollectionAgent () {
         try {
             const response = await axios.get('http://localhost:3008/getagents');
             setAgents(response.data);
+            setTotalCollectionAgents(response.data.length);
         } catch (error) {
             console.error('Error fetching agents:', error);
         }
@@ -143,7 +148,7 @@ function CollectionAgent () {
       });
       const handleChange = (e, role, field ) => {
         const { value } = e.target;
-        console.log("Handle change working")
+        console.log("Handle change working");
     
         if (role === 'agent') {
           setAgentDetails(prevDetails => ({
@@ -151,6 +156,43 @@ function CollectionAgent () {
             [field]: value,
           }));
         } 
+      };
+
+    const filteredData = agents.filter(agent =>
+    agent.firstName.toLowerCase().includes(searchQuery) ||
+    agent.contactnumber.toString().includes(searchQuery)
+    );
+
+
+      const handleSearchChange=(event)=>{
+        setSearchQuery(event.target.value)
+      }
+
+      const handleCheckboxChange = (index) => {
+        setSelectedRows(prevState => {
+          if (prevState.includes(index)) {
+            return prevState.filter(i => i !== index);
+          } else {
+            return [...prevState, index];
+          }
+        });
+      };
+    
+      const deleteAgent = async (id) => {
+        try {
+          await axios.delete(`http://localhost:3008/agents/${id}`);
+          fetchAgents(); 
+        } catch (error) {
+          console.error('Error deleting agent:', error);
+        }
+      };
+    
+      const handleDeleteSelected = () => {
+        selectedRows.forEach((index) => {
+          const agentId = agents[index]._id;
+          deleteAgent(agentId);
+        });
+        setSelectedRows([]); 
       };
       
       const handleSubmit = async () => {
@@ -179,21 +221,20 @@ function CollectionAgent () {
       
   
        return (
-        
-        
+
         <div className='collectionagent'>
         <div className='collection-agent'>
-             <h2>Collection Agents <span>0</span></h2>
+             <h2>Collection Agents <span>{totalCollectionAgents}</span></h2>
          </div>
          <div className="agent-container">
           <div className="agents-btn">
             <div className="input-search">
-            <input type='search' placeholder='Type here to search...' /> <BsSearch className="search-icon" />
+            <input type='search' placeholder='Type here to search...' value={searchQuery} onChange={handleSearchChange}/> <BsSearch className="search-icon" />
             </div>
             <div>
                 <button onClick={addagent} className="add-button">Add Agent +</button>
                 <button className="download-button">Download <FiDownload /></button>
-                <button className="remove-btn">Remove</button>
+                <button className="remove-btn" onClick={handleDeleteSelected}>Remove</button>
             </div>
 
             {addmodal && (
@@ -326,7 +367,7 @@ function CollectionAgent () {
                   type="email" 
                   id="email" 
                   value={email} 
-                  onChange={handleEmailChange} 
+                  onChange={handleEmailChange}
                   required
                 />
                 </div>
@@ -360,7 +401,7 @@ function CollectionAgent () {
       )}
           </div>
           <div>
-                <table className='table2'>
+                <table className='table3'>
                     <thead>
                         <tr>
                             <th>Agent ID</th>
@@ -374,8 +415,8 @@ function CollectionAgent () {
                         </tr>
                     </thead>
                     <tbody>
-                        {agents.map((agent, index) => (
-                            <tr key={index}>
+                        {filteredData.map((agent, index) => (
+                            <tr key={agent._id}>
                                 <td className="application-no" onClick={() => editAgent(agent._id)}>{agent.agentID}</td>
                                 <td>{agent.firstName}</td>
                                 <td>-</td>
@@ -383,7 +424,11 @@ function CollectionAgent () {
                                 <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
-                                <td><input type='checkbox' /></td>
+                                <td><input
+                  type="checkbox"
+                  checked={selectedRows.includes(index)}
+                  onChange={() => handleCheckboxChange(index)}
+                /></td>
                             </tr>
                         ))}
                     </tbody>

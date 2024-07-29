@@ -93,22 +93,25 @@ height: 15px;
   height: 15px;
  
 }
-.table2{
+.table3{
   margin-top: 13px;
   width: 1080px;
   border-collapse: collapse;
   text-align: center;
 }
-.table2 tr{
-  padding-top: 20px;
+
+.table3 tr {
+  margin-top: 10px;
+  line-height: 20px;
 }
-.table2 th{
+
+.table3 th{
   font-size: 13px;
   background: #F7F7F7;
   color: #393938;
   height:30px;
 }  
-.table2 td{
+.table3 td{
   text-align: center;
 }
 .active-status{
