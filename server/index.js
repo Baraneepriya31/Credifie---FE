@@ -355,7 +355,47 @@ db.once('open', function() {
       console.error('Error adding loan:', error);
       res.status(500).json({ message: 'Failed to add loan' });
     }
-  });          
+  });     
+
+  const profileschema = new mongoose.Schema({
+    name:String,
+    empid:String,
+    emailid:String,
+    contactnumber:String,
+    baselocation:String,
+  });  
+        
+  const Profile = mongoose.model('Profile', profileschema);
+
+  app.get('/api/loan', async (req, res) => {
+    try {
+      const profile = await Loan.find();
+      res.json(profile);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+  app.post('/add-loan', async (req, res) => {
+    const {name, empid,emailid,contactnumber,baselocation,} = req.body;
+
+    const newProfile = new Profile({
+      name,
+      empid,
+      emailid,
+      contactnumber,
+      baselocation,
+    });
+            
+    try {
+      await newProfile.save();
+      res.status(200).json({ message: 'profile added successfully' });
+    } catch (error) {
+      console.error('Error adding profile:', error);
+      res.status(500).json({ message: 'Failed to add profile' });
+    }
+  });     
+
+     
   
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

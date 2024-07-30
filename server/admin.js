@@ -141,30 +141,57 @@ db.once('open', async function() {
 
    //add loan application//
 
-   const loanSchema = new mongoose.Schema({
-    location:String,
-    loanamount : String,
-    loanaccountnumber: String,
-    tenure:String,
-    interest:String,
-    duedate:String,
-  });
-  const Loan = mongoose.model('Agent', loanSchema);
+  //  const loanSchema = new mongoose.Schema({
+  //   location:String,
+  //   loanamount : String,
+  //   loanaccountnumber: String,
+  //   tenure:String,
+  //   interest:String,
+  //   duedate:String,
+  // });
+  // const Loan = mongoose.model('Agent', loanSchema);
 
-  const newLoan = new Loan({
-    location:'India',
-    loanamount:'2,50,000',
-    loanaccountnumber:'IBFC12345',
-    tenure:'15%',
-    interest:'15%',
-    duedate:'15-09-2024',
-  });
-  try {
-    await newLoan.save();
-    console.log('Loan added successfully');
-  } catch (error) {
-   console.error('Error adding Loan:', error);
-  } finally {
-   mongoose.connection.close();
-  }
+  // const newLoan = new Loan({
+  //   location:'India',
+  //   loanamount:'2,50,000',
+  //   loanaccountnumber:'IBFC12345',
+  //   tenure:'15%',
+  //   interest:'15%',
+  //   duedate:'15-09-2024',
+  // });
+  // try {
+  //   await newLoan.save();
+  //   console.log('Loan added successfully');
+  // } catch (error) {
+  //  console.error('Error adding Loan:', error);
+  // } finally {
+  //  mongoose.connection.close();
+  // }
+     //add profile//
+
+     const profileSchema = new mongoose.Schema({
+      name:String,
+      empid:String,
+      emailid:String,
+      contactnumber:String,
+      baselocation:String,
+    });
+    const Profile = mongoose.model('Profile', profileSchema);
+  
+    const newProfile = new Profile({
+      name:'Sandhiya',
+      empid:'CRDE010',
+      emailid:'sandhiya@gmail.com',
+      contactnumber:'7890123456',
+      baselocation:'India',
+    });
+    try {
+      await newProfile.save();
+      console.log('profile added successfully');
+    } catch (error) {
+     console.error('Error adding profile:', error);
+    } finally {
+     mongoose.connection.close();
+    }
+
 });

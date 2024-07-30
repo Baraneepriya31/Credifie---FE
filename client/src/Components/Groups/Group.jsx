@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import { CiSearch} from 'react-icons/ci';
 import dropdown from './Vector.png';
@@ -34,7 +34,7 @@ function Group() {
   const [disabledRows, setDisabledRows] = useState([]); 
   const [searchQuery, setSearchQuery] = useState('');       
   const [groups, setGroups] = useState([]);
-  const [agents, setAgents] = useState([]);
+  // const [agents, setAgents] = useState([]);
 
   
   const data = [
@@ -51,9 +51,6 @@ function Group() {
   } else {
     document.body.classList.remove('active-modal')
   }
-      
-    
-
     const Popup = ()=>{
       setPopup(!openPopup);
       }
@@ -180,7 +177,6 @@ function Group() {
       {name: '',contactNumber: '', panNumber:''}
     ]
   });
-
   const handleChange = (e, role, field, index = null) => {
     const { value } = e.target;
 
@@ -207,18 +203,18 @@ function Group() {
       }));
     }
   };
-  useEffect(() => {
-    const fetchAgents = async () => {
-      try {
-        const response = await axios.get('http://localhost:3008/api/agents');
-        setAgents(response.data);
-      } catch (error) {
-        console.error('Error fetching agents:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchAgents = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:3008/api/agents');
+  //       setAgents(response.data);
+  //     } catch (error) {
+  //       console.error('Error fetching agents:', error);
+  //     }
+  //   };
 
-    fetchAgents();
-  }, []);
+  //   fetchAgents();
+  // }, []);
                
 
 const addMemberRow = () => {

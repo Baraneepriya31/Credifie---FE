@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import basil_notification_icon from './basil_notification-on-outline.png'
 import group from './Group.png'
+import axios from 'axios';
 import profile from './Profile icon.png'
 import settings from './Settings icon.png'
 import logout from './Frame 1126.png'
@@ -38,8 +39,16 @@ function Header() {
       setIsEditing(!isEditing);
      }
 
-     const handleSaveClick = () =>{
-      setIsEditing(false);
+     const handleSaveClick = async () => {
+      try {
+         setIsEditing(false);
+        await axios.post('http://localhost:3008/add-agent', adminDetails);
+        console.log(adminDetails);
+        alert('Profile added successfully');
+        clickProfile();
+    } catch (error) {
+        console.error('Error adding Profile:', error);
+    }
      }
 
     const handleSectionClick=(section)=>{
@@ -68,7 +77,35 @@ function Header() {
      } else {
        document.body.classList.remove('active-modals')
      }
+     const [adminDetails,setAdminDetails] = useState({
+      name:'',
+      empid:'',
+      emailid:'',
+      contactnumber:'',
+      baselocation:'',
+     
+    });
+    const handleChange = (e, role, field ) => {
+      const { value } = e.target;
+  
+      if (role === 'Profile') {
+        setAdminDetails(prevDetails => ({
+          ...prevDetails,
+          [field]: value,
+        }));
+      } 
+    };
     
+    // const handleSubmit = async () => {
+    //   try {
+    //       await axios.post('http://localhost:3008/add-agent', adminDetails);
+    //       console.log(adminDetails);
+    //       alert('Profile added successfully');
+    //       clickProfile();
+    //   } catch (error) {
+    //       console.error('Error adding Profile:', error);
+    //   }
+    // };
     
     return(
     
@@ -145,6 +182,7 @@ function Header() {
                             id="name"
                             name="name"
                             disabled={!isEditing}
+ value={adminDetails.name} onChange={(e) => handleChange(e, 'Profile', 'name')}
                         />
                     </div>
                     </div>
@@ -156,7 +194,8 @@ function Header() {
                             id="empId"
                             name="empid"
                             disabled={!isEditing}
-                        />
+ value={adminDetails.empid} onChange={(e) => handleChange(e, 'Profile', 'empid')}
+                       />
                     </div>
                     </div>
                     <div>
@@ -167,6 +206,7 @@ function Header() {
                             id="email"
                             name="email"
                             disabled={!isEditing}
+value={adminDetails.emailid} onChange={(e) => handleChange(e, 'Profile', 'emailid')}
                         />
                     </div>
                     </div>
@@ -178,6 +218,7 @@ function Header() {
                             id="number"
                             name="contact number"
                             disabled={!isEditing}
+value={adminDetails.contactnumber} onChange={(e) => handleChange(e, 'Profile', 'contactnumber')}
                         />
                     </div>
                     </div>
@@ -189,6 +230,7 @@ function Header() {
                             id="location"
                             name="location"
                             disabled={!isEditing}
+value={adminDetails.baselocation} onChange={(e) => handleChange(e, 'Profile', 'baselocation')}
                         />
                          {/* <span>Edit</span>  */}
                     </div>
