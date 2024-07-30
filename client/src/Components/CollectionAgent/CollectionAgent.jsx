@@ -229,7 +229,7 @@ function CollectionAgent () {
                           <div className="agent-info">
                             <p className='last-name'>Contact number</p>
                             <input type="number" name="number" className="input-line2"
-                       value={agentDetails.contactnumber} onChange={(e) => handleChange(e, 'agent', 'contactnumber')}/>
+ value={agentDetails.contactnumber} onChange={(e) => handleChange(e, 'agent', 'contactnumber')}/>
                           </div>
                           <div className='agent-info' >
                             <p className='last-name'>Pan number </p>

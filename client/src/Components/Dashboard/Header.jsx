@@ -42,8 +42,8 @@ function Header() {
      const handleSaveClick = async () => {
       try {
          setIsEditing(false);
-        await axios.post('http://localhost:3008/add-agent', adminDetails);
-        console.log(adminDetails);
+        await axios.post('http://localhost:3008/add-agent', profileDetails);
+        console.log(profileDetails);
         alert('Profile added successfully');
         clickProfile();
     } catch (error) {
@@ -77,7 +77,7 @@ function Header() {
      } else {
        document.body.classList.remove('active-modals')
      }
-     const [adminDetails,setAdminDetails] = useState({
+     const [profileDetails,setProfileDetails] = useState({
       name:'',
       empid:'',
       emailid:'',
@@ -89,7 +89,7 @@ function Header() {
       const { value } = e.target;
   
       if (role === 'Profile') {
-        setAdminDetails(prevDetails => ({
+        setProfileDetails(prevDetails => ({
           ...prevDetails,
           [field]: value,
         }));
