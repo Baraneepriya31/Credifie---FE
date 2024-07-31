@@ -1,12 +1,14 @@
 import React, { useRef, useState } from "react";
 import basil_notification_icon from './basil_notification-on-outline.png'
 import group from './Group.png'
+import axios from 'axios';
 import profile from './Profile icon.png'
 import settings from './Settings icon.png'
 import logout from './Frame 1126.png'
 import calendar from './calendar.png'
 import './App.css';
-import { useNavigate } from 'react-router-dom';
+
+ 
 
 function Header() {
 
@@ -15,14 +17,9 @@ function Header() {
      const [isEditing, setIsEditing] = useState(false);
      const [activeSection, setActiveSection] = useState('primaryInfo');
      const fileInputRef = useRef(null);
-     const navigate = useNavigate();
-
 
      const clickProfile = () =>{
         setOpenProfile(true);
-     }
-     const handleLogout = () =>{
-        navigate('/login')
      }
 
      const closePopup= () =>{
@@ -33,8 +30,15 @@ function Header() {
       setIsEditing(!isEditing);
      }
 
-     const handleSaveClick = () =>{
-      setIsEditing(false);
+     const handleSaveClick = async () => {
+      try {
+         setIsEditing(false);
+        await axios.post('http://localhost:3008/add-profile', profileDetails);
+        console.log(profileDetails);
+        
+    } catch (error) {
+        console.error('Error adding Profile:', error);
+    }
      }
 
     const handleSectionClick=(section)=>{
@@ -46,8 +50,8 @@ function Header() {
     }
 
 // eslint-disable-next-line
-    const handleFileChange = (event) => {
-      const file = event.target.files[0];
+    const handleFileChange = (e) => {
+      const file = e.target.files[0];
       if (file) {
         console.log('Selected file:', file.name);
         // Implement file handling logic here
@@ -63,8 +67,27 @@ function Header() {
      } else {
        document.body.classList.remove('active-modals')
      }
+     const [profileDetails,setProfileDetails] = useState({
+      name:'',
+      empid:'',
+      emailid:'',
+      contactnumber:'',
+      baselocation:'',
+     
+    });
+    const handleChange = (e, role, field ) => {
+      const { value } = e.target;
+  
+      if (role === 'Profile') {
+        setProfileDetails(prevDetails => ({
+          ...prevDetails,
+          [field]: value,
+        }));
+      } 
+    };
     
-
+    
+    
     return(
     
         <header className="header">
@@ -85,14 +108,14 @@ function Header() {
            {modals && (  <div className="modals">
           <div className="profile">
             
-          <div className="profile-pic" onClick={clickProfile}>
+          <div className="profile-pic" onClick={clickProfile}  >
             
              <img className="profile-img" src={profile} alt="profile" />
              <p>Profile</p></div>
           <div className="settings-pic">
              <img className="settings-img" src={settings} alt="settings" />
              <p>Settings</p></div>
-          <div onClick={handleLogout} className="logout-pic"> 
+          <div className="logout-pic"> 
             <img className="logout-img" src={logout} alt="logout" />
             <p>Logout</p></div>
             
@@ -139,8 +162,7 @@ function Header() {
                             type="text"
                             id="name"
                             name="name"
-                            disabled={!isEditing}
-                        />
+                            disabled={!isEditing} value={profileDetails.name} onChange={(e) => handleChange(e, 'Profile', 'name')}/>
                     </div>
                     </div>
                     <div>
@@ -151,7 +173,8 @@ function Header() {
                             id="empId"
                             name="empid"
                             disabled={!isEditing}
-                        />
+ value={profileDetails.empid} onChange={(e) => handleChange(e, 'Profile', 'empid')}
+                       />
                     </div>
                     </div>
                     <div>
@@ -162,6 +185,7 @@ function Header() {
                             id="email"
                             name="email"
                             disabled={!isEditing}
+value={profileDetails.emailid} onChange={(e) => handleChange(e, 'Profile', 'emailid')}
                         />
                     </div>
                     </div>
@@ -173,6 +197,7 @@ function Header() {
                             id="number"
                             name="contact number"
                             disabled={!isEditing}
+value={profileDetails.contactnumber} onChange={(e) => handleChange(e, 'Profile', 'contactnumber')}
                         />
                     </div>
                     </div>
@@ -184,7 +209,9 @@ function Header() {
                             id="location"
                             name="location"
                             disabled={!isEditing}
+value={profileDetails.baselocation} onChange={(e) => handleChange(e, 'Profile', 'baselocation')}
                         />
+                         {/* <span>Edit</span>  */}
                     </div>
                     </div>
                     {isEditing && (
@@ -254,9 +281,10 @@ function Header() {
                   </div>
                   
               </div>
-            )}
+            )} 
+          
         </header>
     )}
-  
+
 
 export default Header;

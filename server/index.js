@@ -215,14 +215,8 @@ db.once('open', function() {
 
   const Group = mongoose.model('Group', groupSchema);
 
-  const groupcounterSchema = new mongoose.Schema({
-    name: String,
-    seq: Number,
-  });
-  const GroupCounter = mongoose.model('GroupCounter', groupcounterSchema);
-
   async function getNextSequence(name) {
-    const grpcount = await GroupCounter.findOneAndUpdate(
+    const grpcount = await Counter.findOneAndUpdate(
       { name },
       { $inc: { seq: 1 } },
       { new: true, upsert: true }
@@ -236,7 +230,7 @@ db.once('open', function() {
     try {
       const grpid = await getNextSequence('groupID');
       const newGroup = new Group({
-        groupID: `G.${grpid.toString().padStart(3, '100')}`,
+        groupID: `CRDG${grpid.toString().padStart(3, '100')}`,
         groupName,
         groupLeader,
         subLeader,
@@ -371,6 +365,98 @@ app.delete('/agents/:id', async (req, res) => {
   }
 });
 
+const applicationschema = new mongoose.Schema({
+  applicationID:String,
+  location:String,
+  loanamount:String,
+  loanaccountnumber:String,
+  tenure:String,
+  interest:String,
+  duedate:String,
+});
+
+const Application = mongoose.model('Application', applicationschema);
+
+async function getNextSequence(name) {
+  const appcount = await Counter.findOneAndUpdate(
+    { name },
+    { $inc: { seq: 1 } },
+    { new: true, upsert: true }
+  );
+  return appcount.seq;
+}
+
+app.post('/add-application', async (req, res) => {
+  const {location, loanamount, loanaccountnumber, tenure, interest, duedate} = req.body;
+  try {
+    const appid = await getNextSequence('applicationID');
+    const newApplication = new Application({
+    applicationID: `CRDA${appid.toString().padStart(3, '100')}`, 
+    location:'India',
+    loanamount:'3,50,000',
+    loanaccountnumber:'IBFC12345',
+    tenure:'6 months',
+    interest:'25%',
+    duedate:'10-09-2024',
+    });
+  
+    await newApplication.save();
+    res.status(200).json({ message: 'Application added successfully' });
+  } catch (error) {
+    console.error('Error adding Application:', error);
+    res.status(500).json({ message: 'Failed to add Application' });
+  };   
+});
+
+
+app.get('/getapplication', async (req, res) => {
+  try {
+    const applications = await Application.find();
+    res.json(applications);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+const profileschema = new mongoose.Schema({
+  name:String,
+  empid:String,
+  emailid:String,
+  contactnumber:String,
+  baselocation:String,
+});  
+      
+const Profile = mongoose.model('Profile', profileschema);
+
+
+app.post('/add-profile', async (req, res) => {
+  const {name, empid, emailid, contactnumber, baselocation,} = req.body;
+
+  const newProfile = new Profile({
+    name,
+    empid,
+    emailid,
+    contactnumber,
+    baselocation,
+  });
+          
+  try {
+    await newProfile.save();
+    res.status(200).json({ message: 'profile added successfully' });
+  } catch (error) {
+    console.error('Error adding profile:', error);
+    res.status(500).json({ message: 'Failed to add profile' });
+  }
+
+  app.get('/getprofile', async (req, res) => {
+    try { 
+      const profiles = await Profile.find();
+      res.json(profiles);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+   });
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

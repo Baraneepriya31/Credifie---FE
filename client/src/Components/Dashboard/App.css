@@ -2,8 +2,6 @@ body {
   background-color:#F7F7F7;
   font-family: 'Roboto';
 }
-
-
 .grid-container{
   display: grid;
   grid-template-columns: 200px 1fr 1fr 1fr ;
@@ -921,6 +919,7 @@ height: 20px;
 padding-left: 15px;
 align-items: center;
 justify-content: center;
+margin-top: 5px;
 }
 .img-pdf img{
 width: 10px;
@@ -949,7 +948,7 @@ position: fixed;
 .overlay{
  background: rgba(49,49,49,0.8);  
 }
-.modal-content {
+.modal-content{
 position: absolute;
 top: 50%;
 left: 50%;
@@ -959,7 +958,19 @@ background: #FFFFFF;
 border-radius: 3px;
  max-width: 500px;
 min-width: 300px; 
+overflow:scroll;
 }
+.modal-content::-webkit-scrollbar{
+    width: 1rem;
+}
+.modal-content::-webkit-scrollbar-track{
+ background-color: #d1cfcf;     
+}
+.modal-content::-webkit-scrollbar-thumb{
+background-color:blue;
+border-radius: 1rem;
+border: 0.5rem solid transparent;
+} 
 .popup-line{
 border: 0.5px solid #777675;
 width: 448px;

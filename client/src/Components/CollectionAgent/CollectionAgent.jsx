@@ -24,6 +24,7 @@ function CollectionAgent () {
     const [searchQuery, setSearchQuery]=useState([]);
     const [selectedRows, setSelectedRows] = useState([]);
     // const [deleteRows, setDelete] = useState([]); 
+    
 
     
     const addagent = () =>{
@@ -158,11 +159,11 @@ function CollectionAgent () {
         } 
       };
 
-    const filteredData = agents.filter(agent =>
-    agent.firstName.toLowerCase().includes(searchQuery) ||
-    agent.contactnumber.toString().includes(searchQuery)
+      const filteredData = agents.filter(agent =>
+        (agent.firstName && agent.firstName.toLowerCase().includes(searchQuery)) ||
+        (agent.contactnumber && agent.contactnumber.toString().includes(searchQuery))
     );
-
+    
 
       const handleSearchChange=(event)=>{
         setSearchQuery(event.target.value)

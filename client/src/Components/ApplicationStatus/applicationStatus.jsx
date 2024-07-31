@@ -8,6 +8,7 @@ import { CiSearch } from "react-icons/ci";
 import closeicon from './ion_close.png';
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
+import axios from'axios';
 
 
 
@@ -25,7 +26,39 @@ function ApplicationStatus() {
   const [email, setEmail] = useState('');
   const [fileType, setFileType] = useState('');
   const [grouppopup, setGroupId] = useState(false); 
+  const [applicationData, setApplicationData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [groupData, setGroupData] = useState({});
+  const [groupId, setAppId] = useState('');
 
+
+  useEffect(() => {
+    const fetchApplicationData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3008/getapplication');
+        setApplicationData(response.data);
+      } catch (error) {
+        console.error('Error fetching group data:', error);
+      }
+    };
+
+    fetchApplicationData();
+  }, []);
+
+  const handleGroupIdChange = (e) => {
+    setAppId(e.target.value);
+  };
+
+  const handleKeyDown = async (e) => {
+    if (e.key === 'Enter') {
+      try {
+        const response = await axios.get(`/api/group/${groupId}`);
+        setGroupData(response.data);
+      } catch (error) {
+        console.error('Error fetching group data:', error);
+      }
+    }
+  };
 
   const Popup = ()=>{
   setPopup(!openPopup);
@@ -162,7 +195,47 @@ function ApplicationStatus() {
       setButtonText('Submitted');
       setButtonColor('#62B8FC');
     }
-};
+  }
+
+  const [loanDetails,setLoanDetails] = useState({
+      location:'',
+     loanamount:'',
+     loanaccountnumber:'',
+     tenure:'',
+     interest:'',
+     duedate:'',
+    });
+    const handleChange = (e, role, field ) => {
+      const { value } = e.target;
+  
+      if (role === 'loan') {
+        setLoanDetails(prevDetails => ({
+          ...prevDetails,
+          [field]: value,
+        }));
+      } 
+    };
+
+    const handleSearchChange = (event) => {
+      setSearchQuery(event.target.value);
+    };
+
+    const filteredData = applicationData.filter(application =>
+      application.loanamount.toLowerCase().includes(searchQuery) ||
+      application.applicationID.toLowerCase().includes(searchQuery)
+      );
+
+    const handleSubmit = async () => {
+      try {
+          await axios.post('http://localhost:3008/add-application', loanDetails);
+          console.log(loanDetails);
+          alert('Application added successfully');
+      } catch (error) {
+          console.error('Error adding application:', error);
+      }
+    };
+
+
     return (
         <div className="application-status-container">
             <div className="application-status-header">
@@ -199,7 +272,7 @@ function ApplicationStatus() {
             <div className="box-header">
                 <div className="box1">
                   <div className="search-container">
-                <input type="text" className="search-box" placeholder="Type here to search..." /><CiSearch className="search-icon"/>
+                <input type="text" className="search-box" placeholder="Type here to search..." value={searchQuery} onChange={handleSearchChange}/><CiSearch className="search-icon"/>
                 </div>
                 <button className="add-application-button" onClick={toggleModal}>Add Loan Application +</button>
                 <button className="download-button" onClick={Popup} >Download  <FiDownload /> </button>
@@ -277,6 +350,7 @@ function ApplicationStatus() {
           </div>
         </div>
       )}
+
        {opensave && (
         <div className="circular-progress">
         <div onClick={openDownload} className="overlay-2"></div>
@@ -310,13 +384,13 @@ function ApplicationStatus() {
         <div className="share-popup">
           <div onClick={closeShare} className="overlay"></div>
           <div className="share-box">
-            
           </div>
         </div>
       )}
 
         <table className='table-ap'>
             <thead>
+            
                 <tr>
                     <td>Application ID</td>
                     <td>Application Date</td>
@@ -328,26 +402,20 @@ function ApplicationStatus() {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td onClick={toggleModal} ><div style={{color:'#0087F3', cursor:'pointer'}} >CRD110279</div></td>
-                    <td>28/08/ 2024</td>
-                    <td onClick={GroupId}><div style={{color:'#0087F3' ,cursor:'pointer'}} >Ambai Group</div></td>
-                    <td>Kannan S</td>
-                    <td>+91 97905 64324</td>
-                    <td>2,50,000</td>
-                    <td>submitted</td>
-                </tr>
-
-                <tr>
-                    <td onClick={toggleModal} ><div style={{color:'#0087F3',cursor:'pointer'}}>CRD110279</div></td>
-                    <td>28/08/ 2024</td>
-                    <td onClick={GroupId}><div style={{color:'#0087F3',cursor:'pointer'}}>Ambai Group</div></td>
-                    <td>Kannan S</td>
-                    <td>+91 97905 64324</td>
-                    <td>2,50,000</td>
+            {filteredData.map((application, index) => (
+            
+                <tr key={index}>
+                    <td onClick={() => toggleModal(application._id)}><div style={{color:'#0087F3',cursor:'pointer'}}>{application.applicationID}</div></td>
+                    <td>28/08/2024</td>
+                    <td onClick={GroupId}><div style={{color:'#0087F3',cursor:'pointer'}}>-</div></td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>{application.loanamount}</td>
                     <td style={{ backgroundColor: buttonColor, color:'white' }}
   onClick={OpenModal} className="status-popup">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                 </tr>
+                ))}
+           
               {Openmodal && (
         <div className="openmodal">
           <div className="modal-list">
@@ -384,6 +452,7 @@ function ApplicationStatus() {
                   </div>
                   
             )}
+          
   
          </tbody>
       </table>
@@ -505,7 +574,7 @@ function ApplicationStatus() {
                      )}
 
 
-        {modal && (
+{modal && (
         <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
@@ -514,24 +583,35 @@ function ApplicationStatus() {
             <p className="status">Status</p>
             <div className="group-id-box">
             <h4>Group ID</h4> 
-            <input type="text"/>
+            <input type="text" value={groupId} onChange={handleGroupIdChange} onKeyDown={handleKeyDown}/>
             <button className="btn"> Disbursed <img src={dropdown} alt="dropdown"/> </button>
             </div>
             <h4 className="group-info">Group Info</h4>
             <div className="group-details">
              <div className="group-information"> 
-              <p>Group Name</p>
-              <p>Group Leader</p>
-              <p>Contact Number</p>
+              <p>{groupData.groupName}</p>
+              <p>{groupData.groupLeader}</p>
+              <p>groupData.group</p>
               <p>Group Members</p>
               <p>Location</p>
               </div>
               <div className="information">
-                <p>Kamala Self Help Group</p>
-                <p>Ezhisai Valli</p>
-                <p>+91 9876543210</p>
-                <p>25</p>
-                <p>Colombo,Sri Lanka</p>
+                <label>
+              <input type="text" id="name" name="name" className="input-line"/>
+              </label>
+              <label>
+              <input type="text" id="name" name="name" className="input-line"/>
+                </label>
+              <label>
+              <input type="text" id="name" name="name" className="input-line"/>
+              </label>
+              <label>
+              <input type="text" id="name" name="name" className="input-line"/>
+              </label>
+              <label>
+              <input type="text" id="name" name="name" className="input-line"
+    value={loanDetails.location} onChange={(e) => handleChange(e, 'loan', 'location')} />
+              </label>
               </div>
               </div>
              <div className="loanstatus-active">
@@ -549,11 +629,26 @@ function ApplicationStatus() {
             <p>Due Date</p>
               </div>
               <div className="information">
-              <p>Rs.1,50,000</p>
-              <p>IDFC2338K 230599D</p>
-              <p>52 Weeks</p>
-              <p>15%</p>
-              <p>15%</p>
+              <label>
+              <input type="text" id="name" name="name" className="input-line"
+       value={loanDetails.loanamount} onChange={(e) => handleChange(e, 'loan', 'loanamount')} />
+              </label>
+             <label>
+             <input type="text" id="name" name="name" className="input-line"
+        value={loanDetails.loanaccountnumber} onChange={(e) => handleChange(e, 'loan', 'loanaccountnumber')}/>
+             </label>
+             <label>
+             <input type="text" id="name" name="name" className="input-line"
+      value={loanDetails.tenure} onChange={(e) => handleChange(e, 'loan', 'tenure')} />
+             </label>
+             <label>
+             <input type="text" id="name" name="name" className="input-line" 
+        value={loanDetails.interest} onChange={(e) => handleChange(e, 'loan', 'interest')}/>
+             </label>
+              <label>
+              <input type="date" id="name" name="name" className="input-line"
+              value={loanDetails.duedate} onChange={(e) => handleChange(e, 'loan', 'duedate')} />
+              </label>
               </div>
               </div>
               <h4 className="group-info">Attachments</h4>
@@ -567,17 +662,14 @@ function ApplicationStatus() {
                 </div>
                 <div>
                 <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
-                <hr className="attachments-line" />
-                <p className="not-attached">*Not Attached </p>
-                
-                <hr className="attachments-line" />
-                <br/>
+                <input type="text" id="name" name="name" className="input-line" />
+                <input type="text" id="name" name="name" className="input-line" />
                 <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
-                <hr className="attachments-line" />
+                <input type="text" id="name" name="name" className="input-line" />
                 </div>
               </div>
               <div className="add-loan-button">
-                <button>ADD</button>
+                <button onClick={handleSubmit}>ADD</button>
               </div>
             <button className="close-modal" onClick={toggleModal}>
               <img src={closeicon} alt="icon" />

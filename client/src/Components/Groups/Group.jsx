@@ -36,6 +36,8 @@ function Group() {
   const [searchQuery, setSearchQuery] = useState('');
   const [groupData, setGroupData] = useState([]);
   const [totalGroups, setTotalGroups] =useState(0);
+  const [selectedGroup] = useState(null);
+
 
   useEffect(() => {
     const fetchGroupData = async () => {
@@ -257,6 +259,14 @@ const handleSubmit = async () => {
     setDisableModal(false);
   };
 
+  // const handleInputChange = (e) => {
+  //       const { name, value } = e.target;
+  //       setSelectedGroup(prevState => ({
+  //           ...prevState,
+  //           [name]: value
+  //       }));
+  //   };
+
   
 
          
@@ -453,7 +463,7 @@ const handleSubmit = async () => {
               </table>
             </div>
             
-                     {grouppopup && (
+                     {grouppopup && selectedGroup(
                       <div className='grouppopup'>
                         <div onClick={GroupId} className='overlay'></div>
                         <div className="groupid-content">
@@ -475,22 +485,22 @@ const handleSubmit = async () => {
                     
                       <tr>
                        <td className='id-details'>Group Id</td>
-                       <td className='id-info'>- &nbsp; G 401</td>
+                       <td className='id-info'>- &nbsp; {selectedGroup.groupID}</td>
                       </tr>
                       &nbsp;
                       <tr>
                        <td className='id-details'>Group Name</td>
-                       <td  className='id-info'>- &nbsp;  group.groupName</td>
+                       <td  className='id-info'>- &nbsp;  {selectedGroup.groupName}</td>
                       </tr>
                       &nbsp;
                       <tr>
                        <td className='id-details'>Group Leader</td>
-                       <td  className='id-info'>- &nbsp;  group.groupLeader</td>
+                       <td  className='id-info'>- &nbsp;  {selectedGroup.groupLeader}</td>
                       </tr>
                       &nbsp;
                       <tr>
                        <td className='id-details'>Contact Number</td>
-                       <td  className='id-info'>- &nbsp;+ 91 7890123456</td>
+                       <td  className='id-info'>- &nbsp;{selectedGroup.contactNumber}</td>
                       </tr>
                     </table>
                    </div> 
@@ -642,7 +652,6 @@ const handleSubmit = async () => {
       </div>
     )}
 
-
                    {disablemodal && (
                     <div className='disablemodal'>
                     <div onClick={DisableModal} className="overlay"></div>
@@ -653,7 +662,6 @@ const handleSubmit = async () => {
                          <p className="disablepara">
                            {isConfirmed ? 'Are you sure?' : 'Do you want to disable this group?'} 
                           </p>
-                     
                            <div className="disable-buttons">
                           
             <button onClick={handleConfirm} className="confirm-button">Confirm</button>
