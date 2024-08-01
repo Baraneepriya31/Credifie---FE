@@ -9,7 +9,6 @@
    import rectangle3 from './Rectangle 259.png'
    import dropdown from './Vector.png'
    import closeion from './ion_close.png'
-   import dropdownblack from './dropdown black.png'
    import pdf from './pdf-file 1.png'
    import elipse from './Ellipse 45.png'
    import elipse2 from './Ellipse 46.png'
@@ -364,11 +363,8 @@
              <div className="loanstatus-active">
               <h4>Loan Status <span>ACTIVE</span></h4>
               <p className="collection">Collection Agent</p>
+              <p className="collec-agent"> R.Suresh Kumar</p>
             </div>
-
-               <img className="dropdown" src={dropdownblack} alt="dropdown"/>
-
-              
               <div className="group-details">
               <div className="group-information">
             <p>Loan Account Number</p>
@@ -405,12 +401,9 @@
                 <hr className="attachments-line" />
                 </div>
               </div>
+              <button className="close-modal" onClick={toggleModal}>
+                <img src={closeion} alt="icon" /></button>
               </div>
-            <button className="close-modal" onClick={toggleModal}>
-
-              <img src={closeion} alt="icon" />
-            </button>
-          
           </div>
         )}
         </div>

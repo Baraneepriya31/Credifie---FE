@@ -556,7 +556,6 @@ form button:hover {
   font-size: 12px;
   color: #393938;
 }
-
 .group-id-box button{
     background-color: #2CBA00;
     height: 30px;
@@ -572,9 +571,12 @@ form button:hover {
   color: #ffffff;
   border: none;
   border-radius: 4px;
-  margin-left: 200px;
+  margin-left: 190px;
+  height: 30px;
+  width: 70px;
+  margin-top: 10px;
+  
 }
-
 .progress-bar {
   position: relative;
   background: conic-gradient(#7d2ae8 0deg, #ededed 0deg);

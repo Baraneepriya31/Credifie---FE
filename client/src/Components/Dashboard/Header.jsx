@@ -83,7 +83,6 @@ function Header() {
       emailid:'',
       contactnumber:'',
       baselocation:'',
-     
     });
     const handleChange = (e, role, field ) => {
       const { value } = e.target;
@@ -182,7 +181,7 @@ function Header() {
                             id="name"
                             name="name"
                             disabled={!isEditing}
- value={adminDetails.name} onChange={(e) => handleChange(e, 'Profile', 'name')}
+ value={profileDetails.name} onChange={(e) => handleChange(e, 'Profile', 'name')}
                         />
                     </div>
                     </div>
@@ -194,7 +193,7 @@ function Header() {
                             id="empId"
                             name="empid"
                             disabled={!isEditing}
- value={adminDetails.empid} onChange={(e) => handleChange(e, 'Profile', 'empid')}
+ value={profileDetails.empid} onChange={(e) => handleChange(e, 'Profile', 'empid')}
                        />
                     </div>
                     </div>
@@ -206,7 +205,7 @@ function Header() {
                             id="email"
                             name="email"
                             disabled={!isEditing}
-value={adminDetails.emailid} onChange={(e) => handleChange(e, 'Profile', 'emailid')}
+value={profileDetails.emailid} onChange={(e) => handleChange(e, 'Profile', 'emailid')}
                         />
                     </div>
                     </div>
@@ -218,7 +217,7 @@ value={adminDetails.emailid} onChange={(e) => handleChange(e, 'Profile', 'emaili
                             id="number"
                             name="contact number"
                             disabled={!isEditing}
-value={adminDetails.contactnumber} onChange={(e) => handleChange(e, 'Profile', 'contactnumber')}
+value={profileDetails.contactnumber} onChange={(e) => handleChange(e, 'Profile', 'contactnumber')}
                         />
                     </div>
                     </div>
@@ -230,7 +229,7 @@ value={adminDetails.contactnumber} onChange={(e) => handleChange(e, 'Profile', '
                             id="location"
                             name="location"
                             disabled={!isEditing}
-value={adminDetails.baselocation} onChange={(e) => handleChange(e, 'Profile', 'baselocation')}
+value={profileDetails.baselocation} onChange={(e) => handleChange(e, 'Profile', 'baselocation')}
                         />
                          {/* <span>Edit</span>  */}
                     </div>

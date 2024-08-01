@@ -1,5 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
@@ -367,15 +370,15 @@ db.once('open', function() {
         
   const Profile = mongoose.model('Profile', profileschema);
 
-  app.get('/api/loan', async (req, res) => {
+  app.get('/api/profile', async (req, res) => {
     try {
-      const profile = await Loan.find();
+      const profile = await Profile.find();
       res.json(profile);
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
   });
-  app.post('/add-loan', async (req, res) => {
+  app.post('/add-profile', async (req, res) => {
     const {name, empid,emailid,contactnumber,baselocation,} = req.body;
 
     const newProfile = new Profile({
@@ -394,11 +397,43 @@ db.once('open', function() {
       res.status(500).json({ message: 'Failed to add profile' });
     }
   });     
-
-     
+    
+  const upload = multer({ dest: 'uploads/' });   
   
+  app.post('/send-document', upload.single('file'), (req, res) => {
+    const { email, fileType } = req.body;
+    const file = req.file;
+  
+    if (!file) {
+      return res.status(400).send('No file uploaded.');
+    }
+  })
+   
+  const mailOptions = {
+    from: 'karthika8849@gmail.com',
+    to: email,
+    subject: `Your ${fileType} report`,
+    text: `Please find attached your ${fileType} report.`,
+    attachments: [
+      {
+        filename: fintechdetails,
+        path: file.path,
+      },
+    ],
+  };
+  
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return res.status(500).send(error.toString());
+    }
+
+    fs.unlinkSync(file.path); // delete the file after sending the email
+    res.status(200).send('Email sent: ' + info.response);
+  });
+  
+
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
-
+  
 });

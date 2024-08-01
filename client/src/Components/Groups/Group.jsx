@@ -1,5 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import * as XLSX from 'xlsx';
 import { CiSearch} from 'react-icons/ci';
 import dropdown from './Vector.png';
 import closeicon from './ion_close.png';
@@ -15,7 +18,7 @@ import './Group.css';
 
 
 
-function Group() {
+ function Group() {
             
   const [addmodal, setAddmodal] = useState(false);
   const [buttonText, setButtonText,] = useState('Pending');
@@ -34,17 +37,15 @@ function Group() {
   const [disabledRows, setDisabledRows] = useState([]); 
   const [searchQuery, setSearchQuery] = useState('');       
   const [groups, setGroups] = useState([]);
-  // const [agents, setAgents] = useState([]);
+  const tableRef = useRef(null);
 
-  
-  const data = [
+
+  const initialdata = [
     { id: 1, name: 'John Doe', age: 28 },
   ];
-  
   const addgroup = () =>{
     setAddmodal(!addmodal);
     setGroups([...groups, `Group ${groups.length + 1}`]);
-  
   }
   if(addmodal) {
     document.body.classList.add('active-modal')
@@ -61,17 +62,21 @@ function Group() {
         document.body.classList.remove('active-model')
     
       }
-
-    const openDownload=()=>{
-      setopenDownload(true);
-      setPopup(false);
+    const openDownload=(e)=>{
+        e.preventDefault();
+        if (fileType === 'pdf') {
+           generatePDF();
+        } else  if (fileType === 'xlsx') {
+          generateExcel();
+        };
+       setopenDownload(true);
+       setPopup(false);
     }
-  
     const openShare =()=>{
       setopenShare(true);
       setPopup(false);
     }
-  
+    
     const sendSuccess=()=>{
       setopensuccess(true);
       setopenShare(false);
@@ -95,12 +100,7 @@ function Group() {
       setEmail(e.target.value);
     };
   
-    const handleSend = (e) => {
-      e.preventDefault();
-      console.log(`Sending ${fileType} report to ${email}`);
-      closeShare(); 
-    };
-
+    
     const handleSearchChange = (event) => {
       setSearchQuery(event.target.value);
     };
@@ -111,13 +111,11 @@ function Group() {
     const Closedisable = () => {
       setDisableModal(false);
     };
-  
-    
     const handleConfirm = () => {
     setIsConfirmed(true);
   };
-    const filteredData = data.filter(row => 
-      row.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const filteredData = initialdata.filter(row => 
+      row.name.toLowerCase().includes(searchQuery) ||
       row.age.toString().includes(searchQuery)
     );
          
@@ -203,20 +201,8 @@ function Group() {
       }));
     }
   };
-  // useEffect(() => {
-  //   const fetchAgents = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:3008/api/agents');
-  //       setAgents(response.data);
-  //     } catch (error) {
-  //       console.error('Error fetching agents:', error);
-  //     }
-  //   };
-
-  //   fetchAgents();
-  // }, []);
-               
-
+  
+  
 const addMemberRow = () => {
     setGroupDetails({
         ...groupDetails,
@@ -248,10 +234,101 @@ const handleSubmit = async () => {
     setDisabledRows(prevState => [...new Set([...prevState, ...selectedRows])]);
     setSelectedRows([]); 
   };
-
   
+  const generatePDF = () => {
+    // return new Promise((resolve, error) =>{
+    const input = tableRef.current; 
+    if (input)  {
+      html2canvas(input)
+        .then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF();
+          pdf.addImage(imgData, 'PNG', 0, 0);
+          pdf.save('download.pdf');
+          return pdf.output('blob');
+        })
+        .catch((error) => {
+          console.error('Error generating PDF:', error);
+        });
+    } else {
+      console.error('Table element not found');
+    }
+    setSelectedRows([]); 
+  // })
+  };
 
-         
+ const generateExcel = () => {
+  const mappedData = filteredData.map((row, index) => {
+    if (selectedRows.includes(index)) {
+      return {
+        'Group ID': row.id,
+        'Group Name': 'Chennai Group',
+        'Group Leader': 'Vijay',
+        'Contact No': '+91 8907654321',
+        'Loan Amount': 'Rs.3,50,000',
+        'Collection Agent': 'B. Vijay',
+        'Over Due': 'Rs.25,000',
+        'Loan Status': '*Active/3',
+        'Application Status': buttonText
+      };
+    }
+    return null;
+  }).filter(row => row !== null);
+
+  // Log the mapped data
+  console.log("Mapped Data:", mappedData);
+
+  // Check if mappedData has data
+  if (mappedData.length === 0) {
+    console.error("No data to write to Excel");
+    return;
+  }
+
+  // Generate Excel sheet
+  const we = XLSX.utils.json_to_sheet(mappedData);
+  const wd = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wd, we, 'Sheet1');
+  XLSX.writeFile(wd, 'download.xlsx');
+   const blob = XLSX.write(wd, { bookType: 'xlsx', type: 'blob' });
+   return blob;
+};
+const handleSend = async (e) => {
+  e.preventDefault();
+  console.log(`Sending ${fileType} report to ${email}`);
+ 
+  const formData = new FormData();
+  formData.append('email', email);
+  formData.append('fileType', fileType);
+
+  let file;
+  try {
+    if (fileType === 'PDF') {
+      file = await generatePDF();
+    } else if (fileType === 'Excel') {
+      file = generateExcel();
+    }
+
+    formData.append('file', file, `report.${fileType === 'PDF' ? 'pdf' : 'xlsx'}`);
+
+    const response = await fetch('http://localhost:3000/send-email', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (response.ok) {
+      console.log('Email sent successfully');
+      sendSuccess();
+    } else {
+      console.error('Error sending email');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+
+  closeShare();
+};
+
+
   return(
     <div className='group'>
        <div className='total-group'>
@@ -271,6 +348,7 @@ const handleSubmit = async () => {
               <button onClick={DisableModal} className='disable-btn'>Disable</button>
               <button onClick={addgroup} className="add-btn">Add Group   +</button>
               <button className="download-button" onClick={Popup} >Download  <FiDownload /> </button>
+        
             </div>
           </div>
             {/* First popup for download and share */}
@@ -293,9 +371,9 @@ const handleSubmit = async () => {
                     </div>
                     <div className="radio-btn">
                     <p>File type</p>
-                    <input type="radio"/>.xlsx
+                    <input type="radio" name="fileType" value="xlsx" onChange={() => setFileType('xlsx')} />.xlsx
                     &nbsp;
-                    <input type="radio"/>.pdf
+                    <input type="radio" name="fileType" value="pdf" onChange={() => setFileType('pdf')} />.pdf
                     </div>
                     <div className="dwnl-button">
                     <button className="downloat-btn" onClick={openDownload}>Download</button>
@@ -369,7 +447,7 @@ const handleSubmit = async () => {
       )}
             
             <div>
-              <table className='table2'>
+              <table className='table2' ref={tableRef}>
               
                  
                 <th>Group ID</th>
@@ -409,7 +487,28 @@ const handleSubmit = async () => {
                  
                   ))}
                    &nbsp;&nbsp;
-                          
+                    {filteredData.map((row, index) => (
+                  <tr key={row.id}
+                  className={disabledRows.includes(index) ? 'disabled' : ''}
+                  style={{ backgroundColor: disabledRows.includes(index)
+                     ? '#d1d1d5' : 'transparent' }}>
+                      <td onClick={GroupId} className="application-no">G.401</td>
+                    <td>Ambai Group</td>
+                    <td>Vijay</td>
+                    <td>+91 8907654321 </td>
+                    <td>Rs.3,50,000</td>
+                    <td>B. Vijay</td>
+                    <td>Rs.25,000</td>
+                    <td className='active-status'>*Active/3</td>
+                    <td style={{ backgroundColor: buttonColor, color:'white' }}
+         onClick={OpenModal} className="loan-status">{buttonText}
+      <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+                 
+                    <td><input  type="checkbox"
+                  /></td>
+                  </tr>
+                 
+                  ))}     
                   {Openmodal && (
         <div className="openmodal3">
           <div className="modal-list">
