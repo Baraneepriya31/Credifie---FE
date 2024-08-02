@@ -327,9 +327,6 @@
                   </div>
             )}
              
-
-            
-           
               </table>
                  {modal && (
         <div className="modal">
@@ -339,7 +336,7 @@
             <h4 className="appno-status">Application no SLK-123456</h4>
             <p className="status">Status</p>
 
-            <button className="btn"> Disbursed <img src={dropdown} alt="dropdown"/> </button>
+            <button className="btn"> Disbursed </button>
 
             
             <h4 className="group-info">Group Info</h4>

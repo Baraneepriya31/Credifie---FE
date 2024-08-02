@@ -288,42 +288,20 @@ const handleSubmit = async () => {
   const wd = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wd, we, 'Sheet1');
   XLSX.writeFile(wd, 'download.xlsx');
-   const blob = XLSX.write(wd, { bookType: 'xlsx', type: 'blob' });
-   return blob;
+  
 };
 const handleSend = async (e) => {
   e.preventDefault();
   console.log(`Sending ${fileType} report to ${email}`);
- 
-  const formData = new FormData();
-  formData.append('email', email);
-  formData.append('fileType', fileType);
-
-  let file;
   try {
-    if (fileType === 'PDF') {
-      file = await generatePDF();
-    } else if (fileType === 'Excel') {
-      file = generateExcel();
-    }
-
-    formData.append('file', file, `report.${fileType === 'PDF' ? 'pdf' : 'xlsx'}`);
-
-    const response = await fetch('http://localhost:3000/send-email', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (response.ok) {
-      console.log('Email sent successfully');
-      sendSuccess();
-    } else {
-      console.error('Error sending email');
-    }
+    await axios.post('/api/send-report', { email, fileType });
+    alert('Email sent successfully!');
   } catch (error) {
-    console.error('Error:', error);
+    alert('Failed to send email.');
   }
-
+  
+  
+  
   closeShare();
 };
 

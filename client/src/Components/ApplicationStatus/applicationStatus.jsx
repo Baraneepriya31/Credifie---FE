@@ -25,6 +25,19 @@ function ApplicationStatus() {
   const [grouppopup, setGroupId] = useState(false); 
   const [appstatuspopup, setAppstatusPopup] = useState(false);
   const [collectionagent, setCollectionagent] = useState(false);
+  const [selectedAgent, setSelectedAgent] = useState('R.Suresh Krishna');
+  const [agents, setAgents] = useState([]);
+           
+  // const agents = [
+  //   'B.Vijay',
+  //   'S.Ramesh',
+  //   'A.Karthik',
+  //   'R.Ram',
+  //   'V.Vignesh',
+  //   'D.Dhanush',
+  //   'V.Harish',
+  // ];
+
 
   const Popup = ()=>{
   setPopup(!openPopup);
@@ -122,12 +135,30 @@ function ApplicationStatus() {
     const Collectionagent = () => {
       setCollectionagent(!collectionagent);
     };
-  
     if(collectionagent) {
       document.body.classList.add('active-modal')
     } else {
       document.body.classList.remove('active-modal')
     }
+    useEffect(() => {
+      const fetchAgents = async () => {
+        try {
+          const response = await axios.get('/api/agents'); // Adjust the endpoint as necessary
+          setAgents(response.data);
+        } catch (error) {
+          console.error('Error fetching agents:', error);
+        }
+      };
+  
+      fetchAgents();
+    }, []);
+
+    
+    const handleAgentSelect = (agent) => {
+      setSelectedAgent(agent);
+      setCollectionagent(false); // Close the dropdown after selecting an agent
+    };
+    
 
     const [loanDetails,setLoanDetails] = useState({
       location:'',
@@ -570,7 +601,8 @@ function ApplicationStatus() {
         <div className="app-statuspopup">
           <div className="modal-list">
             <div className="submitted">
-            <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
+  <input   className="radio-button" type="radio" name="status" 
+ value="submitted" onChange={handleRadioChange} /> 
             <p className="submit" >Submitted</p>
             </div>
             <div className="submitted">
@@ -637,17 +669,16 @@ function ApplicationStatus() {
               <p  className="collection">Collection Agent</p>
             </div>
            
-             <button onClick={Collectionagent} className="btn2">R.Suresh Krishna <img className="dropdown" src={dropdownblack} alt="dropdown2"/> </button>
+   <button onClick={Collectionagent} className="btn2">  {selectedAgent} &nbsp;
+     <img className="dropdown" src={dropdownblack} alt="dropdown2"/> </button>
               {collectionagent && (
                <div className="collection-agent-popup">
                <div className = "agent-list">
-                       <li>B.Vijay</li>
-                       <li>S.Ramesh</li>
-                       <li>A.karthik</li>
-                       <li>R.Ram</li>
-                       <li>V.Vignesh</li>
-                       <li>D.Dhanush</li>
-                       <li>V.Harish</li>
+               {agents.map((agent, index) => (
+              <li key={index} onClick={() => handleAgentSelect(agent)}>
+                {agent}
+              </li>
+            ))}
                        {/* <button onClick={Collectionagent} className="cancel">Cancel</button>
                        <button className="btn-ok">Ok</button> */}
                </div>

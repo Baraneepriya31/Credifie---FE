@@ -217,6 +217,12 @@ height: 10px;
 color: #FFFFFF;
 margin-right: 10px;
 }
+.submit p{
+  cursor: pointer;
+}
+.submitted{
+  cursor: pointer;
+}
 .download-popup {
     position: fixed;
     top: 0;
@@ -576,7 +582,7 @@ form button:hover {
  } 
  .collection-agent-popup{
   position: absolute;
-    margin-left: 70%;   
+    margin-left: 63%;   
   background-color:#FFFFFF;
   width: 120px;
   height:210px;

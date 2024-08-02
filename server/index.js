@@ -430,9 +430,51 @@ db.once('open', function() {
     res.status(200).send('Email sent: ' + info.response);
   });
   
+  router.get('/agents', async (req, res) => {
+    try {
+      const agents = await Agent.find({}, 'name'); // Fetch only the 'name' field
+      res.json(agents);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+  
+  module.exports = router;
 
+  app.post('/api/send-document', async (req, res) => {
+    const { email, fileType } = req.body;
+  
+    // Logic to generate the file (PDF or Excel)
+    const filePath = generateFile(fileType);
+
+    const emailOptions = {
+      from: 'your-email@gmail.com',
+      to: email,
+      subject: 'Your Document',
+      text: 'Please find the attached document.',
+      attachments: [
+        {
+          path: filePath,
+        },
+      ],
+    };
+  
+    try {
+      await transporter.sendMail(emailOptions);
+      res.status(200).send('Email sent successfully!');
+    } catch (error) {
+      res.status(500).send('Failed to send email.');
+    }
+  });
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
-  
+  function generateFile(fileType) {
+    e.preventDefault();
+    if (fileType === 'pdf') {
+       generatePDF();
+    } else  if (fileType === 'xlsx') {
+      generateExcel();
+    };
+  }
 });
