@@ -426,7 +426,6 @@ db.once('open', function() {
     if (error) {
       return res.status(500).send(error.toString());
     }
-
     fs.unlinkSync(file.path); // delete the file after sending the email
     res.status(200).send('Email sent: ' + info.response);
   });

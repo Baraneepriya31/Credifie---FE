@@ -363,8 +363,8 @@
              <div className="loanstatus-active">
               <h4>Loan Status <span>ACTIVE</span></h4>
               <p className="collection">Collection Agent</p>
-              <p className="collec-agent"> R.Suresh Kumar</p>
             </div>
+            <p className="collec-agent"> R.Suresh Kumar</p>
               <div className="group-details">
               <div className="group-information">
             <p>Loan Account Number</p>

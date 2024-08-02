@@ -550,7 +550,6 @@ form button:hover {
   width: 40px;
   height: 20px;
 }
-
 .status {
   margin-left: 320px;
   font-size: 12px;
@@ -564,8 +563,38 @@ form button:hover {
     margin-left: 200px;
     color: #FFFFFF;
     font-size: 12px;
+    cursor: pointer;
 }
-
+.app-statuspopup{
+  position: absolute;
+    margin-left: 70%;   
+  background-color:#FFFFFF;
+  width: 90px;
+  height: 210px;
+  z-index: 10;
+ box-shadow: 0px 15px 15px 0px #0000001A;
+ } 
+ .collection-agent-popup{
+  position: absolute;
+    margin-left: 70%;   
+  background-color:#FFFFFF;
+  width: 120px;
+  height:210px;
+  z-index: 10;
+ box-shadow: 0px 15px 15px 0px #0000001A;
+ } 
+ .agent-list > li{
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+  margin-left: 10px;
+  margin-top: 10px;
+ }
+ .cancel{
+  background-color: #FFFFFF;
+  border: none;
+  color: #393938;
+ }
 .add-loan-button button{
   background-color: #25AE7A;
   color: #ffffff;

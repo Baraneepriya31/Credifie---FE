@@ -219,7 +219,6 @@ const handleSubmit = async () => {
         console.error('Error adding group:', error);
     }
   };
-
   const handleCheckboxChange = (index) => {
     setSelectedRows(prevState => {
       if (prevState.includes(index)) {

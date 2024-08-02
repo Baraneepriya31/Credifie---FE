@@ -23,7 +23,8 @@ function ApplicationStatus() {
   const [email, setEmail] = useState('');
   const [fileType, setFileType] = useState('');
   const [grouppopup, setGroupId] = useState(false); 
-
+  const [appstatuspopup, setAppstatusPopup] = useState(false);
+  const [collectionagent, setCollectionagent] = useState(false);
 
   const Popup = ()=>{
   setPopup(!openPopup);
@@ -33,7 +34,6 @@ function ApplicationStatus() {
   }
   else{
     document.body.classList.remove('active-model')
-
   }
 
   const openDownload=()=>{
@@ -109,7 +109,26 @@ function ApplicationStatus() {
     } else {
       document.body.classList.remove('active-modal')
     }
-        
+    const AppstatusPopup = () => {
+      setAppstatusPopup(!appstatuspopup);
+    };
+  
+    if(appstatuspopup) {
+      document.body.classList.add('active-modal')
+    } else {
+      document.body.classList.remove('active-modal')
+    }
+
+    const Collectionagent = () => {
+      setCollectionagent(!collectionagent);
+    };
+  
+    if(collectionagent) {
+      document.body.classList.add('active-modal')
+    } else {
+      document.body.classList.remove('active-modal')
+    }
+
     const [loanDetails,setLoanDetails] = useState({
       location:'',
      loanamount:'',
@@ -226,7 +245,6 @@ function ApplicationStatus() {
             <div className="application-status-text">
                 <p>Total Application</p>
             </div> 
-            
             <div className="table-container">
             <div className="box-header">
                 <div className="box1">
@@ -546,8 +564,45 @@ function ApplicationStatus() {
             <div className="group-id-box">
             <h4>Group ID</h4> 
             <input type="text"/>
-            <button className="btn"> Disbursed <img src={dropdown} alt="dropdown"/> </button>
+            <button style={{ backgroundColor: buttonColor, color:'white' }} onClick={AppstatusPopup} className="btn"> {buttonText} <img src={dropdown} alt="dropdown"/> </button>
             </div>
+            {appstatuspopup && (
+        <div className="app-statuspopup">
+          <div className="modal-list">
+            <div className="submitted">
+            <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
+            <p className="submit" >Submitted</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="acknowledged" onChange={handleRadioChange} />
+            <p className="submit">Acknowledged</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
+            <p className="submit">Approved</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
+            <p className="submit">Deadline</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
+            <p  className="submit">Disbursed</p>
+            </div> <div className="submitted">
+            <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
+            onChange={handleRadioChange} />
+            <p className="submit">In-Progress</p>
+            </div>
+            <div className="submitted">
+            <p onClick={AppstatusPopup} className="cancel">Cancel</p>
+            <button onClick={AppstatusPopup} className="btn-ok">Ok</button>
+            </div>
+            
+                  </div>
+                  </div>
+                  
+            )}
+  
             <h4 className="group-info">Group Info</h4>
             <div className="group-details">
              <div className="group-information"> 
@@ -579,10 +634,25 @@ function ApplicationStatus() {
               </div>
              <div className="loanstatus-active">
               <h4>Loan Status <span>ACTIVE</span></h4>
-              <p className="collection">Collection Agent</p>
+              <p  className="collection">Collection Agent</p>
             </div>
-             <button className="btn2">R.Suresh Krishna <img className="dropdown" src={dropdownblack} alt="dropdown2"/> </button>
-              
+           
+             <button onClick={Collectionagent} className="btn2">R.Suresh Krishna <img className="dropdown" src={dropdownblack} alt="dropdown2"/> </button>
+              {collectionagent && (
+               <div className="collection-agent-popup">
+               <div className = "agent-list">
+                       <li>B.Vijay</li>
+                       <li>S.Ramesh</li>
+                       <li>A.karthik</li>
+                       <li>R.Ram</li>
+                       <li>V.Vignesh</li>
+                       <li>D.Dhanush</li>
+                       <li>V.Harish</li>
+                       {/* <button onClick={Collectionagent} className="cancel">Cancel</button>
+                       <button className="btn-ok">Ok</button> */}
+               </div>
+               </div>
+              )}
               <div className="group-details">
               <div className="group-information">
               <p >Loan Amount</p>
