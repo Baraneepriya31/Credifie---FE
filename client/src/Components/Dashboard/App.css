@@ -972,7 +972,8 @@ body.active-modal {
       width: 0.8rem;
 }
 .modal-content::-webkit-scrollbar-track{
-   background-color: #d1cfcf;     
+   background-color: #d1cfcf;   
+     
 }
 .modal-content::-webkit-scrollbar-thumb{
   background-color:#25AE7A;

@@ -27,7 +27,10 @@ function ApplicationStatus() {
   const [collectionagent, setCollectionagent] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState('R.Suresh Krishna');
   const [agents, setAgents] = useState([]);
-           
+  const [togglemodal2, settoggleModal2] = useState(false);
+  const [appstatuspopup2, setAppstatusPopup2] = useState(false);
+  const [collectionagent2, setCollectionagent2] = useState(false);
+
   // const agents = [
   //   'B.Vijay',
   //   'S.Ramesh',
@@ -244,7 +247,18 @@ function ApplicationStatus() {
       setButtonText('Disbursed');
       setButtonColor('#2CBA00');
     }
-};
+  }    
+    const toggleModal2 = () => {
+      settoggleModal2(!togglemodal2)
+    }
+
+    const AppstatusPopup2 = () => {
+      setAppstatusPopup2(!appstatuspopup2);
+    };
+       
+       const Collectionagent2 = () => {
+        setCollectionagent2(!collectionagent2)
+       }
     return (
         <div className="application-status-container">
             <div className="application-status-header">
@@ -411,7 +425,7 @@ function ApplicationStatus() {
             </thead>
             <tbody>
                 <tr>
-                    <td onClick={toggleModal} ><div style={{color:'#0087F3', cursor:'pointer'}} >CRD110279</div></td>
+  <td onClick={toggleModal2} ><div style={{color:'#0087F3', cursor:'pointer'}} >CRD110279</div></td>
                     <td>28/08/ 2024</td>
                     <td onClick={GroupId}><div style={{color:'#0087F3' ,cursor:'pointer'}} >Ambai Group</div></td>
                     <td>Kannan S</td>
@@ -421,7 +435,7 @@ function ApplicationStatus() {
                 </tr>
 
                 <tr>
-                    <td onClick={toggleModal} ><div style={{color:'#0087F3',cursor:'pointer'}}>CRD110279</div></td>
+                    <td onClick={toggleModal2} ><div style={{color:'#0087F3',cursor:'pointer'}}>CRD110279</div></td>
                     <td>28/08/ 2024</td>
                     <td onClick={GroupId}><div style={{color:'#0087F3',cursor:'pointer'}}>Ambai Group</div></td>
                     <td>Kannan S</td>
@@ -469,7 +483,135 @@ function ApplicationStatus() {
   
          </tbody>
       </table>
-        
+      {togglemodal2 && (
+        <div className="modal">
+          <div onClick={toggleModal2} className="overlay"></div>
+          <div className="modal-content">
+            
+            <h4 className="appno-status">Application no SLK-123456</h4>
+            <p className="status">Status</p>
+
+            <button style={{ backgroundColor: buttonColor, color:'white' }}
+            onClick={AppstatusPopup2} className="btn"> {buttonText} &nbsp;
+             <img src={dropdown} alt="dropdown" /></button>
+             {appstatuspopup2 && (
+        <div className="app-statuspopup">
+          <div className="modal-list">
+            <div className="submitted">
+  <input   className="radio-button" type="radio" name="status" 
+ value="submitted" onChange={handleRadioChange} /> 
+            <p className="submit" >Submitted</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="acknowledged" onChange={handleRadioChange} />
+            <p className="submit">Acknowledged</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
+            <p className="submit">Approved</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
+            <p className="submit">Deadline</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
+            <p  className="submit">Disbursed</p>
+            </div> <div className="submitted">
+            <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
+            onChange={handleRadioChange} />
+            <p className="submit">In-Progress</p>
+            </div>
+            <div className="submitted">
+            <p onClick={AppstatusPopup2} className="cancel">Cancel</p>
+            <button onClick={AppstatusPopup2} className="btn-ok">Ok</button>
+            </div>
+            
+                  </div>
+                  </div>
+                  
+            )}
+  
+            
+            <h4 className="group-info">Group Info</h4>
+            <div className="group-details">
+             <div className="group-information"> 
+              <p>Group Name</p>
+              <p>Group Leader</p>
+              <p>Contact Number</p>
+              <p>Group Members</p>
+              <p>Location</p>
+              </div>
+              <div className="information">
+                <p>Kamala Self Help Group</p>
+                <p>Ezhisai Valli</p>
+                <p>+91 9876543210</p>
+                <p>25</p>
+                <p>Colombo,Sri Lanka</p>
+              </div>
+              </div>
+              
+             <div className="loanstatus-active">
+              <h4>Loan Status <span>ACTIVE</span></h4>
+              <p className="collection">Collection Agent</p>
+            </div>
+            <button onClick={Collectionagent2} className="btn2">  {selectedAgent} &nbsp;
+     <img className="dropdown" src={dropdownblack} alt="dropdown2"/> </button>
+              {collectionagent2 && (
+               <div className="collection-agent-popup">
+               <div className = "agent-list">
+               {agents.map((agent, index) => (
+              <li key={index} onClick={() => handleAgentSelect(agent)}>
+                {agent}
+              </li>
+            ))}
+                       {/* <button onClick={Collectionagent} className="cancel">Cancel</button>
+                       <button className="btn-ok">Ok</button> */}
+               </div>
+               </div>
+              )}
+              <div className="group-details">
+              <div className="group-information">
+            <p>Loan Account Number</p>
+            <p>Tenure</p>
+            <p>Interest</p>
+            <p>Due Date</p>
+              </div>
+              <div className="information">
+              <p>Rs.1,50,000</p>
+              <p>IDFC2338K 230599D</p>
+              <p>52 Weeks</p>
+              <p>15%</p>
+              <p>15%</p>
+              </div>
+              </div>
+             
+              <h4 className="group-info">Attachments</h4>
+              <div className="group-details">
+                <div className="group-information">
+                 <p>Pan card</p>
+                 <br/>
+                 <p>Photos</p>
+                 <br/>
+                 <p>Bank Pass Book</p>
+                </div>
+                <div>
+                <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
+                <hr className="attachments-line" />
+                <p className="not-attached">*Not Attached </p>
+                
+                <hr className="attachments-line" />
+                <br/>
+                <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
+                <hr className="attachments-line" />
+                </div>
+              </div>
+              <button className="close-modal" onClick={toggleModal2}>
+                <img src={closeicon} alt="icon" /></button>
+              </div>
+          </div>
+        )}
+
         {grouppopup && (
                       <div className='grouppopup'>
                         <div onClick={GroupId} className='overlay'></div>
@@ -595,7 +737,8 @@ function ApplicationStatus() {
             <div className="group-id-box">
             <h4>Group ID</h4> 
             <input type="text"/>
-            <button style={{ backgroundColor: buttonColor, color:'white' }} onClick={AppstatusPopup} className="btn"> {buttonText} <img src={dropdown} alt="dropdown"/> </button>
+            <button style={{ backgroundColor: buttonColor, color:'white' }}
+   onClick={AppstatusPopup} className="btn"> {buttonText} <img src={dropdown} alt="dropdown"/> </button>
             </div>
             {appstatuspopup && (
         <div className="app-statuspopup">

@@ -571,9 +571,12 @@ form button:hover {
     font-size: 12px;
     cursor: pointer;
 }
+.btn{
+  cursor: pointer;
+}
 .app-statuspopup{
   position: absolute;
-    margin-left: 70%;   
+    margin-left: 73%;   
   background-color:#FFFFFF;
   width: 90px;
   height: 210px;
