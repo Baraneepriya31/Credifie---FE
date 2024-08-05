@@ -30,6 +30,9 @@ function ApplicationStatus() {
   const [togglemodal2, settoggleModal2] = useState(false);
   const [appstatuspopup2, setAppstatusPopup2] = useState(false);
   const [collectionagent2, setCollectionagent2] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [appliedStatus, setAppliedStatus] = useState("");
+
 
   // const agents = [
   //   'B.Vijay',
@@ -40,7 +43,54 @@ function ApplicationStatus() {
   //   'D.Dhanush',
   //   'V.Harish',
   // ];
+               
+  const handleRadioChange = (event) => {
+    setSelectedStatus(event.target.value);
+};
 
+const handleOkClick = () => {
+  const newStatus = selectedStatus;
+  setAppliedStatus(newStatus);
+   updateButtonTextAndColor(newStatus);
+  
+};
+
+const handleButtonClick = () => {
+  OpenModal();
+};
+
+const updateButtonTextAndColor = () => {
+  switch (appliedStatus) {
+      case "submitted":
+          setButtonColor("#62B8FC");
+          setButtonText("Submitted");
+          break;
+      case "acknowledged":
+          setButtonColor("#FFBE0B");
+          setButtonText("Acknowledged");
+          break;
+      case "approved":
+          setButtonColor("#25AE7A");
+          setButtonText("Approved");
+          break;
+      case "deadline":
+          setButtonColor("orange");
+          setButtonText("Deadline");
+          break;
+      case "disbursed":
+          setButtonColor("#2CBA00");
+          setButtonText("Disbursed");
+          break;
+      case "inprogress":
+          setButtonColor("#FFBE0B");
+          setButtonText("In-Progress");
+          break;
+      default:
+          setButtonColor("#12c2e9");
+          setButtonText("Submitted");
+          break;
+  }
+};
 
   const Popup = ()=>{
   setPopup(!openPopup);
@@ -226,28 +276,28 @@ function ApplicationStatus() {
 
     
     
-  const handleRadioChange = (event) => {
-    const { value } = event.target;
-    if (value === 'approved') {
-      setButtonText('Approved');
-      setButtonColor(' #25AE7A');
-    } else if (value === 'acknowledged') {
-      setButtonText('Acknowledged');
-      setButtonColor(' #FFBE0B');
-    } else if (value === 'deadline') {
-      setButtonText('Deadline');
-      setButtonColor('orange');
-    }else if (value === 'inprogress') {
-      setButtonText('On-Process');
-      setButtonColor('#FFBE0B');
-    }else if (value === 'submitted') {
-      setButtonText('Submitted');
-      setButtonColor('#62B8FC');
-    }else if (value === 'disbursed') {
-      setButtonText('Disbursed');
-      setButtonColor('#2CBA00');
-    }
-  }    
+  // const handleRadioChange = (event) => {
+  //   const { value } = event.target;
+  //   if (value === 'approved') {
+  //     setButtonText('Approved');
+  //     setButtonColor(' #25AE7A');
+  //   } else if (value === 'acknowledged') {
+  //     setButtonText('Acknowledged');
+  //     setButtonColor(' #FFBE0B');
+  //   } else if (value === 'deadline') {
+  //     setButtonText('Deadline');
+  //     setButtonColor('orange');
+  //   }else if (value === 'inprogress') {
+  //     setButtonText('On-Process');
+  //     setButtonColor('#FFBE0B');
+  //   }else if (value === 'submitted') {
+  //     setButtonText('Submitted');
+  //     setButtonColor('#62B8FC');
+  //   }else if (value === 'disbursed') {
+  //     setButtonText('Disbursed');
+  //     setButtonColor('#2CBA00');
+  //   }
+  // }    
     const toggleModal2 = () => {
       settoggleModal2(!togglemodal2)
     }
@@ -441,39 +491,39 @@ function ApplicationStatus() {
                     <td>Kannan S</td>
                     <td>+91 97905 64324</td>
                     <td>2,50,000</td>
-                    <td style={{ backgroundColor: buttonColor, color:'white' }}
-  onClick={OpenModal} className="loan-status">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+                    <td style={{ backgroundColor: buttonColor, color: 'white' }} onClick={handleButtonClick} 
+                  className="loan-status">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                 </tr>
               {Openmodal && (
         <div className="openmodal-2">
           <div className="modal-list">
             <div className="submitted">
             <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
-            <p className="submit" >Submitted</p>
+            <p className={`submit ${appliedStatus === "submitted" ? "#62B8FC" : ""}`}>Submitted</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="acknowledged" onChange={handleRadioChange} />
-            <p className="submit">Acknowledged</p>
+            <p className={`submit ${appliedStatus === "acknowledged" ? "#FFBE0B" : ""}`} >Acknowledged</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
-            <p className="submit">Approved</p>
+            <p className={`submit ${appliedStatus === "approved" ? "#25AE7A" : ""}`}>Approved</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
-            <p className="submit">Deadline</p>
+            <p className={`submit ${appliedStatus === "deadline" ? "orange" : ""}`}>Deadline</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
-            <p className="submit">Disbursed</p>
+            <p className={`submit ${appliedStatus === "disbursed" ? "#2CBA00" : ""}`}>Disbursed</p>
             </div> <div className="submitted">
             <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
             onChange={handleRadioChange} />
-            <p className="submit">In-Progress</p>
+            <p className={`submit ${appliedStatus === "inprogress" ? "#FFBE0B" : ""}`}>In-Progress</p>
             </div>
             <div className="submitted">
             <p onClick={OpenModal} className="cancel">Cancel</p>
-            <button onClick={OpenModal} className="btn-ok">Ok</button>
+            <button onClick={handleOkClick} className="btn-ok">Ok</button>
             </div>
             
                   </div>
@@ -618,7 +668,7 @@ function ApplicationStatus() {
                         <div className="groupid-content">
                       <h5 className='group-id5'>Group Id</h5>
                       <div className="group-member">
-                      <h5>Group Member  <span style={{background:' #044483',color:'white',width:'100vw'}}>0</span> </h5>
+                      <h5>Group Member  <span style={{color:'#393938',width:'100vw'}}>0</span> </h5>
                       <div className='application-status2'>
                        <h4> Application Status</h4>
                        <button className='pending'>Pending</button>

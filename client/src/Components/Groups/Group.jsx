@@ -299,9 +299,6 @@ const handleSend = async (e) => {
   } catch (error) {
     alert('Failed to send email.');
   }
-  
-  
-  
   closeShare();
 };
 
@@ -533,7 +530,7 @@ const handleSend = async (e) => {
                       <h5 className='group-id5'>Group Id</h5>
                      
                       <div className="group-member">
-                      <h5>Group Member  <span style={{background:' #044483',color:'white',width:'100vw'}}>0</span> </h5>
+                      <h5>Group Member  <span style={{color:'#393938',width:'100vw'}}>0</span> </h5>
                       <div className='application-status2'>
                        <h4> Application Status</h4>
                        <button className='pending'>Pending</button>
