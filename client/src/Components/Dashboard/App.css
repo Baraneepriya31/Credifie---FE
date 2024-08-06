@@ -87,7 +87,7 @@ position: absolute;
 }
 
 .profile-popup {
-position: fixed;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -251,13 +251,14 @@ margin-top: 10px;
 }
 
 .save-button button{
-background-color: #25AE7A;
-width: 150px;
-height: 30px;
-border: none;
-color: #ffffff;
-cursor: pointer;
-
+  background-color: #25AE7A;
+  width: 150px;
+  height: 30px;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  margin-top: 3px;
+  margin-left: 450px;
 }
 
 
@@ -376,12 +377,14 @@ li{
   overflow-y: hidden;
 } 
  .modals{
-  margin-top: 145px;  
- background-color:#FFFFFF;
- width: 140px;
- height: 125px;
- position: absolute;
- margin-left: 970px;
+  position: fixed;
+  background-color: #FFFFFF;
+  width: 140px;
+  height: 125px;
+  margin-left: 1050px;
+  transform: translate(-50%, -50%);
+  margin-top: 295px;
+  z-index: 1000;
 } 
 .profile-pic{
 display: flex;
@@ -958,16 +961,17 @@ background: #FFFFFF;
 border-radius: 3px;
  max-width: 500px;
 min-width: 300px; 
-overflow:scroll;
+overflow-y: auto;
+max-height: 85vh;
 }
 .modal-content::-webkit-scrollbar{
-    width: 1rem;
+  width: 0.8rem;
 }
 .modal-content::-webkit-scrollbar-track{
- background-color: #d1cfcf;     
+background-color: #d1cfcf;     
 }
 .modal-content::-webkit-scrollbar-thumb{
-background-color:blue;
+background-color:#25AE7A;
 border-radius: 1rem;
 border: 0.5rem solid transparent;
 } 

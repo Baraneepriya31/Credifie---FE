@@ -220,7 +220,6 @@ function CollectionAgent () {
         }
     };
       
-  
        return (
 
         <div className='collectionagent'>

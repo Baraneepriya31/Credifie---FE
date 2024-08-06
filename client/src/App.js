@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import CollectionAgent from './Components/CollectionAgent/CollectionAgent';
 import LoanCalculator from './Components/Dashboard/Loancalculator';
@@ -17,12 +17,19 @@ import './App.css';
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    useEffect(() => {
+        const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        setIsLoggedIn(loggedIn);
+    }, []);
+
     const handleLogin = () => {
         setIsLoggedIn(true);
+        localStorage.setItem('isLoggedIn', 'true');
     };
 
     const handleLogout = () => {
         setIsLoggedIn(false);
+        localStorage.removeItem('isLoggedIn');
     };
 
     const AuthenticatedRoute = ({ element }) => {

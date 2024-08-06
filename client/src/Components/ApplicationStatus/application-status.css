@@ -158,6 +158,32 @@
     cursor: pointer;
 }
 
+.app-statuspopup{
+  position: absolute;
+    margin-left: 70%;   
+  background-color:#FFFFFF;
+  width: 90px;
+  height: 210px;
+  z-index: 10;
+ box-shadow: 0px 15px 15px 0px #0000001A;
+ } 
+ .collection-agent-popup{
+  position: absolute;
+    margin-left: 70%;   
+  background-color:#FFFFFF;
+  width: 120px;
+  height:210px;
+  z-index: 10;
+ box-shadow: 0px 15px 15px 0px #0000001A;
+ } 
+ .agent-list > li{
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+  margin-left: 10px;
+  margin-top: 10px;
+ }
+
 /* .add-application-button:hover, .download-button:hover{
     background-color: #1F8B63;
 } */
@@ -539,6 +565,23 @@ form button:hover {
   max-width: 450px;
   min-width: 300px;
 }
+
+.collection-agent-popup{
+  position: absolute;
+    margin-left: 70%;   
+  background-color:#FFFFFF;
+  width: 120px;
+  height:210px;
+  z-index: 10;
+ box-shadow: 0px 15px 15px 0px #0000001A;
+ } 
+ .agent-list > li{
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+  margin-left: 10px;
+  margin-top: 10px;
+ }
 
 .group-id-box{
   display: flex;

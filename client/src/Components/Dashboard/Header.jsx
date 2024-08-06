@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react";
-import basil_notification_icon from './basil_notification-on-outline.png'
-import group from './Group.png'
+import React, { useRef, useState} from "react";
+import basil_notification_icon from './basil_notification-on-outline.png';
+import group from './Group.png';
 import axios from 'axios';
-import profile from './Profile icon.png'
-import settings from './Settings icon.png'
-import logout from './Frame 1126.png'
-import calendar from './calendar.png'
+import profile from './Profile icon.png';
+import settings from './Settings icon.png';
+import logout from './Frame 1126.png';
+import calendar from './calendar.png';
 import './App.css';
 
  
@@ -17,6 +17,7 @@ function Header() {
      const [isEditing, setIsEditing] = useState(false);
      const [activeSection, setActiveSection] = useState('primaryInfo');
      const fileInputRef = useRef(null);
+    //  const modalRef = useRef(null);
 
      const clickProfile = () =>{
         setOpenProfile(true);
@@ -214,13 +215,14 @@ value={profileDetails.baselocation} onChange={(e) => handleChange(e, 'Profile', 
                          {/* <span>Edit</span>  */}
                     </div>
                     </div>
-                    {isEditing && (
+                    
+                  </div>
+                )}
+                {isEditing && (
                       <div className="save-button">
                       <button onClick = {handleSaveClick} > SAVE </button>
                       </div>
                     )}
-                  </div>
-                )}
 
 {activeSection === 'accountPassword' &&(
                         <div className="details-box">
@@ -235,12 +237,13 @@ value={profileDetails.baselocation} onChange={(e) => handleChange(e, 'Profile', 
                         />
                     </div>
                     </div>
-                    {isEditing && (
+                   
+                    </div>
+                    )}
+                     {isEditing && (
                       <div className="save-button">
                       <button onClick = {handleSaveClick} > SAVE </button>
                       </div>
-                    )}
-                    </div>
                     )}
 
 {activeSection === 'secondaryInfo' &&(
@@ -267,12 +270,13 @@ value={profileDetails.baselocation} onChange={(e) => handleChange(e, 'Profile', 
                         />
                     </div>
                     </div>
+                    
+                    </div>
+                    )}
                     {isEditing && (
                       <div className="save-button">
                       <button onClick = {handleSaveClick} > SAVE </button>
                       </div>
-                    )}
-                    </div>
                     )}
 
                 </div>

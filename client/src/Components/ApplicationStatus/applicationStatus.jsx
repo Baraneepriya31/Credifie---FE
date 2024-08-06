@@ -30,6 +30,8 @@ function ApplicationStatus() {
   const [searchQuery, setSearchQuery] = useState('');
   const [groupData, setGroupData] = useState({});
   const [groupId, setAppId] = useState('');
+  const [appstatuspopup, setAppstatusPopup] = useState(false);
+  const [collectionagent, setCollectionagent] = useState(false);
 
 
   useEffect(() => {
@@ -45,18 +47,31 @@ function ApplicationStatus() {
     fetchApplicationData();
   }, []);
 
+  const fetchGroupDetails = async (groupId) =>{
+    const response = await fetch(`http://localhost:3008/getgroups/${groupId}`);
+    if(!response.ok){
+      throw new Error('Failed to fetch group details');
+    }
+    return response.json()
+  }
+
   const handleGroupIdChange = (e) => {
     setAppId(e.target.value);
   };
 
   const handleKeyDown = async (e) => {
     if (e.key === 'Enter') {
-      try {
-        const response = await axios.get(`/api/group/${groupId}`);
-        setGroupData(response.data);
-      } catch (error) {
-        console.error('Error fetching group data:', error);
-      }
+      fetchAndDisplayGroupDetails();
+    }
+  };
+
+  const fetchAndDisplayGroupDetails = async ()=>{
+    try{
+      const data =await fetchGroupDetails(groupId);
+      setGroupData(data);
+    }
+    catch(error){
+      console.error('Error fetching group details:', error);
     }
   };
 
@@ -102,6 +117,26 @@ function ApplicationStatus() {
       setopenDownload(false);
       setopensuccess(false);
       setPopup(false);
+    }
+
+    const Collectionagent = () => {
+      setCollectionagent(!collectionagent);
+    };
+  
+    if(collectionagent) {
+      document.body.classList.add('active-modal')
+    } else {
+      document.body.classList.remove('active-modal')
+    }
+
+    const AppstatusPopup = () => {
+      setAppstatusPopup(!appstatuspopup);
+    };
+  
+    if(appstatuspopup) {
+      document.body.classList.add('active-modal')
+    } else {
+      document.body.classList.remove('active-modal')
     }
   
     const emailPdf = () => {
@@ -574,7 +609,7 @@ function ApplicationStatus() {
                      )}
 
 
-{modal && (
+{modal && groupData &&(
         <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
@@ -583,30 +618,67 @@ function ApplicationStatus() {
             <p className="status">Status</p>
             <div className="group-id-box">
             <h4>Group ID</h4> 
-            <input type="text" value={groupId} onChange={handleGroupIdChange} onKeyDown={handleKeyDown}/>
-            <button className="btn"> Disbursed <img src={dropdown} alt="dropdown"/> </button>
+            <input type="text" value={groupId} onChange={handleGroupIdChange} onClick={fetchAndDisplayGroupDetails}onKeyDown={handleKeyDown}/>
+            <button style={{ backgroundColor: buttonColor, color:'white' }} onClick={AppstatusPopup} className="btn"> {buttonText} <img src={dropdown} alt="dropdown"/> </button>
             </div>
+            {appstatuspopup && (
+        <div className="app-statuspopup">
+          <div className="modal-list">
+            <div className="submitted">
+            <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
+            <p className="submit" >Submitted</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="acknowledged" onChange={handleRadioChange} />
+            <p className="submit">Acknowledged</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
+            <p className="submit">Approved</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
+            <p className="submit">Deadline</p>
+            </div>
+            <div className="submitted">
+            <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
+            <p  className="submit">Disbursed</p>
+            </div> <div className="submitted">
+            <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
+            onChange={handleRadioChange} />
+            <p className="submit">In-Progress</p>
+            </div>
+            <div className="submitted">
+            <p onClick={AppstatusPopup} className="cancel">Cancel</p>
+            <button onClick={AppstatusPopup} className="btn-ok">Ok</button>
+            </div>
+            
+                  </div>
+                  </div>
+                  
+            )}
+
             <h4 className="group-info">Group Info</h4>
             <div className="group-details">
              <div className="group-information"> 
-              <p>{groupData.groupName}</p>
-              <p>{groupData.groupLeader}</p>
-              <p>groupData.group</p>
+              <p>Group Name</p>
+              <p>Group Leader</p>
+              <p>Contact Number</p>
               <p>Group Members</p>
               <p>Location</p>
               </div>
               <div className="information">
                 <label>
-              <input type="text" id="name" name="name" className="input-line"/>
+              <input type="text" id="name" name="name" className="input-line" value={groupData.groupName}/>
               </label>
               <label>
-              <input type="text" id="name" name="name" className="input-line"/>
+              <input type="text" id="name" name="name" className="input-line" />
                 </label>
               <label>
               <input type="text" id="name" name="name" className="input-line"/>
               </label>
               <label>
-              <input type="text" id="name" name="name" className="input-line"/>
+              <input type="text" id="name" name="name" className="input-line" />
               </label>
               <label>
               <input type="text" id="name" name="name" className="input-line"
@@ -618,7 +690,21 @@ function ApplicationStatus() {
               <h4>Loan Status <span>ACTIVE</span></h4>
               <p className="collection">Collection Agent</p>
             </div>
-             <button className="btn2">R.Suresh Krishna <img className="dropdown" src={dropdownblack} alt="dropdown2"/> </button>
+            <button onClick={Collectionagent} className="btn2">R.Suresh Krishna <img className="dropdown" src={dropdownblack} alt="dropdown2"/> </button>
+              {collectionagent && (
+               <div className="collection-agent-popup">
+               <div className = "agent-list">
+                       <li>B.Vijay</li>
+                       <li>S.Ramesh</li>
+                       <li>A.karthik</li>
+                       <li>R.Ram</li>
+                       <li>V.Vignesh</li>
+                       <li>D.Dhanush</li>
+                       <li>V.Harish</li>
+                      
+               </div>
+               </div>
+              )}
               
               <div className="group-details">
               <div className="group-information">

@@ -36,7 +36,8 @@ function Group() {
   const [searchQuery, setSearchQuery] = useState('');
   const [groupData, setGroupData] = useState([]);
   const [totalGroups, setTotalGroups] =useState(0);
-  const [selectedGroup] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState(null);
+  // const [groups, setGroups] = useState([]);
 
 
   useEffect(() => {
@@ -45,14 +46,20 @@ function Group() {
         const response = await axios.get('http://localhost:3008/getgroups');
         setGroupData(response.data);
         setTotalGroups(response.data.length);
+        
       } catch (error) {
         console.error('Error fetching group data:', error);
       }
     };
-
     fetchGroupData();
   }, []);
 
+  // useEffect(() => {
+  //   fetch('/getgroupdisable/:id')
+  //     .then(response => response.json())
+  //     .then(data => setGroups(data));
+  // }, []);
+  
 
 
   const addgroup = () =>{
@@ -119,10 +126,26 @@ function Group() {
     const handleSearchChange = (event) => {
       setSearchQuery(event.target.value);
     };
+
+    const GroupId = (id) => {
+      setGroupId(!grouppopup);
+      const group = groupData.find((group) => group._id === id);
+      setSelectedGroup(group);
+  };
+
+  const DisableModal =  () => {
+    setDisableModal(true);
+    // try {
+    //   await axios.put(`/groups/${groupId}/disable`);
+    //   // Update the UI after disabling the group
+    //   setGroups(groups.map(group => 
+    //     groups._id === groupId ? { ...groups, isDisabled: true } : group
+    //   ));
+    // } catch (error) {
+    //   console.error('Error disabling group', error);
+    // }
+  };
   
-    const DisableModal = () => {
-      setDisableModal(true);
-    };
     const Closedisable = () => {
       setDisableModal(false);
     };
@@ -164,9 +187,9 @@ function Group() {
     }
       
 
-  const GroupId = () => {
-    setGroupId(!grouppopup);
-  };
+  // const GroupId = () => {
+  //   setGroupId(!grouppopup);
+  // };
 
   if(grouppopup) {
     document.body.classList.add('active-modal')
@@ -230,7 +253,8 @@ const addMemberRow = () => {
 const filteredData = groupData.filter(group =>
   group.groupName.toLowerCase().includes(searchQuery) ||
   group.groupLeader.name.toLowerCase().includes(searchQuery) ||
-  group.groupLeader.contactNumber.toString().includes(searchQuery)
+  group.groupLeader.contactNumber.toString().includes(searchQuery) ||
+  group.groupID.toLowerCase().includes(searchQuery)
   );
 
 const handleSubmit = async () => {
@@ -255,7 +279,7 @@ const handleSubmit = async () => {
 
   const disableSelectedRows = () => {
     setDisabledRows(prevState => [...new Set([...prevState, ...selectedRows])]);
-    setSelectedRows([]); 
+    setSelectedRows([]);
     setDisableModal(false);
   };
 
@@ -284,7 +308,7 @@ const handleSubmit = async () => {
             onChange={handleSearchChange}  /> <BsSearch className="search-icon" />
             </div>
             <div>
-              <button onClick={DisableModal} className='disable-btn'>Disable</button>
+            <button onClick={DisableModal} className='disable-btn'>Disable</button>
               <button onClick={addgroup} className="add-btn">Add Group   +</button>
               <button className="download-button" onClick={Popup} >Download  <FiDownload /> </button>
             </div>
@@ -408,7 +432,7 @@ const handleSubmit = async () => {
                       <td>-</td>
                       <td>-</td>
                       <td>-</td>
-                      <td className='active-status'>*Active/3</td>
+                      <td className='active-status'>-</td>
                       <td style={{ backgroundColor: buttonColor, color: 'white' }}
                         onClick={OpenModal} className="loan-status">
                         {buttonText}
@@ -463,17 +487,17 @@ const handleSubmit = async () => {
               </table>
             </div>
             
-                     {grouppopup && selectedGroup(
+                     {grouppopup && selectedGroup &&(
                       <div className='grouppopup'>
                         <div onClick={GroupId} className='overlay'></div>
                         <div className="groupid-content">
-                      <h5 className='group-id5'>Group Id</h5>
+                      <h5 className='group-id5'>Group Id - {selectedGroup.groupID}</h5>
                      
                       <div className="group-member">
-                      <h5>Group Member  <span style={{background:' #044483',color:'white',width:'100vw'}}>0</span> </h5>
+                      <h5>Group Member  <span style={{color:'black',width:'100vw'}}>{selectedGroup.members.length}</span> </h5>
                       <div className='application-status2'>
-                       <h4> Application Status</h4>
-                       <button className='pending'>Pending</button>
+                       <h4> Application Status - </h4>
+                       <button className='pending'>-</button>
                       </div>
                       </div>
                       <button className="close-modal" onClick={GroupId}>
@@ -485,7 +509,7 @@ const handleSubmit = async () => {
                     
                       <tr>
                        <td className='id-details'>Group Id</td>
-                       <td className='id-info'>- &nbsp; {selectedGroup.groupID}</td>
+                       <td className='id-info'>- &nbsp; {selectedGroup.groupID} </td>
                       </tr>
                       &nbsp;
                       <tr>
@@ -495,12 +519,12 @@ const handleSubmit = async () => {
                       &nbsp;
                       <tr>
                        <td className='id-details'>Group Leader</td>
-                       <td  className='id-info'>- &nbsp;  {selectedGroup.groupLeader}</td>
+                       <td  className='id-info'>- &nbsp;  {selectedGroup.groupLeader.name}</td>
                       </tr>
                       &nbsp;
                       <tr>
                        <td className='id-details'>Contact Number</td>
-                       <td  className='id-info'>- &nbsp;{selectedGroup.contactNumber}</td>
+                       <td  className='id-info'>- &nbsp;{selectedGroup.groupLeader.contactNumber}</td>
                       </tr>
                     </table>
                    </div> 
@@ -508,22 +532,22 @@ const handleSubmit = async () => {
                     <table className='group-table'>
                       <tr>
                       <td className='id-details'>Loan Amount</td>
-                      <td className='id-info'>- &nbsp; Rs.2,50,000</td>
+                      <td className='id-info'>- &nbsp; NA</td>
                       </tr>
                      &nbsp;
                       <tr>
                        <td className='id-details'>Collection Agent</td>
-                       <td  className='id-info'>- &nbsp;  Vijay</td>
+                       <td  className='id-info'>- &nbsp;  NA</td>
                       </tr>
                       &nbsp;
                       <tr>
                        <td className='id-details'>Over Due</td>
-                       <td  className='id-info'>- &nbsp;  Rs.60,000</td>
+                       <td  className='id-info'>- &nbsp;  NA</td>
                       </tr>
                       &nbsp;
                       <tr>
                        <td className='id-details'>Loan Status</td>
-                       <td  className='id-info'>- &nbsp;Active/3</td>
+                       <td  className='id-info'>- &nbsp;NA</td>
                       </tr>
                    </table>
                    
@@ -652,7 +676,7 @@ const handleSubmit = async () => {
       </div>
     )}
 
-                   {disablemodal && (
+{disablemodal && (
                     <div className='disablemodal'>
                     <div onClick={DisableModal} className="overlay"></div>
                    <div className="disable-content">

@@ -1,4 +1,5 @@
 const express = require('express');
+const { MongoClient, ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
@@ -455,8 +456,45 @@ app.post('/add-profile', async (req, res) => {
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
+    });
   });
-   });
+
+  app.get('/getgroups/:id', async (req, res) => {
+    const groupId = req.params.id;
+    try {
+      const client = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+      const db = client.db(dbName);
+      const group = await db.collection('groups').findOne({ _id: new ObjectId(groupId) });
+      client.close();
+      
+      if (!group) {
+        return res.status(404).json({ error: 'Group not found' });
+      }
+      
+      res.json(group);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+    app.put('/groups/:id/disable', async (req, res) => {
+      try {
+        const groupId = req.params.id;
+        const group = await Group.findById(groupId);
+    
+        if (!group) {
+          return res.status(404).send('Group not found');
+        }
+    
+        group.isDisabled = true;
+        await group.save();
+    
+        res.status(200).send('Group disabled successfully');
+      } catch (error) {
+        res.status(500).send('Server error');
+      }   
+});
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
