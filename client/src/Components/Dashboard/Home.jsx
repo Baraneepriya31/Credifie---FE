@@ -1,6 +1,6 @@
 
 
-  import React, { useState} from "react";
+  import React, { useState, useEffect} from "react";
   
   import { BsCalendar2Date} from 'react-icons/bs'
    import iconimage from './Group 385.png'
@@ -25,6 +25,8 @@
     const [buttonColor, setButtonColor] = useState('#12c2e9');
     const [report, setreportmodal] = useState(false);
     const navigate = useNavigate();
+    const [selectedStatus, setSelectedStatus] = useState("");
+  const [appliedStatus, setAppliedStatus] = useState("");
     
     const loanpage = () => {  
       navigate("/LoanCalculator");
@@ -70,30 +72,45 @@
       document.body.classList.remove('active-modal')
     }
        
-  const handleRadioChange = (event) => {
-    const { value } = event.target;
-    if (value === 'approved') {
-      setButtonText('Approved');
-      setButtonColor(' #25AE7A');
-    } else if (value === 'aknowledged') {
-      setButtonText('Aknowledged');
-      setButtonColor(' #FFBE0B');
-    } else if (value === 'deadline') {
-      setButtonText('Deadline');
-      setButtonColor('orange');
-    }else if (value === 'inprogress') {
-      setButtonText('On-Process');
-      setButtonColor('#FFBE0B');
-      
-    }else if (value === 'submitted') {
-      setButtonText('Submitted');
-      setButtonColor('#62B8FC');
-    }else if (value === 'disbursed') {
-      setButtonText('Disbursed');
-      setButtonColor('#2CBA00');
-    }
-
+    const handleRadioChange = (event) => {
+      setSelectedStatus(event.target.value);
   };
+  
+  const handleOkClick = () => {
+    setAppliedStatus(selectedStatus);
+    OpenModal(false);
+  };
+  
+  const handleButtonClick = () => {
+    OpenModal();
+  };
+  const updateButtonTextAndColor = (newStatus) => {
+      // Update the button text and color based on the new status
+      if (newStatus === 'approved') {
+        setButtonText('Approved');
+        setButtonColor('#25AE7A');
+      } else if (newStatus === 'submitted') {
+        setButtonText('Submitted');
+        setButtonColor('#62B8FC');
+      } else if (newStatus === 'acknowledged') {
+        setButtonText('Acknowledged');
+        setButtonColor('#FFBE0B');
+      } else if (newStatus === 'inprogress') {
+        setButtonText('Inprogress');
+        setButtonColor('#FFBE0B');
+      } else if (newStatus === 'deadline') {
+        setButtonText('Deadline');
+        setButtonColor('orange');
+      }else if (newStatus === 'disbursed') {
+        setButtonText('Disbursed');
+        setButtonColor('#2CBA00');
+      }
+    };
+  
+    useEffect(() => {
+      updateButtonTextAndColor(appliedStatus);
+    }, [appliedStatus]);
+    
   
   
     return (
@@ -208,7 +225,7 @@
                   <td>+91 980765421</td>
                   <td>N/A</td>
 <td style={{ backgroundColor: buttonColor, color:'white' }}
-  onClick={OpenModal} className="loan-status">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+  onClick={handleButtonClick} className="loan-status">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                  
                 </tr>
                
@@ -219,32 +236,32 @@
           <div className="modal-list">
             <div className="submitted">
             <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
-            <p className="submit" >Submitted</p>
+            <p className={`submit ${appliedStatus === "submitted" ? "#62B8FC" : ""}`} >Submitted</p>
             </div>
             <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="aknowledged" onChange={handleRadioChange} />
-            <p className="submit">Acknowledged</p>
+            <input className="radio-button" type="radio" name="status" value="acknowledged" onChange={handleRadioChange} />
+            <p className={`submit ${appliedStatus === "acknowledged" ? "#FFBE0B" : ""}`}>Acknowledged</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
-            <p className="submit">Approved</p>
+            <p className={`submit ${appliedStatus === "approved" ? "#25AE7A" : ""}`}>Approved</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
-            <p className="submit">Deadline</p>
+            <p className={`submit ${appliedStatus === "deadline" ? "orange" : ""}`}>Deadline</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
-            <p className="submit">Disbursed</p>
+            <p className={`submit ${appliedStatus === "disbursed" ? "#2CBA00" : ""}`}>Disbursed</p>
             </div>
              <div className="submitted">
             <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
             onChange={handleRadioChange} />
-            <p className="submit">In-Progress</p>
+            <p className={`submit ${appliedStatus === "inprogress" ? "#FFBE0B" : ""}`}>In-Progress</p>
             </div>
             <div className="submitted">
             <p onClick={OpenModal} className="cancel">Cancel</p>
-            <button onClick={OpenModal} className="btn-ok">Ok</button>
+            <button onClick={handleOkClick} className="btn-ok">Ok</button>
             </div>
             
                   </div>

@@ -24,7 +24,7 @@ function ApplicationStatus() {
   const [fileType, setFileType] = useState('');
   const [grouppopup, setGroupId] = useState(false); 
   const [appstatuspopup, setAppstatusPopup] = useState(false);
-  const [collectionagent, setCollectionagent] = useState(false);
+  // const [collectionagent, setCollectionagent] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState('R.Suresh Krishna');
   const [agents, setAgents] = useState([]);
   const [togglemodal2, settoggleModal2] = useState(false);
@@ -32,7 +32,9 @@ function ApplicationStatus() {
   const [collectionagent2, setCollectionagent2] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [appliedStatus, setAppliedStatus] = useState("");
-
+  const [selectedStatus1, setSelectedStatus1] = useState("");
+  const [appliedStatus1, setAppliedStatus1] = useState("");
+  // const [disbursed, setDisbursed] = useState(false);  
 
   // const agents = [
   //   'B.Vijay',
@@ -46,51 +48,50 @@ function ApplicationStatus() {
                
   const handleRadioChange = (event) => {
     setSelectedStatus(event.target.value);
+   
 };
 
 const handleOkClick = () => {
-  const newStatus = selectedStatus;
-  setAppliedStatus(newStatus);
-   updateButtonTextAndColor(newStatus);
+  setAppliedStatus(selectedStatus);
+  OpenModal(false);
+};
+const handleOk = () => {
+  setAppliedStatus(selectedStatus);
+  AppstatusPopup2(false);
   
 };
 
 const handleButtonClick = () => {
   OpenModal();
 };
+const updateButtonTextAndColor = (newStatus) => {
+    // Update the button text and color based on the new status
+    if (newStatus === 'approved') {
+      setButtonText('Approved');
+      setButtonColor('#25AE7A');
+    } else if (newStatus === 'submitted') {
+      setButtonText('Submitted');
+      setButtonColor('#62B8FC');
+    } else if (newStatus === 'acknowledged') {
+      setButtonText('Acknowledged');
+      setButtonColor('#FFBE0B');
+    } else if (newStatus === 'inprogress') {
+      setButtonText('Inprogress');
+      setButtonColor('#FFBE0B');
+    } else if (newStatus === 'deadline') {
+      setButtonText('Deadline');
+      setButtonColor('orange');
+    }else if (newStatus === 'disbursed') {
+      setButtonText('Disbursed');
+      setButtonColor('#2CBA00');
+    }
+  };
 
-const updateButtonTextAndColor = () => {
-  switch (appliedStatus) {
-      case "submitted":
-          setButtonColor("#62B8FC");
-          setButtonText("Submitted");
-          break;
-      case "acknowledged":
-          setButtonColor("#FFBE0B");
-          setButtonText("Acknowledged");
-          break;
-      case "approved":
-          setButtonColor("#25AE7A");
-          setButtonText("Approved");
-          break;
-      case "deadline":
-          setButtonColor("orange");
-          setButtonText("Deadline");
-          break;
-      case "disbursed":
-          setButtonColor("#2CBA00");
-          setButtonText("Disbursed");
-          break;
-      case "inprogress":
-          setButtonColor("#FFBE0B");
-          setButtonText("In-Progress");
-          break;
-      default:
-          setButtonColor("#12c2e9");
-          setButtonText("Submitted");
-          break;
-  }
-};
+  useEffect(() => {
+    updateButtonTextAndColor(appliedStatus);
+  }, [appliedStatus]);
+
+
 
   const Popup = ()=>{
   setPopup(!openPopup);
@@ -185,14 +186,14 @@ const updateButtonTextAndColor = () => {
       document.body.classList.remove('active-modal')
     }
 
-    const Collectionagent = () => {
-      setCollectionagent(!collectionagent);
-    };
-    if(collectionagent) {
-      document.body.classList.add('active-modal')
-    } else {
-      document.body.classList.remove('active-modal')
-    }
+    // const Collectionagent = () => {
+    //   setCollectionagent(!collectionagent);
+    // };
+    // if(collectionagent) {
+    //   document.body.classList.add('active-modal')
+    // } else {
+    //   document.body.classList.remove('active-modal')
+    // }
     useEffect(() => {
       const fetchAgents = async () => {
         try {
@@ -209,9 +210,49 @@ const updateButtonTextAndColor = () => {
     
     const handleAgentSelect = (agent) => {
       setSelectedAgent(agent);
-      setCollectionagent(false); // Close the dropdown after selecting an agent
+      // setCollectionagent(false); // Close the dropdown after selecting an agent
     };
     
+    const handleRadioChange1 = (event) => {
+      setSelectedStatus1(event.target.value);
+  };
+  
+  const handleOkClick1 = () => {
+    setAppliedStatus1(selectedStatus1);
+    AppstatusPopup(false);
+  };
+  
+  const handleButtonClick1 = () => {
+    AppstatusPopup();
+  };
+          
+  const updateButtonTextAndColor1 = (newStatus1) => {
+    // Update the button text and color based on the new status
+    if (newStatus1 === 'approved') {
+      setButtonText('Approved');
+      setButtonColor('#25AE7A');
+    } else if (newStatus1 === 'submitted') {
+      setButtonText('Submitted');
+      setButtonColor('#62B8FC');
+    } else if (newStatus1 === 'acknowledged') {
+      setButtonText('Acknowledged');
+      setButtonColor('#FFBE0B');
+    } else if (newStatus1 === 'inprogress') {
+      setButtonText('Inprogress');
+      setButtonColor('#FFBE0B');
+    } else if (newStatus1 === 'deadline') {
+      setButtonText('Deadline');
+      setButtonColor('orange');
+    }else if (newStatus1 === 'disbursed') {
+      setButtonText('Disbursed');
+      setButtonColor('#2CBA00');
+    }
+  };
+
+  useEffect(() => {
+    updateButtonTextAndColor1(appliedStatus1);
+  }, [appliedStatus1]);
+
 
     const [loanDetails,setLoanDetails] = useState({
       location:'',
@@ -309,6 +350,9 @@ const updateButtonTextAndColor = () => {
        const Collectionagent2 = () => {
         setCollectionagent2(!collectionagent2)
        }
+
+       
+
     return (
         <div className="application-status-container">
             <div className="application-status-header">
@@ -491,7 +535,8 @@ const updateButtonTextAndColor = () => {
                     <td>Kannan S</td>
                     <td>+91 97905 64324</td>
                     <td>2,50,000</td>
-                    <td style={{ backgroundColor: buttonColor, color: 'white' }} onClick={handleButtonClick} 
+                    <td style={{ backgroundColor: buttonColor, color: 'white' }}
+                     onClick={handleButtonClick} 
                   className="loan-status">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                 </tr>
               {Openmodal && (
@@ -515,7 +560,8 @@ const updateButtonTextAndColor = () => {
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
-            <p className={`submit ${appliedStatus === "disbursed" ? "#2CBA00" : ""}`}>Disbursed</p>
+            <p className={`submit ${appliedStatus === "disbursed" ? "#2CBA00" : ""}`}
+             >Disbursed</p>
             </div> <div className="submitted">
             <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
             onChange={handleRadioChange} />
@@ -533,6 +579,7 @@ const updateButtonTextAndColor = () => {
   
          </tbody>
       </table>
+
       {togglemodal2 && (
         <div className="modal">
           <div onClick={toggleModal2} className="overlay"></div>
@@ -544,37 +591,40 @@ const updateButtonTextAndColor = () => {
             <button style={{ backgroundColor: buttonColor, color:'white' }}
             onClick={AppstatusPopup2} className="btn"> {buttonText} &nbsp;
              <img src={dropdown} alt="dropdown" /></button>
+
              {appstatuspopup2 && (
         <div className="app-statuspopup">
           <div className="modal-list">
             <div className="submitted">
   <input   className="radio-button" type="radio" name="status" 
  value="submitted" onChange={handleRadioChange} /> 
-            <p className="submit" >Submitted</p>
+            <p className={`submit ${appliedStatus === "submitted" ? "#62B8FC" : ""}`} >Submitted</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="acknowledged" onChange={handleRadioChange} />
-            <p className="submit">Acknowledged</p>
+            <p className={`submit ${appliedStatus === "acknowledged" ? "#FFBE0B" : ""}`}>Acknowledged</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
-            <p className="submit">Approved</p>
+            <p className={`submit ${appliedStatus === "approved" ? "#25AE7A" : ""}`}>Approved</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
-            <p className="submit">Deadline</p>
+            <p className={`submit ${appliedStatus === "deadline" ? "orange" : ""}`} >Deadline</p>
             </div>
             <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
-            <p  className="submit">Disbursed</p>
+            <input className="radio-button" type="radio" name="status" value="disbursed" 
+            onChange={handleRadioChange}/>
+            <p  className={`submit ${appliedStatus === "disbursed" ? "#2CBA00" : ""}`}>Disbursed
+            </p>
             </div> <div className="submitted">
             <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
             onChange={handleRadioChange} />
-            <p className="submit">In-Progress</p>
+            <p className={`submit ${appliedStatus === "inprogress" ? "#FFBE0B" : ""}`}>In-Progress</p>
             </div>
             <div className="submitted">
             <p onClick={AppstatusPopup2} className="cancel">Cancel</p>
-            <button onClick={AppstatusPopup2} className="btn-ok">Ok</button>
+            <button onClick={handleOk} className="btn-ok">Ok</button>
             </div>
             
                   </div>
@@ -601,13 +651,30 @@ const updateButtonTextAndColor = () => {
               </div>
               </div>
               
+              <h4 className="group-info">Attachments</h4>
+              <div className="group-details">
+                <div className="group-information">
+                 <p>Pan card</p>
+                 <br/>
+                 <p>Photos</p>
+            
+                </div>
+                <div>
+                <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
+               
+                <p className="not-attached">*Not Attached </p>
+                </div>
+              </div>
+                    
+           <div className="loan-section"  >
              <div className="loanstatus-active">
-              <h4>Loan Status <span>ACTIVE</span></h4>
-              <p className="collection">Collection Agent</p>
-            </div>
-            <button onClick={Collectionagent2} className="btn2">  {selectedAgent} &nbsp;
-     <img className="dropdown" src={dropdownblack} alt="dropdown2"/> </button>
-              {collectionagent2 && (
+                      <h4>Loan Status <span>ACTIVE</span></h4>
+                      <p className="collection">Collection Agent</p>
+                    </div>
+                    <button onClick={Collectionagent2} className="btn2">  {selectedAgent} &nbsp;
+                        <img className="dropdown" src={dropdownblack} alt="dropdown2" /> </button>
+                        
+                        {collectionagent2 && (
                <div className="collection-agent-popup">
                <div className = "agent-list">
                {agents.map((agent, index) => (
@@ -615,8 +682,7 @@ const updateButtonTextAndColor = () => {
                 {agent}
               </li>
             ))}
-                       {/* <button onClick={Collectionagent} className="cancel">Cancel</button>
-                       <button className="btn-ok">Ok</button> */}
+         
                </div>
                </div>
               )}
@@ -626,42 +692,33 @@ const updateButtonTextAndColor = () => {
             <p>Tenure</p>
             <p>Interest</p>
             <p>Due Date</p>
+            <p>Bank Pass Book</p>
               </div>
               <div className="information">
               <p>Rs.1,50,000</p>
               <p>IDFC2338K 230599D</p>
               <p>52 Weeks</p>
               <p>15%</p>
-              <p>15%</p>
+              <div className="img-pdf">  <img src={pdf} alt="pdf"  />
+              <p className="information">img.pdf</p></div>
+              </div>   
               </div>
               </div>
-             
-              <h4 className="group-info">Attachments</h4>
-              <div className="group-details">
-                <div className="group-information">
-                 <p>Pan card</p>
-                 <br/>
-                 <p>Photos</p>
-                 <br/>
-                 <p>Bank Pass Book</p>
-                </div>
-                <div>
-                <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
-                <hr className="attachments-line" />
-                <p className="not-attached">*Not Attached </p>
-                
-                <hr className="attachments-line" />
-                <br/>
-                <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
-                <hr className="attachments-line" />
-                </div>
+      
+            
+              <div className="add-loan-button">
+                <button onClick={handleSubmit}>ADD</button>
               </div>
               <button className="close-modal" onClick={toggleModal2}>
                 <img src={closeicon} alt="icon" /></button>
-              </div>
-          </div>
-        )}
+                 
+               </div>
+             </div>
+      )};
 
+          
+       
+        
         {grouppopup && (
                       <div className='grouppopup'>
                         <div onClick={GroupId} className='overlay'></div>
@@ -788,39 +845,43 @@ const updateButtonTextAndColor = () => {
             <h4>Group ID</h4> 
             <input type="text"/>
             <button style={{ backgroundColor: buttonColor, color:'white' }}
-   onClick={AppstatusPopup} className="btn"> {buttonText} <img src={dropdown} alt="dropdown"/> </button>
+   onClick={handleButtonClick1} className="btn"> {buttonText} <img src={dropdown} alt="dropdown"/> </button>
             </div>
             {appstatuspopup && (
         <div className="app-statuspopup">
           <div className="modal-list">
             <div className="submitted">
   <input   className="radio-button" type="radio" name="status" 
- value="submitted" onChange={handleRadioChange} /> 
-            <p className="submit" >Submitted</p>
+ value="submitted" onChange={handleRadioChange1}/> 
+            <p className={`submit ${appliedStatus1 === "submitted" ? "#62B8FC" : ""}`} >
+              Submitted</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="acknowledged" onChange={handleRadioChange} />
-            <p className="submit">Acknowledged</p>
+            <p className={`submit ${appliedStatus1 === "acknowledged" ? "#FFBE0B" : ""}`}>Acknowledged</p>
             </div>
             <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
-            <p className="submit">Approved</p>
+            <input className="radio-button" type="radio" name="status" value="approved"
+             onChange={handleRadioChange1} />
+            <p className={`submit ${appliedStatus1 === "approved" ? "#25AE7A" : ""}`}>Approved</p>
             </div>
             <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
-            <p className="submit">Deadline</p>
+            <input className="radio-button" type="radio" name="status" value="deadline"
+             onChange={handleRadioChange1} />
+            <p className={`submit ${appliedStatus1 === "deadline" ? "orange" : ""}`}>Deadline</p>
             </div>
             <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
-            <p  className="submit">Disbursed</p>
+            <input className="radio-button" type="radio" name="status" value="disbursed"
+             onChange={handleRadioChange1} />
+            <p  className={`submit ${appliedStatus1 === "disbursed" ? "#2CBA00" : ""}`}>Disbursed</p>
             </div> <div className="submitted">
             <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
-            onChange={handleRadioChange} />
-            <p className="submit">In-Progress</p>
+            onChange={handleRadioChange1} />
+            <p className={`submit ${appliedStatus1 === "inprogress" ? "#FFBE0B" : ""}`}>In-Progress</p>
             </div>
             <div className="submitted">
             <p onClick={AppstatusPopup} className="cancel">Cancel</p>
-            <button onClick={AppstatusPopup} className="btn-ok">Ok</button>
+            <button onClick={handleOkClick1} className="btn-ok">Ok</button>
             </div>
             
                   </div>
@@ -857,57 +918,7 @@ const updateButtonTextAndColor = () => {
               </label>
               </div>
               </div>
-             <div className="loanstatus-active">
-              <h4>Loan Status <span>ACTIVE</span></h4>
-              <p  className="collection">Collection Agent</p>
-            </div>
-           
-   <button onClick={Collectionagent} className="btn2">  {selectedAgent} &nbsp;
-     <img className="dropdown" src={dropdownblack} alt="dropdown2"/> </button>
-              {collectionagent && (
-               <div className="collection-agent-popup">
-               <div className = "agent-list">
-               {agents.map((agent, index) => (
-              <li key={index} onClick={() => handleAgentSelect(agent)}>
-                {agent}
-              </li>
-            ))}
-                       {/* <button onClick={Collectionagent} className="cancel">Cancel</button>
-                       <button className="btn-ok">Ok</button> */}
-               </div>
-               </div>
-              )}
-              <div className="group-details">
-              <div className="group-information">
-              <p >Loan Amount</p>
-            <p>Loan Account Number</p>
-            <p>Tenure</p>
-            <p>Interest</p>
-            <p>Due Date</p>
-              </div>
-              <div className="information">
-              <label>
-              <input type="text" id="name" name="name" className="input-line"
-       value={loanDetails.loanamount} onChange={(e) => handleChange(e, 'loan', 'loanamount')} />
-              </label>
-             <label>
-             <input type="text" id="name" name="name" className="input-line"
-        value={loanDetails.loanaccountnumber} onChange={(e) => handleChange(e, 'loan', 'loanaccountnumber')}/>
-             </label>
-             <label>
-             <input type="text" id="name" name="name" className="input-line"
-      value={loanDetails.tenure} onChange={(e) => handleChange(e, 'loan', 'tenure')} />
-             </label>
-             <label>
-             <input type="text" id="name" name="name" className="input-line" 
-        value={loanDetails.interest} onChange={(e) => handleChange(e, 'loan', 'tenure')}/>
-             </label>
-              <label>
-              <input type="date" id="name" name="name" className="input-line"
-              value={loanDetails.duedate} onChange={(e) => handleChange(e, 'loan', 'duedate')} />
-              </label>
-              </div>
-              </div>
+            
               <h4 className="group-info">Attachments</h4>
               <div className="group-details">
                 <div className="group-information">
@@ -915,14 +926,11 @@ const updateButtonTextAndColor = () => {
                  <br/>
                  <p>Photos</p>
                  <br/>
-                 <p>Bank Pass Book</p>
                 </div>
                 <div>
                 <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
-                <input type="text" id="name" name="name" className="input-line" />
-                <input type="text" id="name" name="name" className="input-line" />
                 <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
-                <input type="text" id="name" name="name" className="input-line" />
+              
                 </div>
               </div>
               <div className="add-loan-button">

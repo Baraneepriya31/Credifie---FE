@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -21,7 +21,7 @@ import './Group.css';
  function Group() {
             
   const [addmodal, setAddmodal] = useState(false);
-  const [buttonText, setButtonText,] = useState('Pending');
+  const [buttonText, setButtonText,] = useState('Submitted');
   const [buttonColor, setButtonColor] = useState('#12c2e9');
   const [disablemodal, setDisableModal] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -38,7 +38,8 @@ import './Group.css';
   const [searchQuery, setSearchQuery] = useState('');       
   const [groups, setGroups] = useState([]);
   const tableRef = useRef(null);
-
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [appliedStatus, setAppliedStatus] = useState("");
 
   const initialdata = [
     { id: 1, name: 'John Doe', age: 28 },
@@ -129,33 +130,71 @@ import './Group.css';
       document.body.classList.remove('active-modal')
     }
 
+    // const handleRadioChange = (event) => {
+    //   const { value } = event.target;
+    //   if (value === 'approved') {
+    //     setButtonText('Approved');
+    //     setButtonColor(' #25AE7A');
+    //   } else if (value === 'aknowledged') {
+    //     setButtonText('Aknowledged');
+    //     setButtonColor(' #FFBE0B');
+    //   } else if (value === 'deadline') {
+    //     setButtonText('Deadline');
+    //     setButtonColor('orange');
+    //   }else if (value === 'inprogress') {
+    //     setButtonText('On-Process');
+    //     setButtonColor('#FFBE0B');
+    //   }else if (value === 'pending') {
+    //     setButtonText('Pending');
+    //     setButtonColor('#62B8FC');
+    //   }else if (value === 'submitted') {
+    //     setButtonText('Submitted');
+    //     setButtonColor('#62B8FC');
+    //   }else if (value === 'disbursed') {
+    //     setButtonText('Disbursed');
+    //     setButtonColor('#2CBA00');
+    //   }
+    // }
+      
     const handleRadioChange = (event) => {
-      const { value } = event.target;
-      if (value === 'approved') {
+      setSelectedStatus(event.target.value);
+  };
+  
+  const handleOkClick = () => {
+    setAppliedStatus(selectedStatus);
+    OpenModal(false);
+  };
+  
+  const handleButtonClick = () => {
+    OpenModal();
+  };
+  const updateButtonTextAndColor = (newStatus) => {
+      // Update the button text and color based on the new status
+      if (newStatus === 'approved') {
         setButtonText('Approved');
-        setButtonColor(' #25AE7A');
-      } else if (value === 'aknowledged') {
-        setButtonText('Aknowledged');
-        setButtonColor(' #FFBE0B');
-      } else if (value === 'deadline') {
-        setButtonText('Deadline');
-        setButtonColor('orange');
-      }else if (value === 'inprogress') {
-        setButtonText('On-Process');
-        setButtonColor('#FFBE0B');
-      }else if (value === 'pending') {
-        setButtonText('Pending');
-        setButtonColor('#62B8FC');
-      }else if (value === 'submitted') {
+        setButtonColor('#25AE7A');
+      } else if (newStatus === 'submitted') {
         setButtonText('Submitted');
         setButtonColor('#62B8FC');
-      }else if (value === 'disbursed') {
+      } else if (newStatus === 'acknowledged') {
+        setButtonText('Acknowledged');
+        setButtonColor('#FFBE0B');
+      } else if (newStatus === 'inprogress') {
+        setButtonText('Inprogress');
+        setButtonColor('#FFBE0B');
+      } else if (newStatus === 'deadline') {
+        setButtonText('Deadline');
+        setButtonColor('orange');
+      }else if (newStatus === 'disbursed') {
         setButtonText('Disbursed');
         setButtonColor('#2CBA00');
       }
-    }
-      
-
+    };
+    useEffect(() => {
+      updateButtonTextAndColor(appliedStatus);
+    }, [appliedStatus]);
+    
+  
   const GroupId = () => {
     setGroupId(!grouppopup);
   };
@@ -475,7 +514,7 @@ const handleSend = async (e) => {
                     <td>Rs.25,000</td>
                     <td className='active-status'>*Active/3</td>
                     <td style={{ backgroundColor: buttonColor, color:'white' }}
-         onClick={OpenModal} className="loan-status">{buttonText}
+         onClick={handleButtonClick} className="loan-status">{buttonText}
       <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                  
                     <td><input  type="checkbox"
@@ -487,33 +526,33 @@ const handleSend = async (e) => {
         <div className="openmodal3">
           <div className="modal-list">
             <div className="submitted">
-            <input   className="radio-button" type="radio" name="status" value="pending" onChange={handleRadioChange} />
-            <p className="submit" >Submitted</p>
+            <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
+            <p className={`submit ${appliedStatus === "submitted" ? "#62B8FC" : ""}`} >Submitted</p>
             </div>
             <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="aknowledged" onChange={handleRadioChange} />
-            <p className="submit">Acknowledged</p>
+            <input className="radio-button" type="radio" name="status" value="acknowledged" onChange={handleRadioChange} />
+            <p className={`submit ${appliedStatus === "acknowledged" ? "#FFBE0B" : ""}`}>Acknowledged</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
-            <p className="submit">Approved</p>
+            <p className={`submit ${appliedStatus === "approved" ? "#25AE7A" : ""}`}>Approved</p>
             </div>
             <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
-            <p className="submit">Deadline</p>
+            <p className={`submit ${appliedStatus === "deadline" ? "orange" : ""}`}>Deadline</p>
             </div>
              <div className="submitted">
             <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
-            <p className="submit">Disbursed</p>
+            <p className={`submit ${appliedStatus === "deadline" ? "orange" : ""}`}>Disbursed</p>
             </div>
             <div className="submitted">
             <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
             onChange={handleRadioChange} />
-            <p className="submit">In-Progress</p>
+            <p className={`submit ${appliedStatus === "inprogress" ? "#FFBE0B" : ""}`}>In-Progress</p>
             </div>
             <div className="submitted">
             <p onClick={OpenModal} className="cancel">Cancel</p>
-            <button onClick={OpenModal} className="btn-ok">Ok</button>
+            <button onClick={handleOkClick} className="btn-ok">Ok</button>
             </div>
             </div>
                   </div>
