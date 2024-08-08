@@ -111,6 +111,7 @@ import './Group.css';
     };
     const Closedisable = () => {
       setDisableModal(false);
+      setIsConfirmed(false);
     };
     const handleConfirm = () => {
     setIsConfirmed(true);

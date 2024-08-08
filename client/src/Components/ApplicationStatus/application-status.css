@@ -28,31 +28,56 @@
 }
 
 
-.application-status-button {
+.application-status-button{
     display: flex;
     width: 160px;
     height: 90px;
-    flex-direction: column;
+     flex-direction: column; 
     align-items: center;
     background-color: #ffffff;
-    color: black;
+    color:#7b7b79;
     border: none;
     border-radius: 8px;
-    padding: 10px 20px;
-    font-family: 'Roboto', sans-serif;
+    padding: 15px 70px;
+    font-family: 'Roboto';
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    margin-right: 30px;
+     margin-right: 30px; 
     transition: background-color 0.3s ease;
     border: 1px solid #25AE7A;
+}
+.application-status-button p{
+  margin-top: 0;
+  color: #393938;
+  font-weight: 500;
+  font-size: 14px;
+}
+.application-status {
+  display: flex;
+  width: 160px;
+  height: 90px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 30px;
+  transition: background-color 0.3s ease;
+  border: 1px solid #25AE7A;
 }
 
 .application-status-button:hover {
     background-color: #1F8B63;
     color: white;
 }
-.application-status-button span:hover{
+.application-status-button p:hover{
   color: white;
 }
 .application-count {
@@ -613,7 +638,16 @@ form button:hover {
   height: 30px;
   width: 70px;
   margin-top: 10px;
-  
+}
+.add-loan-button1 button{
+  background-color: #25AE7A;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  margin-left: 130px;
+  height: 30px;
+  width: 70px;
+  margin-top: 10px;
 }
 .progress-bar {
   position: relative;

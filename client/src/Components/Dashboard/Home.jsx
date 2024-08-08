@@ -1,13 +1,13 @@
 
 
-  import React, { useState, useEffect} from "react";
+  import React, { useState} from "react";
   
   import { BsCalendar2Date} from 'react-icons/bs'
    import iconimage from './Group 385.png'
    import rectangle from './Rectangle 257.png'
    import rectangle2 from './Rectangle 258.png'
    import rectangle3 from './Rectangle 259.png'
-   import dropdown from './Vector.png'
+  //  import dropdown from './Vector.png'
    import closeion from './ion_close.png'
    import pdf from './pdf-file 1.png'
    import elipse from './Ellipse 45.png'
@@ -19,14 +19,14 @@
   function Home() {
                     
     const [modal, setModal] = useState(false);
-    const [Openmodal, setOpenModal] = useState(false);
-    const [Openmodal2, setOpenModal2] = useState(false);
+    // const [Openmodal, setOpenModal] = useState(false);
+    // const [Openmodal2, setOpenModal2] = useState(false);
     const [buttonText, setButtonText,] = useState('Submitted');
     const [buttonColor, setButtonColor] = useState('#12c2e9');
     const [report, setreportmodal] = useState(false);
     const navigate = useNavigate();
-    const [selectedStatus, setSelectedStatus] = useState("");
-  const [appliedStatus, setAppliedStatus] = useState("");
+  //   const [selectedStatus, setSelectedStatus] = useState("");
+  // const [appliedStatus, setAppliedStatus] = useState("");
     
     const loanpage = () => {  
       navigate("/LoanCalculator");
@@ -42,25 +42,25 @@
       document.body.classList.remove('active-modal')
     }
       
-    const OpenModal = () => {
-      setOpenModal(!Openmodal);
-    };
+    // const OpenModal = () => {
+    //   setOpenModal(!Openmodal);
+    // };
   
-    if(modal) {
-      document.body.classList.add('active-modal')
-    } else {
-      document.body.classList.remove('active-modal')
-    }
+    // if(modal) {
+    //   document.body.classList.add('active-modal')
+    // } else {
+    //   document.body.classList.remove('active-modal')
+    // }
      
-    const OpenModal2 = () => {
-      setOpenModal2(!Openmodal2);
-    };
+    // const OpenModal2 = () => {
+    //   setOpenModal2(!Openmodal2);
+    // };
   
-    if(modal) {
-      document.body.classList.add('active-modal')
-    } else {
-      document.body.classList.remove('active-modal')
-    }
+    // if(modal) {
+    //   document.body.classList.add('active-modal')
+    // } else {
+    //   document.body.classList.remove('active-modal')
+    // }
 
     const reportmodal = () => {
       setreportmodal(!report);
@@ -72,22 +72,22 @@
       document.body.classList.remove('active-modal')
     }
        
-    const handleRadioChange = (event) => {
-      setSelectedStatus(event.target.value);
-  };
+  //   const handleRadioChange = (event) => {
+  //     setSelectedStatus(event.target.value);
+  // };
   
-  const handleOkClick = () => {
-    setAppliedStatus(selectedStatus);
-    OpenModal(false);
-  };
+  // const handleOkClick = () => {
+  //   setAppliedStatus(selectedStatus);
+  //   OpenModal(false);
+  // };
   
-  const handleButtonClick = () => {
-    OpenModal();
-  };
-  const updateButtonTextAndColor = (newStatus) => {
-      // Update the button text and color based on the new status
-      if (newStatus === 'approved') {
-        setButtonText('Approved');
+  // const handleButtonClick = () => {
+  //   OpenModal();
+  // };
+    const updateButtonTextAndColor = (newStatus) => {
+  //     // Update the button text and color based on the new status
+         if (newStatus === 'approved') {
+         setButtonText('Approved');
         setButtonColor('#25AE7A');
       } else if (newStatus === 'submitted') {
         setButtonText('Submitted');
@@ -107,9 +107,9 @@
       }
     };
   
-    useEffect(() => {
-      updateButtonTextAndColor(appliedStatus);
-    }, [appliedStatus]);
+    // useEffect(() => {
+    //   updateButtonTextAndColor(appliedStatus);
+    // }, [appliedStatus]);
     
   
   
@@ -225,49 +225,9 @@
                   <td>+91 980765421</td>
                   <td>N/A</td>
 <td style={{ backgroundColor: buttonColor, color:'white' }}
-  onClick={handleButtonClick} className="loan-status">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
-                 
+ onChange={updateButtonTextAndColor}  className="loan-status">{buttonText} </td>
                 </tr>
-               
-       
-              <div>
-              {Openmodal && (
-        <div className="openmodal">
-          <div className="modal-list">
-            <div className="submitted">
-            <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
-            <p className={`submit ${appliedStatus === "submitted" ? "#62B8FC" : ""}`} >Submitted</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="acknowledged" onChange={handleRadioChange} />
-            <p className={`submit ${appliedStatus === "acknowledged" ? "#FFBE0B" : ""}`}>Acknowledged</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
-            <p className={`submit ${appliedStatus === "approved" ? "#25AE7A" : ""}`}>Approved</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
-            <p className={`submit ${appliedStatus === "deadline" ? "orange" : ""}`}>Deadline</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
-            <p className={`submit ${appliedStatus === "disbursed" ? "#2CBA00" : ""}`}>Disbursed</p>
-            </div>
-             <div className="submitted">
-            <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
-            onChange={handleRadioChange} />
-            <p className={`submit ${appliedStatus === "inprogress" ? "#FFBE0B" : ""}`}>In-Progress</p>
-            </div>
-            <div className="submitted">
-            <p onClick={OpenModal} className="cancel">Cancel</p>
-            <button onClick={handleOkClick} className="btn-ok">Ok</button>
-            </div>
-            
-                  </div>
-                  </div>
-            )}
-              </div>
+             
                    &nbsp; 
                 <tr>
                   <td className="application-no"onClick={toggleModal}>SLK-123456</td>
@@ -275,7 +235,7 @@
                   <td>Rs.2,50,000</td>
                   <td>+91 980765421</td>
                   <td>B.Vijay Vasanth</td>
-                  <td className="loan-status2" >Approved <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+                  <td className="loan-status2" >Approved </td>
                   
                 </tr>
                 &nbsp;
@@ -285,7 +245,7 @@
                   <td>Rs.2,50,000</td>
                   <td>+91 980765421</td>
                   <td>N/A</td>
-                  <td className="loan-status3">On-Process <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+                  <td className="loan-status3">On-Process  </td>
 </tr>
      
                 &nbsp;
@@ -295,7 +255,7 @@
                   <td>Rs.2,50,000</td>
                   <td>+91 980765421</td>
                   <td>R.Mohammed</td>
-                  <td className="loan-status4">On-Process <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+                  <td className="loan-status4">On-Process  </td>
                   
                 </tr>
                 &nbsp;
@@ -305,45 +265,9 @@
                   <td>Rs.2,50,000</td>
                   <td>+91 980765421</td>
                   <td>N/A</td>
-                  <td onClick={OpenModal2} className="loan-status5">Submitted <img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+                  <td className="loan-status5">Submitted</td>
 </tr>
                     
-              {Openmodal2 && (
-        <div className="openmodal">
-          <div className="modal-list">
-            <div className="submitted">
-            <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
-            <p className="submit" >Submitted</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="aknowledged" onChange={handleRadioChange} />
-            <p className="submit">Acknowledged</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
-            <p className="submit">Approved</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
-            <p className="submit">Deadline</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" />
-            <p className="submit">Disbursed</p>
-            </div> <div className="submitted">
-            <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
-            onChange={handleRadioChange} />
-            <p className="submit">In-Progress</p>
-            </div>
-            <div className="submitted">
-            <p onClick={OpenModal2} className="cancel">Cancel</p>
-            <button onClick={OpenModal2} className="btn-ok">Ok</button>
-            </div>
-            
-                  </div>
-                  </div>
-            )}
-             
               </table>
                  {modal && (
         <div className="modal">
