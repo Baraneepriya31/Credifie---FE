@@ -492,7 +492,7 @@ const updateButtonTextAndColor = (newStatus) => {
       )}
        {opensave && (
         <div className="circular-progress">
-        <div onClick={openDownload} className="overlay-2"></div>
+        <div onClick={closeShare} className="overlay-2"></div>
         <div className="progress-box">
         <div className="progress-bar">
         {/* <span className="progress-value">{counter}%</span> */}
@@ -506,7 +506,7 @@ const updateButtonTextAndColor = (newStatus) => {
 {/*Popup for send successful message*/}
       {share && (
         <div className="circular-progress">
-        <div onClick={sendSuccess} className="overlay-2"></div>
+        <div onClick={closeShare} className="overlay-2"></div>
           <div className="progress-box">
             <div className="progress-bar">
           {/* <span className="progress-value">{counter}%</span> */}
@@ -519,14 +519,11 @@ const updateButtonTextAndColor = (newStatus) => {
 
 
 {/*Popup for send successful message*/}
-      {opensave && (
+       {/* {opensave && (
         <div className="share-popup">
-          <div onClick={closeShare} className="overlay"></div>
-          <div className="share-box">
-            
-          </div>
+          <div onClick={closeShare} className="overlay-2"></div>
         </div>
-      )}
+      )}  */}
 
         <table className='table2'>
             <thead>

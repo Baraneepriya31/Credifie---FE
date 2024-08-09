@@ -64,7 +64,6 @@
     font-weight: 700;
     margin-bottom: 5px;
 }
-
 .group-details{
   border-bottom: 0.5px solid #aaaaaa;
   padding: 10px;
@@ -248,7 +247,18 @@ margin-right: 10px;
     background: rgba(0, 0, 0, 0.5);
     z-index: -1;
   }
-  
+  body.active-modal {
+    overflow-y: hidden;
+  }
+  .overlay-2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -2;
+  }
   .download-box {
     background: white;
     padding: 20px;
@@ -663,7 +673,6 @@ form button:hover {
   justify-content: center;
   z-index: 1000;
 }
-
 .circular-progress .overlay-2 {
   position: absolute;
   top: 0;
@@ -675,29 +684,42 @@ form button:hover {
 }
 
 .progress-bar::before {
-  content: "";
+   content: ""; 
   position: absolute;
   height: 145px;
   width: 145px;
   border-radius: 50%;
   background-color: #fff;
+  z-index: 1;
 }
-
+.progress-bar {
+  position: relative; 
+}
 .tick {
-  font-size: 2rem;
+  font-size: 90px;
+  font-weight: 500;
   color: green;
-  opacity: 0;
   position: absolute;
-  animation: tickAppear 2s forwards 2s;
+   animation: tickAppear 2s forwards 1s; 
+   z-index: 2;
 }
-
-.progress-bar.complete .tick {
+ @keyframes tickAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+} 
+/* .progress-bar.complete .tick {
   display: block;
 }
 
 .progress-bar.complete .progress-value {
   display: none;
-}
+} */
 
 .progress-text{
   font-size: 30px;

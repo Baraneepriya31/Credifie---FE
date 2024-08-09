@@ -325,6 +325,9 @@ border: 0.5rem solid transparent;
     cursor: pointer;
     background: #FFFFFF;
   }
+  body.active-modal {
+    overflow-y: hidden;
+  }
   .group-name{
    
     margin-left: 30%;
