@@ -239,7 +239,7 @@ function CollectionAgent () {
 
             {addmodal && (
                 <div className='addmodal'>
-                    <div onClick={addagent} className="overlay"></div>
+                    <div onClick={addagent} className="overlay-c"></div>
                     <div className='add-agent'>
                         <h4>Add Agent</h4>
                         <hr className='add-line' />

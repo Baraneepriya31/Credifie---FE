@@ -9,8 +9,7 @@ h2 span{
 padding: 4px 5px 4px 5px;
 border-radius: 4.45px 0px 0px 0px;
 opacity: 0px;
-background-color: #044483;
-color:#FFFFFF;
+color:#000000;
 }   
 .agent-container{
   width: 1080px;
@@ -129,7 +128,7 @@ height: 15px;
  top: 50%;
  height: 100vh;
 }
-.addmodal, .overlay {
+.addmodal, .overlay-c {
   width: 100vw;
   top: 0px;
   left: 0;
@@ -137,7 +136,7 @@ height: 15px;
   bottom: 0px;
   position: fixed;
 } 
-.overlay{
+.overlay-c{
    background: rgba(49,49,49,0.8);  
 }
 .add-agent {

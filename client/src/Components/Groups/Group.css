@@ -7,13 +7,14 @@
 } 
    
 h2 span{
-  
+  width: Hug (68px)px;
+  height: Hug (30px)px;
 padding: 4px 5px 4px 5px;
 border-radius: 4.45px 0px 0px 0px;
 opacity: 0px;
-color:#000000;
+color:#393938;
+font-weight: 600;
 }
-
  .group-container{
   width: 1080px;
   height: fit-content;
@@ -35,7 +36,7 @@ color:#000000;
   border-radius: 20px;
   background-color:#f1f1f4;
   border: 0.5px solid #00000080;
-  width: 250px;
+  width: 230px;
   height: 35px;
   position: relative;
   padding-left: 10px;
@@ -110,24 +111,22 @@ padding-bottom: 5px;
   height: 15px;
  
 }
-.table2{
+.table3{
   margin-top: 13px;
-  width: 1080px;
+  width: 1088px;
   border-collapse: collapse;
 }
-.table2 tr {
-  margin-top: 10px;
-  line-height: 20px;
-}
-.table2 th{
+ .table3 tr{
+  padding-top: 20px;
+} 
+.table3 th{
   font-size: 13px;
   background: #F7F7F7;
   color: #393938;
-  
 }
-.table2 td{
+.table3 td{
   text-align: center;
-  padding: 10px;
+  width: fit-content;
 }
 .active-status{
   color:#25AE7A;
@@ -299,9 +298,20 @@ padding: 5px;
   background: #FFFFFF;
    padding: 15px;
   border-radius: 3px;
-   max-width: 500px;
+   max-width: 520px;
   min-width: 300px; 
+  z-index: 20px;
+  overflow-y:auto;
+   max-height: 85vh; 
 }
+.add-group::-webkit-scrollbar-track{
+background-color: #d1cfcf;   
+} 
+.add-group::-webkit-scrollbar-thumb{
+background-color:#25AE7A;
+border-radius: 1rem;
+border: 0.5rem solid transparent;
+}  
 .add-line{
   height: 0.2px;
   width: 500px;
@@ -369,7 +379,8 @@ padding: 5px;
   margin-top: 20px;
   cursor: pointer;
 }
-.input-line {
+
+.input-lines {
   border: none;
    border-bottom: 0.2px solid #343433; 
   outline: none;
@@ -417,15 +428,18 @@ padding: 5px;
   right: 0;
   bottom: 0px;
   position: fixed;
+  background: rgba(0, 0, 0, 0.5);
 } 
 .disable-content {
   position: absolute;
-  top: 50%;
+  top:50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: #FFFFFF;
   border-radius: 3px;
-   max-width: 300px;
+  max-width: 500px;
+ min-width: 300px;
+ height: 530px;
 }
 .groupid{
    width: 300px;
@@ -490,8 +504,8 @@ padding: 5px;
   color: white;
   border-radius: 5px;
   margin-bottom: 10px;
+  cursor: pointer;
 }
-
 .disabled {
   pointer-events: none;
   opacity: 0.4;

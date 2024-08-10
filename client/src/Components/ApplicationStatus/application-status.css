@@ -1,539 +1,402 @@
 .application-status-header {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    border-color: #1F8B63;
-    width: 800px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-color: #1F8B63;
+  width: 800px;
 }
 
 .application-count{
-    font-family: Roboto;
-    width: 74px;
-    height: 30px;
-    font-size: 30px;
-    font-weight: 400;
-    line-height: 30px;
-    padding-top: 20px;
+  font-family: Roboto;
+  width: 74px;
+  height: 30px;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 30px;
+  padding-top: 20px;
 }
 
 .application-label{
-    width: 146px;
-    height: 14px;
-    font-family: Roboto;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 14px;
-    letter-spacing: 0.0015em;
-    text-align: center;
+  width: 146px;
+  height: 14px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: 0.0015em;
+  text-align: center;
 }
 
 
 .application-status-button {
-    display: flex;
-    width: 170px;
-    height: 120px;
-    flex-direction: column;
-    align-items: center;
-    background-color: #ffffff;
-    color: black;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    margin-right: 10px;
-    transition: background-color 0.3s ease;
-    border: 1px solid #25AE7A;
+  display: flex;
+  width: 170px;
+  height: 120px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+  border: 1px solid #25AE7A;
 }
 
 .application-status-button:hover {
-    background-color: #1F8B63;
-    color: white;
+  background-color: #1F8B63;
+  color: white;
 }
 
 .application-count {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 5px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 5px;
 }
 
 .group-details{
-  border-bottom: 0.5px solid #aaaaaa;
-  padding: 10px;
+border-bottom: 0.5px solid #aaaaaa;
+padding: 10px;
 }
 
 
 .application-label {
-    font-size: 14px;
+  font-size: 14px;
+}
+
+.grouppopup-a{
+  display: flex;
+  width: 100vw;
+  top: 50%;
+}
+.grouppopup-a, .overlay-g{
+  width: 100vw;
+  top: 0px;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+ 
+}
+.groupid-content{
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #FFFFFF;
+  border-radius: 3px;
+  max-width: 500px;
+ min-width: 300px;
+ height: 530px;
+}
+.groupid-line{
+  width: 300px;
+}
+.group-member{
+  display: flex;
+  justify-content: space-between;
+  
+}
+.group-member h5{
+  color:#9e9ea4;
+}
+.application-status2{
+  display: flex;
+}
+.pending{
+  background-color: #12c2e9;
+  color: white;
+  width: 118px;
+  height: 25px;
+  border: none;
+  border-radius: 20px;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+.groupid-content h5{
+  margin-left: 20px;
+}
+.group-id5{
+  border-bottom: 0.5px solid #bdbaba;
+ padding: 20px;
+  width: 370px;
+  margin-top: 0;
+}
+.groupid-line{
+  width: 400px;
+  border: 0.5px solid #bdbaba;
+}
+.group-table{
+  background-color: #FFFFFF;
+  /* margin-left: 10px;
+  margin-right: 10px;
+  */
+}
+.id-details{
+  color: #bdbaba;
+  font-size: 10px;
+  text-align: left;
+}
+.id-info{
+  /* padding-left: 20px; */
+  font-size: 10px;
+  color: #000000;
+  text-align: left;
+  font-weight: 600;
+}
+.table-1{
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid #9e9ea4;
+  border-radius: 6px;
+ margin-left: 12px;
+ margin-right: 12px;
+  width: 430px;
+  border-bottom: 0.5px solid #bdbaba;
+  padding: 10px;
+}
+.table-2{
+  margin-right: 10px;
+}
+.loan-history{
+  margin-left: 20px;
+  font-size: 15px;
+}
+.loanstatus-act-clo{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+.loanstats{
+  color: #777675;
+}
+.loanstatus-act{
+  background-color: #25AE7A;
+  border-radius: 20px;
+  color: #FFFFFF;
+  border: none;
+  width: 100px;
+  margin-top: 15px;
+}
+.loanhistory-table{
+    font-size: 11px;
+    margin-left: 12px;
+   border-collapse: collapse;
+   width: 450px;
+   text-align: center;
+   outline: 0.5px solid #9e9ea4;
+   padding: 10px;
+}
+.loanhistory-table th{
+  background-color:#dddbdb;
+  color: #393938;
+
+}
+.loanhistory-table td{
+  color: #393938;
+padding: 5px;
+  border-bottom: 0.5px solid #9e9ea4;
+  margin-bottom: 20px;
 }
 
 .application-status-container {
-    padding: 10px;
-    width: 1115px;
-    margin-left: 15px;
-    height: 570px;
-    /* background-color: #E7E7E7; */
+  padding: 10px;
+  width: 1115px;
+  margin-left: 15px;
+  height: 570px;
+  /* background-color: #E7E7E7; */
 }
 
 .application-status-text{
-    font-family: Roboto;
-    font-size: 26px;
-    font-weight: 500;
-    padding-left: 5px;
-    padding-top: 5px;
+  font-family: Roboto;
+  font-size: 26px;
+  font-weight: 500;
+  padding-left: 5px;
+  padding-top: 5px;
 }
 
 .box-header{
-    width: 1000px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    font-size: 16px;
-    margin-left: 20px;
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 16px;
+  margin-left: 20px;
 }
 
 .box1 {
-    display: flex;
-    flex-direction: row;
-    gap: 20px; 
-    width: 1100px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px; 
+  width: 1100px;
 }
 
 .search-container {
-    position: relative;
-    width: 100%;
-    max-width: 300px;
+  position: relative;
+  width: 100%;
+  max-width: 300px;
 }
 
 .search-icon {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    right: 10px;
-    top:10%;
-    transform: translateY(-50%);
-    cursor: pointer;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 10px;
+  top:10%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
 
 .search-box{
-    width: 300px;
-    height: 30px;
-    border-radius: 20px;
-    background: #F3F3F9;
-    border: 0.5px solid #00000080;
-    padding: 5px;
-    margin-top: 0px;
+  width: 300px;
+  height: 30px;
+  border-radius: 20px;
+  background: #F3F3F9;
+  border: 0.5px solid #00000080;
+  padding: 5px;
+  margin-top: 0px;
 }
 
 .add-application-button{
-    width: 200px;
-    height: 40px;
-    margin-left: 350px;
-    color: white;
-    padding: 5px;
-    border-radius: 10px;
-    background-color: #1F8B63;
-    font-size:16px;
-    font-weight: 400px;
-    font-family: roboto, sans-serif;
-    border: 1px solid #25AE7A;
-    cursor: pointer;
+  width: 200px;
+  height: 40px;
+  margin-left: 350px;
+  color: white;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #1F8B63;
+  font-size:16px;
+  font-weight: 400px;
+  font-family: roboto, sans-serif;
+  border: 1px solid #25AE7A;
+  cursor: pointer;
 }
 
 .download-button{
-    width: 130px;
-    height: 40px;
-    margin-left: 25px;
-    padding: 5px;
-    color: #25AE7A;
-    border-radius: 10px;
-    border: 1px 0px 0px 0px;
-    background-color: #e0f1e4;
-    border: 1px solid #1F8B63;
-    font-size:16px;
-    font-family: roboto, sans-serif;
-    cursor: pointer;
+  width: 130px;
+  height: 40px;
+  margin-left: 25px;
+  padding: 5px;
+  color: #25AE7A;
+  border-radius: 10px;
+  border: 1px 0px 0px 0px;
+  background-color: #e0f1e4;
+  border: 1px solid #1F8B63;
+  font-size:16px;
+  font-family: roboto, sans-serif;
+  cursor: pointer;
 }
 
 .app-statuspopup{
-  position: absolute;
-    margin-left: 70%;   
-  background-color:#FFFFFF;
-  width: 90px;
-  height: 210px;
-  z-index: 10;
- box-shadow: 0px 15px 15px 0px #0000001A;
- } 
- .collection-agent-popup{
-  position: absolute;
-    margin-left: 70%;   
-  background-color:#FFFFFF;
-  width: 120px;
-  height:210px;
-  z-index: 10;
- box-shadow: 0px 15px 15px 0px #0000001A;
- } 
- .agent-list > li{
-  font-size: 12px;
-  cursor: pointer;
-  text-align: left;
-  margin-left: 10px;
-  margin-top: 10px;
- }
+position: absolute;
+  margin-left: 70%;   
+background-color:#FFFFFF;
+width: 90px;
+height: 210px;
+z-index: 10;
+box-shadow: 0px 15px 15px 0px #0000001A;
+} 
+.collection-agent-popup{
+position: absolute;
+  margin-left: 70%;   
+background-color:#FFFFFF;
+width: 120px;
+height:210px;
+z-index: 10;
+box-shadow: 0px 15px 15px 0px #0000001A;
+} 
+.agent-list > li{
+font-size: 12px;
+cursor: pointer;
+text-align: left;
+margin-left: 10px;
+margin-top: 10px;
+}
 
 /* .add-application-button:hover, .download-button:hover{
-    background-color: #1F8B63;
+  background-color: #1F8B63;
 } */
 
 .table-container{
-  background-color: #ffffff;
-  height: 70%;
+background-color: #ffffff;
+height: 70%;
 }
 
 .table-ap{
-    width: 1050px;
-    margin-top: 20px;
-    padding: 10px;
-    border-collapse: collapse;
-    box-shadow: 0px 0px 5px #aaaaaa;
-    border-radius: 8px;
+  width: 1050px;
+  margin-top: 20px;
+  padding: 10px;
+  border-collapse: collapse;
+  box-shadow: 0px 0px 5px #aaaaaa;
+  border-radius: 8px;
 
 }
 
 .table-container{
-  background-color: #ffffff;
-  height: fit-content;
+background-color: #ffffff;
+height: fit-content;
 }
 
-.input-line {
-  border: none;
-   border-bottom: 0.2px solid #343433; 
-  outline: none;
-  width: 140px; 
-  display:flex;
- flex-direction: column;
- padding-bottom:3.5px;
+.input-lines {
+border: none;
+outline: none;
+width: 140px; 
+display:flex;
+flex-direction: column;
+padding-bottom:3.5px;
 }
 
 table thead td{
-    width: 80px;
-    padding: 10px;
-    background-color: #E7E7E7;
-    color: black;
+  width: 80px;
+  padding: 10px;
+  background-color: #E7E7E7;
+  color: black;
 }
 
 table tbody td{
-    padding: 10px;
-    margin: 5px;
+  padding: 10px;
+  margin: 5px;
 }
 
 .loan-status1{
-    border-radius: 20px;
-    cursor: pointer;
-    width: 80px;
-    height: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 80px;
+  height: 10px;
 }
 
 
 
 .status-popup{
-    background-color: #62B8FC;
-    border-radius: 20px;
-    cursor: pointer;
-    width: 50px;
-    height: 5px;
-    color: #FFFFFF;
-    text-align: center;
+  background-color: #62B8FC;
+  border-radius: 20px;
+  cursor: pointer;
+  width: 50px;
+  height: 5px;
+  color: #FFFFFF;
+  text-align: center;
 }
 
 .download-popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  
-  .download-popup .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: -1;
-  }
-  
-  .download-box {
-    background: white;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .download-box h5 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 400;
-    border-bottom: 0.5px solid #afafaf;
-    padding: 10px;
-    text-align: left;
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-  
-  
-  .download-box form {
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .download-box form div {
-    width: 450px;
-    text-align: left;
-  }
-  
-  .download-box form label {
-    margin: 5px 0;
-    display: flex;
-    flex-direction: column;
-  }
- 
-  .dwnl-ft{
-    display: flex;
-    justify-content: space-evenly;
-    margin-left: 20px;
-  }
-  .download-box form input[type="date"] {
-    width: calc(50% - 10px);
-    margin: 5px 5px 10px 0;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .download-box form p {
-    margin: 10px 0 5px;
-    font-weight: bold;
-  }
-  
-  .download-box form input[type="radio"] {
-    margin: 0 10px 10px 0;
-    justify-content:space-evenly;
-  }
-
-  .radio-btn{
-    margin-left: 20px;
-  }
-  
-  .download-box form button {
-    width: 180px;
-    text-align: center;
-  }
-
-  .dwnl-button {
-    margin: 10px 0px 0px 10px;
-  }
-
-  .share-btn{
-    margin-left: 20px;
-    text-align: center;
-  }
-  
-  .dwnl-button button {
-    padding: 10px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: #25AE7A;
-    color: white;
-    font-size: 14px;
-  }
-  
-  .dwnl-button button:hover {
-    background-color: #1F8B63;
-  }
-  
-  .share-popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  
-  .share-popup .overlay-1 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: -1;
-  }
-  
-  .share-box {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  text-align: center;
-  position: relative;
-}
-
-.close-icon {
-  cursor: pointer;
-  color: black;
-  display: flex;
-  justify-content: flex-end;
-  font-size: 24px;
-}
-
-.share-rpt p {
-  font-size: 18px;
-  color: black;
-  border-bottom: 0.5px solid #afafaf;
-  padding: 10px;
-  text-align: left;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.pdfxl-btn {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-}
-
-.pdfxl-btn button {
-  width: 80px;
-  height: 25px;
-  background-color: #ffffff;
-  border-radius: 15px;
-  border: 0.5px solid #25AE7A;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.pdfxl-btn button:hover {
-  background-color: #f0f0f0;
-}
-
-form {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-
-.input-share{
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  align-items: left;
-  margin-left: 10px;
-}
-
-.input-share input{
-  width: 100%;
-  padding: 8px;
-  border: none;
-  outline:none;
-  border-bottom: 0.5px solid #00000080;
-  margin-bottom: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.input-share svg{
-  width: 20px;
-  height: 20px;
-  color: navy;
-}
-
-.send-button button {
-  padding: 10px 20px;
-  width: 200px;
-  background-color: #25AE7A;
-  border: none;
-  color: white;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-form button:hover {
-  background-color: #1F8B63;
-}
-
-.share-box {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
-  text-align: center;
-  position: relative;
-}
-
-
-.loader {
-  position: relative;
-  width: 100px;
-  height: 100px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 
-.circle {
-  width: 100px;
-  height: 100px;
-  border: 10px solid lightgray;
-  border-top: 10px solid #f0f0f0;
-  border-radius: 50%;
-  animation: spin 2s linear infinite, fadeOut 2s forwards;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.tick {
-  font-size: 2rem;
-  color: navy;
-  opacity: 0;
-  position: absolute;
-  animation: tickAppear 2s forwards 2s;
-}
-
-.group-popup{
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.group-popup .overlay {
+.download-popup .overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -543,87 +406,364 @@ form button:hover {
   z-index: -1;
 }
 
-.group-box {
+.download-box {
   background: white;
   padding: 20px;
-  border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 100%;
   text-align: center;
-  position: relative;
+}
+
+.download-box h5 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  border-bottom: 0.5px solid #afafaf;
+  padding: 10px;
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+
+.download-box form {
+  flex-direction: row;
+  align-items: center;
+}
+
+.download-box form div {
+  width: 450px;
+  text-align: left;
+}
+
+.download-box form label {
+  margin: 5px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dwnl-ft{
+  display: flex;
+  justify-content: space-evenly;
+  margin-left: 20px;
+}
+.download-box form input[type="date"] {
+  width: calc(50% - 10px);
+  margin: 5px 5px 10px 0;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.download-box form p {
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+.download-box form input[type="radio"] {
+  margin: 0 10px 10px 0;
+  justify-content:space-evenly;
+}
+
+.radio-btn{
+  margin-left: 20px;
+}
+
+.download-box form button {
+  width: 180px;
+  text-align: center;
+}
+
+.dwnl-button {
+  margin: 10px 0px 0px 10px;
+}
+
+.share-btn{
+  margin-left: 20px;
+  text-align: center;
+}
+
+.dwnl-button button {
+  padding: 10px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #25AE7A;
+  color: white;
+  font-size: 14px;
+}
+
+.dwnl-button button:hover {
+  background-color: #1F8B63;
+}
+
+.share-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.share-popup .overlay-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+.share-box {
+background: white;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+max-width: 400px;
+width: 100%;
+text-align: center;
+position: relative;
+}
+
+.close-icon {
+cursor: pointer;
+color: black;
+display: flex;
+justify-content: flex-end;
+font-size: 24px;
+}
+
+.share-rpt p {
+font-size: 18px;
+color: black;
+border-bottom: 0.5px solid #afafaf;
+padding: 10px;
+text-align: left;
+font-weight: 600;
+margin-bottom: 10px;
+}
+
+.pdfxl-btn {
+width: 100%;
+display: flex;
+justify-content: space-around;
+}
+
+.pdfxl-btn button {
+width: 80px;
+height: 25px;
+background-color: #ffffff;
+border-radius: 15px;
+border: 0.5px solid #25AE7A;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+.pdfxl-btn button:hover {
+background-color: #f0f0f0;
+}
+
+form {
+margin-top: 20px;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+
+.input-share{
+display: flex;
+flex-direction: row;
+width: 100%;
+align-items: left;
+margin-left: 10px;
+}
+
+.input-share input{
+width: 100%;
+padding: 8px;
+border: none;
+outline:none;
+border-bottom: 0.5px solid #00000080;
+margin-bottom: 10px;
+margin-left: 20px;
+margin-right: 20px;
+}
+
+.input-share svg{
+width: 20px;
+height: 20px;
+color: navy;
+}
+
+.send-button button {
+padding: 10px 20px;
+width: 200px;
+background-color: #25AE7A;
+border: none;
+color: white;
+cursor: pointer;
+border-radius: 4px;
+}
+
+form button:hover {
+background-color: #1F8B63;
+}
+
+.share-box {
+background: white;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+max-width: 400px;
+width: 100%;
+text-align: center;
+position: relative;
+}
+
+
+.loader {
+position: relative;
+width: 100px;
+height: 100px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.circle {
+width: 100px;
+height: 100px;
+border: 10px solid lightgray;
+border-top: 10px solid #f0f0f0;
+border-radius: 50%;
+animation: spin 2s linear infinite, fadeOut 2s forwards;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.tick {
+font-size: 2rem;
+color: navy;
+opacity: 0;
+position: absolute;
+animation: tickAppear 2s forwards 2s;
+}
+
+.group-popup{
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.group-popup .overlay-g {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.5);
+z-index: -1;
+}
+
+.group-box {
+background: white;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+max-width: 400px;
+width: 100%;
+text-align: center;
+position: relative;
 }
 
 .modal-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #FFFFFF;
-  padding: 15px;
-  border-radius: 3px;
-  max-width: 450px;
-  min-width: 300px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background: #FFFFFF;
+padding: 15px;
+border-radius: 3px;
+max-width: 450px;
+min-width: 300px;
 }
 
 .collection-agent-popup{
-  position: absolute;
-    margin-left: 70%;   
-  background-color:#FFFFFF;
-  width: 120px;
-  height:210px;
-  z-index: 10;
- box-shadow: 0px 15px 15px 0px #0000001A;
- } 
- .agent-list > li{
-  font-size: 12px;
-  cursor: pointer;
-  text-align: left;
-  margin-left: 10px;
-  margin-top: 10px;
- }
+position: absolute;
+  margin-left: 70%;   
+background-color:#FFFFFF;
+width: 120px;
+height:210px;
+z-index: 10;
+box-shadow: 0px 15px 15px 0px #0000001A;
+} 
+.agent-list > li{
+font-size: 12px;
+cursor: pointer;
+text-align: left;
+margin-left: 10px;
+margin-top: 10px;
+}
 
 .group-id-box{
-  display: flex;
-  flex-direction: row;
-  width: 100%;
+display: flex;
+flex-direction: row;
+width: 100%;
 
 }
 
 .group-id-box h4{
-  width: 70px;
-  margin: 0px;
+width: 70px;
+margin: 0px;
 }
 
 .group-id-box input{
-  width: 40px;
-  height: 20px;
+width: 40px;
+height: 20px;
 }
 
 .status {
-  margin-left: 320px;
-  font-size: 12px;
-  color: #393938;
+margin-left: 320px;
+font-size: 12px;
+color: #393938;
 }
 
 .group-id-box button{
-    background-color: #2CBA00;
-    height: 30px;
-    width: 100px;
-    border: none;
-    margin-left: 200px;
-    color: #FFFFFF;
-    font-size: 12px;
+  background-color: #2CBA00;
+  height: 30px;
+  width: 100px;
+  border: none;
+  margin-left: 200px;
+  color: #FFFFFF;
+  font-size: 12px;
 }
 
 .add-loan-button button{
-  background-color: #25AE7A;
-  color: #ffffff;
-  border: none;
-  height: 30px;
-  width: 70px;
-  border-radius: 4px;
-  margin-left: 190px;
+background-color: #25AE7A;
+color: #ffffff;
+border: none;
+height: 30px;
+width: 70px;
+border-radius: 4px;
+margin-left: 190px;
+cursor: pointer;
+}
+
+.img-pdf{
+  cursor: pointer;
 }
 
 .progress-bar {
@@ -661,7 +801,6 @@ form button:hover {
   justify-content: center;
   z-index: 1000;
 }
-
 .circular-progress .overlay-2 {
   position: absolute;
   top: 0;
@@ -673,34 +812,47 @@ form button:hover {
 }
 
 .progress-bar::before {
-  content: "";
+   content: ""; 
   position: absolute;
   height: 145px;
   width: 145px;
   border-radius: 50%;
   background-color: #fff;
+  z-index: 1;
 }
-
+.progress-bar {
+  position: relative; 
+}
 .tick {
-  font-size: 2rem;
+  font-size: 90px;
+  font-weight: 500;
   color: green;
-  opacity: 0;
   position: absolute;
-  animation: tickAppear 2s forwards 2s;
+   animation: tickAppear 2s forwards 1s; 
+   z-index: 2;
 }
+ @keyframes tickAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+} 
 
-.progress-bar.complete .tick {
-  display: block;
+/* .progress-bar.complete .tick {
+display: block;
 }
 
 .progress-bar.complete .progress-value {
-  display: none;
-}
+display: none;
+} */
 
 .progress-text{
-  font-size: 30px;
-  font-weight: 500;
-  text-align: center;
-  color: #000000;
+font-size: 30px;
+font-weight: 500;
+text-align: center;
+color: #000000;
 }
-

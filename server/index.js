@@ -16,6 +16,8 @@ mongoose.connect('mongodb://localhost:27017/admindb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+ const url = 'mongodb://localhost:27017';
+ dbName= 'admindb';
 
 const db = mongoose.connection;
 
@@ -212,6 +214,11 @@ db.once('open', function() {
         panNumber: String,
       },
     ],
+    groupLocation: String,
+    isDisabled:{
+      type: Boolean,
+      default: false
+    }
   });
 
   const Group = mongoose.model('Group', groupSchema);
@@ -226,7 +233,7 @@ db.once('open', function() {
   }
 
   app.post('/add-group', async (req, res) => {
-    const { groupName, groupLeader, subLeader, members } = req.body;
+    const { groupName, groupLeader, subLeader, members, groupLocation, isDisabled } = req.body;
 
     try {
       const grpid = await getNextSequence('groupID');
@@ -236,6 +243,8 @@ db.once('open', function() {
         groupLeader,
         subLeader,
         members,
+        groupLocation,
+        isDisabled,
       });
 
       await newGroup.save();
@@ -246,15 +255,6 @@ db.once('open', function() {
     }
   });
 
-  // API endpoint to get group details
-app.get('/getgroups', async (req, res) => {
-  try {
-    const groups = await Group.find();
-    res.json(groups);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
 app.get('/getagents',async (req,res) => {
   try{
@@ -296,6 +296,19 @@ async function getNextSequence(name) {
   );
   return counter.seq;
 }
+
+app.get('/getgroups', async (req, res) => {
+  try {
+    const client = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+    const db = client.db(dbName);
+    const groups = await db.collection('groups').find({ isDisabled: { $ne: true } }).toArray();
+    client.close();
+    res.json(groups);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 app.post('/add-agent', async (req, res) => {
   const {
@@ -374,7 +387,30 @@ const applicationschema = new mongoose.Schema({
   tenure:String,
   interest:String,
   duedate:String,
-});
+  groupName: String,
+  appStatus: String,
+  groupID: String,
+  groupLeader: {
+    name: String,
+    contactNumber: String,
+    panNumber: String,
+  },
+  subLeader: {
+    name: String,
+    contactNumber: String,
+    panNumber: String,
+  },
+  members: [
+    {
+      name: String,
+      contactNumber: String,
+      panNumber: String,
+    },
+  ],
+  groupLocation: String,
+  panCard: String,
+    photos: String,
+})
 
 const Application = mongoose.model('Application', applicationschema);
 
@@ -388,17 +424,27 @@ async function getNextSequence(name) {
 }
 
 app.post('/add-application', async (req, res) => {
-  const {location, loanamount, loanaccountnumber, tenure, interest, duedate} = req.body;
+  const {location, loanamount, loanaccountnumber, tenure, interest, duedate, appStatus, groupID, groupName, groupLeader, subLeader, members,
+    groupLocation} = req.body;
   try {
     const appid = await getNextSequence('applicationID');
     const newApplication = new Application({
     applicationID: `CRDA${appid.toString().padStart(3, '100')}`, 
-    location:'India',
-    loanamount:'3,50,000',
-    loanaccountnumber:'IBFC12345',
-    tenure:'6 months',
-    interest:'25%',
-    duedate:'10-09-2024',
+    location,
+    loanamount,
+    loanaccountnumber,
+    tenure,
+    interest,
+    duedate,
+    appStatus,
+    groupID,
+    groupName,
+    groupLeader,
+    subLeader,
+    members,
+    groupLocation,
+    panCard,
+    photos,
     });
   
     await newApplication.save();
@@ -406,7 +452,7 @@ app.post('/add-application', async (req, res) => {
   } catch (error) {
     console.error('Error adding Application:', error);
     res.status(500).json({ message: 'Failed to add Application' });
-  };   
+  };
 });
 
 
@@ -460,41 +506,65 @@ app.post('/add-profile', async (req, res) => {
   });
 
   app.get('/getgroups/:id', async (req, res) => {
-    const groupId = req.params.id;
-    try {
-      const client = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-      const db = client.db(dbName);
-      const group = await db.collection('groups').findOne({ _id: new ObjectId(groupId) });
-      client.close();
-      
-      if (!group) {
-        return res.status(404).json({ error: 'Group not found' });
-      }
-      
-      res.json(group);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  });
+  const groupId = req.params.id;
+  const groupIdPattern = /^[A-Z]{4}\d{3}$/; 
 
-    app.put('/groups/:id/disable', async (req, res) => {
-      try {
-        const groupId = req.params.id;
-        const group = await Group.findById(groupId);
-    
+  if (!groupIdPattern.test(groupId)) {
+    return res.status(400).json({ error: 'Invalid group ID format' });
+  }
+
+    try {
+        const client = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+        const db = client.db(dbName);
+        
+        // Query by the groupID field
+        const group = await db.collection('groups').findOne({ groupID: groupId });
+        client.close();
+
         if (!group) {
-          return res.status(404).send('Group not found');
+            return res.status(404).json({ error: 'Group not found' });
         }
-    
-        group.isDisabled = true;
-        await group.save();
-    
-        res.status(200).send('Group disabled successfully');
-      } catch (error) {
-        res.status(500).send('Server error');
-      }   
+
+        res.json(group);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
+
+app.put('/groups/:id/disable', async (req, res) => {
+  const groupId = req.params.id;
+  try {
+    const client = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+    const db = client.db(dbName);
+    const result = await db.collection('groups').updateOne(
+      { groupID: groupId },  // Use groupID for matching
+      { $set: { isDisabled: true } }
+    );
+    client.close();
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({ error: 'Group not found' });
+    }
+    res.status(200).json({ message: 'Group disabled successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/groups/:id', async (req, res) => {
+  try {
+    const groupId = await Group.findById(req.params.id);
+    if (groupId) {
+      res.json(groupId);
+    } else {
+      res.status(404).json({ error: 'Group not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

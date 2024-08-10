@@ -1,5 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import axios from 'axios';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import * as XLSX from 'xlsx';
 import { BsSearch} from 'react-icons/bs';
 import dropdown from './Vector.png';
 import closeicon from './ion_close.png';
@@ -11,17 +14,14 @@ import alert from './alerticon.png'
 import { FiDownload } from "react-icons/fi";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
-import './Group.css';
-
-
-
+import './Group.css'
 
 function Group() {
             
   const [addmodal, setAddmodal] = useState(false);
   const [buttonText, setButtonText,] = useState('Pending');
   const [buttonColor, setButtonColor] = useState('#12c2e9');
-  const [disablemodal, setDisableModal] = useState(false);
+  const [disableModal, setDisableModal] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [Openmodal, setOpenModal] = useState(false);
   const [grouppopup, setGroupId] = useState(false); 
@@ -37,16 +37,18 @@ function Group() {
   const [groupData, setGroupData] = useState([]);
   const [totalGroups, setTotalGroups] =useState(0);
   const [selectedGroup, setSelectedGroup] = useState(null);
-  // const [groups, setGroups] = useState([]);
+  const [groups, setGroups] = useState([]);
+  const tableRef = useRef(null);
 
 
+
+  // API endpoint to get group details
   useEffect(() => {
     const fetchGroupData = async () => {
       try {
         const response = await axios.get('http://localhost:3008/getgroups');
         setGroupData(response.data);
         setTotalGroups(response.data.length);
-        
       } catch (error) {
         console.error('Error fetching group data:', error);
       }
@@ -54,11 +56,12 @@ function Group() {
     fetchGroupData();
   }, []);
 
-  // useEffect(() => {
-  //   fetch('/getgroupdisable/:id')
-  //     .then(response => response.json())
-  //     .then(data => setGroups(data));
-  // }, []);
+  useEffect(() => {
+    const initialDisabledRows = groups
+      .map((group, index) => group.isDisabled ? index : null)
+      .filter(index => index !== null);
+    setDisabledRows(initialDisabledRows);
+  }, [groups]);
   
 
 
@@ -84,10 +87,85 @@ function Group() {
     
       }
 
-    const openDownload=()=>{
-      setopenDownload(true);
-      setPopup(false);
+      const openDownload=(e)=>{
+        e.preventDefault();
+        if (fileType === 'pdf') {
+           generatePDF();
+        } else  if (fileType === 'xlsx') {
+          generateExcel();
+        };
+       setopenDownload(true);
+       setPopup(false);
     }
+
+    const generatePDF = () => {
+      // return new Promise((resolve, error) =>{
+      const input = tableRef.current; 
+      if (input)  {
+        html2canvas(input)
+          .then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF();
+            pdf.addImage(imgData, 'PNG', 0, 0);
+            pdf.save('download.pdf');
+            return pdf.output('blob');
+          })
+          .catch((error) => {
+            console.error('Error generating PDF:', error);
+          });
+      } else {
+        console.error('Table element not found');
+      }
+      setSelectedRows([]); 
+    // })
+    };
+
+    const generateExcel = () => {
+      const mappedData = filteredData.map((row, index) => {
+        if (selectedRows.includes(index)) {
+          return {
+            'Group ID': row.id,
+            'Group Name': 'Chennai Group',
+            'Group Leader': 'Vijay',
+            'Contact No': '+91 8907654321',
+            'Loan Amount': 'Rs.3,50,000',
+            'Collection Agent': 'B. Vijay',
+            'Over Due': 'Rs.25,000',
+            'Loan Status': '*Active/3',
+            'Application Status': buttonText
+          };
+        }
+        return null;
+      }).filter(row => row !== null);
+    
+      // Log the mapped data
+      console.log("Mapped Data:", mappedData);
+    
+      // Check if mappedData has data
+      if (mappedData.length === 0) {
+        console.error("No data to write to Excel");
+        return;
+      }
+    
+      // Generate Excel sheet
+      const we = XLSX.utils.json_to_sheet(mappedData);
+      const wd = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wd, we, 'Sheet1');
+      XLSX.writeFile(wd, 'download.xlsx');
+      
+    };
+    const handleSend = async (e) => {
+      e.preventDefault();
+      console.log(`Sending ${fileType} report to ${email}`);
+      try {
+        await axios.post('/api/send-report', { email, fileType });
+        alert('Email sent successfully!');
+      } catch (error) {
+        alert('Failed to send email.');
+      }
+      closeShare();
+    };
+    
   
     const openShare =()=>{
       setopenShare(true);
@@ -117,11 +195,6 @@ function Group() {
       setEmail(e.target.value);
     };
   
-    const handleSend = (e) => {
-      e.preventDefault();
-      console.log(`Sending ${fileType} report to ${email}`);
-      closeShare(); 
-    };
 
     const handleSearchChange = (event) => {
       setSearchQuery(event.target.value);
@@ -133,27 +206,14 @@ function Group() {
       setSelectedGroup(group);
   };
 
-  const DisableModal =  () => {
-    setDisableModal(true);
-    // try {
-    //   await axios.put(`/groups/${groupId}/disable`);
-    //   // Update the UI after disabling the group
-    //   setGroups(groups.map(group => 
-    //     groups._id === groupId ? { ...groups, isDisabled: true } : group
-    //   ));
-    // } catch (error) {
-    //   console.error('Error disabling group', error);
-    // }
-  };
-  
-    const Closedisable = () => {
-      setDisableModal(false);
-    };
-  
-    const handleConfirm = () => {
-    setIsConfirmed(true);
-  };
 
+    const openDisableModal = () => setDisableModal(true);
+
+    const closeDisableModal = () =>{ 
+      setDisableModal(false);
+      setIsConfirmed(false);
+    }
+  
 
     const OpenModal = () => {
       setOpenModal(!Openmodal);
@@ -204,7 +264,9 @@ function Group() {
     members:[
       {name: '',contactNumber: '', panNumber:''},
       {name: '',contactNumber: '', panNumber:''}
-    ]
+    ],
+    groupLocation:'',
+    isDisabled: false,
   });
 
   const handleChange = (e, role, field, index=null) => {
@@ -240,6 +302,12 @@ function Group() {
       members: updatedMembers,
     }));
   }
+  else if (role === 'location') {
+    setGroupDetails(prevDetails => ({
+      ...prevDetails,
+      [field]: value,
+    }));
+    }
 };
 
 
@@ -277,12 +345,26 @@ const handleSubmit = async () => {
     });
   };
 
-  const disableSelectedRows = () => {
-    setDisabledRows(prevState => [...new Set([...prevState, ...selectedRows])]);
-    setSelectedRows([]);
-    setDisableModal(false);
+  const disableSelectedRows = async () => {
+    try {
+      await Promise.all(selectedRows.map(index => {
+        const groupId = groupData[index].groupID; // Use groupID from groupData
+        return axios.put(`http://localhost:3008/groups/${groupId}/disable`);
+      }));
+  
+      // Update UI to reflect disabled status
+      setGroupData(prevGroups =>
+        prevGroups.map((group, index) =>
+          selectedRows.includes(index) ? { ...group, isDisabled: true } : group
+        )
+      );
+      setSelectedRows([]);
+      setDisableModal(false);
+    } catch (error) {
+      console.error('Error disabling groups:', error);
+    }
   };
-
+  
   // const handleInputChange = (e) => {
   //       const { name, value } = e.target;
   //       setSelectedGroup(prevState => ({
@@ -308,12 +390,12 @@ const handleSubmit = async () => {
             onChange={handleSearchChange}  /> <BsSearch className="search-icon" />
             </div>
             <div>
-            <button onClick={DisableModal} className='disable-btn'>Disable</button>
-              <button onClick={addgroup} className="add-btn">Add Group   +</button>
+            <button onClick={openDisableModal} className='disable-btn'>Disable</button>
+            <button onClick={addgroup} className="add-btn">Add Group   +</button>
               <button className="download-button" onClick={Popup} >Download  <FiDownload /> </button>
             </div>
           </div>
-            {/* First popup for download and share */}
+          {/* First popup for download and share */}
             {openPopup && (<div className="download-popup">
                   <div onClick={Popup} className="overlay"></div>
                   <div className="download-box">
@@ -333,9 +415,9 @@ const handleSubmit = async () => {
                     </div>
                     <div className="radio-btn">
                     <p>File type</p>
-                    <input type="radio"/>.xlsx
+                    <input type="radio" name="fileType" value="xlsx" onChange={() => setFileType('xlsx')} />.xlsx
                     &nbsp;
-                    <input type="radio"/>.pdf
+                    <input type="radio" name="fileType" value="pdf" onChange={() => setFileType('pdf')} />.pdf
                     </div>
                     <div className="dwnl-button">
                     <button className="downloat-btn" onClick={openDownload}>Download</button>
@@ -347,7 +429,7 @@ const handleSubmit = async () => {
                 </div>)
                 }
         
-      {/*Second popup for share*/ }
+        {/*Second popup for share*/ }
 
      {opensend && (
         <div className="share-popup">
@@ -409,9 +491,7 @@ const handleSubmit = async () => {
       )}
             
             <div>
-            <table className='table2'>
-              
-                 
+            <table className='table3'>
               <th>Group ID</th>
               <th>Group Name</th>
               <th>Group Leader</th>
@@ -439,11 +519,13 @@ const handleSubmit = async () => {
                         <img className="dropdown" src={dropdown} alt="dropdown" />
                       </td>
                       <td>
-                        <input type="checkbox" 
-                        checked={selectedRows.includes(index)}
-                        onChange={() => handleCheckboxChange(index)}
-                        disabled={disabledRows.includes(index)}/>
-                      </td>
+                      <input
+                  type="checkbox"
+                  checked={selectedRows.includes(index)}
+                  onChange={() => handleCheckboxChange(index)}
+                  disabled={group.isDisabled}
+                />
+               </td>
                     </tr>
                   ))
                 }
@@ -483,13 +565,11 @@ const handleSubmit = async () => {
             </div>
                   </div>
             )}
-
               </table>
             </div>
-            
                      {grouppopup && selectedGroup &&(
-                      <div className='grouppopup'>
-                        <div onClick={GroupId} className='overlay'></div>
+                      <div className='grouppopup-a'>
+                        <div onClick={GroupId} className='overlay-g'></div>
                         <div className="groupid-content">
                       <h5 className='group-id5'>Group Id - {selectedGroup.groupID}</h5>
                      
@@ -630,7 +710,7 @@ const handleSubmit = async () => {
             </div>
             <div>
               <p className='group-leader'>Pan number</p>
-              <input type="text" id="name" name="name" className="input-line" value={groupDetails.groupLeader.panNumber} onChange={(e) => handleChange(e, 'leader', 'panNumber')}/>
+              <input type="text" id="name" name="name" className="input-lines" value={groupDetails.groupLeader.panNumber} onChange={(e) => handleChange(e, 'leader', 'panNumber')}/>
             </div>
           </div>
           <div className="group-flex">
@@ -646,7 +726,7 @@ const handleSubmit = async () => {
             </div>
             <div>
               <p className='group-leader'>Pan number</p>
-              <input type="text" id="name" name="name" className="input-line" value={groupDetails.subLeader.panNumber} onChange={(e) => handleChange(e, 'subLeader', 'panNumber')}/>
+              <input type="text" id="name" name="name" className="input-lines" value={groupDetails.subLeader.panNumber} onChange={(e) => handleChange(e, 'subLeader', 'panNumber')}/>
             </div>
           </div>
           {groupDetails.members.map((row, index) => (
@@ -663,10 +743,15 @@ const handleSubmit = async () => {
               </div>
               <div>
                 <p className='group-leader'>Pan number</p>
-                <input type="text" id="name" name="name" className="input-line" value={row.panNumber} onChange={(e) => handleChange(e, 'member', 'panNumber', index)}/>
+                <input type="text" id="name" name="name" className="input-lines" value={row.panNumber} onChange={(e) => handleChange(e, 'member', 'panNumber', index)}/>
               </div>
             </div>
           ))}
+          <div>
+            <p className='group-name'>Location</p>
+            <img src={groupicon} alt='group' className='name-icon' />
+            <input type="text" id="name" name="name" className="input-line1" value={groupDetails.groupLocation} onChange={(e) => handleChange(e, 'location', 'groupLocation')}/>
+          </div>
           <button className='add-more' onClick={addMemberRow}>+ Add more</button>
           <button className='add' onClick={handleSubmit}>Add</button>
           <button className="close-modal" onClick={addgroup}>
@@ -676,34 +761,33 @@ const handleSubmit = async () => {
       </div>
     )}
 
-{disablemodal && (
-                    <div className='disablemodal'>
-                    <div onClick={DisableModal} className="overlay"></div>
-                   <div className="disable-content">
-                         <h4 className='groupid'>Group ID</h4> 
-                         <img src={alert} alt="alert" className='alert' />
-                         <p className='disable'>Disable</p>
-                         <p className="disablepara">
-                           {isConfirmed ? 'Are you sure?' : 'Do you want to disable this group?'} 
-                          </p>
-                           <div className="disable-buttons">
-                          
-            <button onClick={handleConfirm} className="confirm-button">Confirm</button>
-            <button onClick={Closedisable} className='cancel-button'> {isConfirmed ? 'Exit' : 'Cancel'}</button>
-                           </div>
-                           {isConfirmed && (
-          <>
-            <label className="label-reason">Reason*</label>
-            <input type='textarea' className="reason-input" />
-            <br />
-            <button className="disable-button" onClick={disableSelectedRows}>Disable</button>
-            
-          </>
-        )}
-      
+{disableModal && (
+        <div className='disablemodal'>
+          <div onClick={closeDisableModal} className="overlay"></div>
+          <div className="disable-content">
+            <h4 className='groupid'>Group ID</h4>
+            <img src={alert} alt="alert" className='alert' />
+            <p className='disable'>Disable</p>
+            <p className="disablepara">
+              {isConfirmed ? 'Are you sure?' : 'Do you want to disable this group?'}
+            </p>
+            <div className="disable-buttons">
+              <button onClick={() => setIsConfirmed(true)} className="confirm-button">Confirm</button>
+              <button onClick={closeDisableModal} className='cancel-button'>
+                {isConfirmed ? 'Exit' : 'Cancel'}
+              </button>
+            </div>
+            {isConfirmed && (
+              <>
+                <label className="label-reason">Reason*</label>
+                <input type='textarea' className="reason-input" />
+                <br />
+                <button className="disable-button" onClick={disableSelectedRows}>Disable</button>
+              </>
+            )}
+          </div>
         </div>
-        </div>
-        )}
+      )}
 </div>
 </div>
 )}

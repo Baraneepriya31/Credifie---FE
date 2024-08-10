@@ -3,11 +3,12 @@ import './application-status.css';
 import { FiDownload } from "react-icons/fi";
 import dropdown from './Vector.png';
 import pdf from './pdf-file 1.png';
-import dropdownblack from './dropdown black.png';
+// import dropdownblack from './dropdown black.png';
 import { CiSearch } from "react-icons/ci";
 import closeicon from './ion_close.png';
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
+import dropdownblack from './dropdown black.png';
 import axios from'axios';
 
 
@@ -31,7 +32,21 @@ function ApplicationStatus() {
   const [groupData, setGroupData] = useState({});
   const [groupId, setAppId] = useState('');
   const [appstatuspopup, setAppstatusPopup] = useState(false);
-  const [collectionagent, setCollectionagent] = useState(false);
+  const [collectionagent2, setCollectionagent2] = useState(false);
+  const [error, setError] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(true);
+  const [agents, setAgents] = useState([]);
+  const [togglemodal2, settoggleModal2] = useState(false);
+  const [appstatuspopup2, setAppstatusPopup2] = useState(false);
+  const [appliedStatus, setAppliedStatus] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedAgent, setSelectedAgent] = useState('R.Suresh Krishna');
+  const [selectedApplication, setSelectedApplication] = useState(null);
+  const [file, setFile] = useState()
+  const [uploadedFileURL, setUploadedFileURL] = useState(null)
+
+
 
 
   useEffect(() => {
@@ -40,40 +55,115 @@ function ApplicationStatus() {
         const response = await axios.get('http://localhost:3008/getapplication');
         setApplicationData(response.data);
       } catch (error) {
-        console.error('Error fetching group data:', error);
+        console.error('Error fetching application data:', error);
       }
     };
-
     fetchApplicationData();
   }, []);
 
-  const fetchGroupDetails = async (groupId) =>{
-    const response = await fetch(`http://localhost:3008/getgroups/${groupId}`);
-    if(!response.ok){
-      throw new Error('Failed to fetch group details');
+  useEffect(() => {
+    const savedVisibility = localStorage.getItem('isDivVisible');
+    if (savedVisibility === 'true') {
+      setIsVisible(false);
     }
-    return response.json()
+  }, []);
+
+  const handleGroupIdChange = (e) => setAppId(e.target.value);
+
+  const fetchAndDisplayGroupDetails = async () => {
+    console.log(`Fetching details for Group ID: ${groupId}`); 
+    try {
+      const response = await axios.get(`http://localhost:3008/getgroups/${groupId}`);
+      setGroupData(response.data);
+      //setModal(true);
+    } catch (error) {
+      console.error('Error fetching group details:', error.response ? error.response.data : error.message); // Log full error response
+      setError(error.response ? error.response.data : error.message);
+    }
+  };
+
+
+  const handleKeyDown = async (event) => {
+    if (event.key === 'Enter') {
+      await fetchAndDisplayGroupDetails();
+    }
+  };
+
+
+  // API endpoint to get group details
+  useEffect(() => {
+    const fetchGroupData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3008/getgroups');
+        setGroupData(response.data);
+      } catch (error) {
+        console.error('Error fetching group data:', error);
+      }
+    };
+    fetchGroupData();
+  }, []);
+
+  // const GroupId = (id) =>{
+  //   setGroupId(!grouppopup);
+  // const group = groupData.find((group) => group._id === id);
+  // setSelectedGroup(group);
+  // }
+
+  const handleRadioChange = (event) => {
+    setSelectedStatus(event.target.value);
+      setAppliedStatus(event.target.value);
+};
+
+
+ const handleOk = () => {
+   setAppliedStatus(selectedStatus);
+  AppstatusPopup2(false);
+  if (appliedStatus === 'disbursed') {
+    setIsVisible(true);
+    localStorage.setItem('isDivVisible', 'true');
+    setButtonColor('#2CBA00'); 
+      setButtonText('Disbursed'); 
+      setDropdownVisible(false); 
   }
-
-  const handleGroupIdChange = (e) => {
-    setAppId(e.target.value);
-  };
-
-  const handleKeyDown = async (e) => {
-    if (e.key === 'Enter') {
-      fetchAndDisplayGroupDetails();
+ };
+const handlecancel = () => {
+  setAppliedStatus(appliedStatus);
+  AppstatusPopup2(false);
+}
+// const handleButtonClick = () => {
+//   OpenModal();
+// };
+const updateButtonTextAndColor = (newStatus) => {
+    // Update the button text and color based on the new status
+    if (newStatus === 'approved') {
+      setButtonText('Approved');
+      setButtonColor('#25AE7A');
+    } else if (newStatus === 'submitted') {
+      setButtonText('Submitted');
+      setButtonColor('#62B8FC');
+    } else if (newStatus === 'acknowledged') {
+      setButtonText('Acknowledged');
+      setButtonColor('#FFBE0B');
+    } else if (newStatus === 'inprogress') {
+      setButtonText('Inprogress');
+      setButtonColor('#FFBE0B');
+    } else if (newStatus === 'deadline') {
+      setButtonText('Deadline');
+      setButtonColor('orange');
+    }else if (newStatus === 'disbursed') {
+      setButtonText('Disbursed');
+      setButtonColor('#2CBA00');
     }
   };
 
-  const fetchAndDisplayGroupDetails = async ()=>{
-    try{
-      const data =await fetchGroupDetails(groupId);
-      setGroupData(data);
-    }
-    catch(error){
-      console.error('Error fetching group details:', error);
-    }
-  };
+  useEffect(() => {
+    updateButtonTextAndColor(appliedStatus);
+  }, [appliedStatus]);
+
+ const handleAgentSelect = (agent) => {
+      setSelectedAgent(agent);
+    };
+
 
   const Popup = ()=>{
   setPopup(!openPopup);
@@ -83,12 +173,12 @@ function ApplicationStatus() {
   }
   else{
     document.body.classList.remove('active-model')
-
   }
 
   const openDownload=()=>{
     setopenDownload(true);
     setPopup(false);
+    setopenShare(false);
   }
 
   const openShare =()=>{
@@ -119,15 +209,25 @@ function ApplicationStatus() {
       setPopup(false);
     }
 
-    const Collectionagent = () => {
-      setCollectionagent(!collectionagent);
+    const Collectionagent2 = () => {
+      setCollectionagent2(!collectionagent2);
     };
   
-    if(collectionagent) {
+    if(collectionagent2) {
       document.body.classList.add('active-modal')
     } else {
       document.body.classList.remove('active-modal')
     }
+
+    const toggleModal2 = (id) => {
+      settoggleModal2(!togglemodal2);
+      const application = applicationData.find((application) => application._id === id);
+      setSelectedApplication(application);
+    }
+
+    const AppstatusPopup2 = () => {
+      setAppstatusPopup2(!appstatuspopup2);
+    };
 
     const AppstatusPopup = () => {
       setAppstatusPopup(!appstatuspopup);
@@ -170,6 +270,8 @@ function ApplicationStatus() {
 
     const GroupId = () => {
       setGroupId(!grouppopup);
+      const application = applicationData.find((application) => application._id);
+      setSelectedApplication(application);
     };
   
     if(grouppopup) {
@@ -211,26 +313,26 @@ function ApplicationStatus() {
 
     
     
-  const handleRadioChange = (event) => {
-    const { value } = event.target;
-    if (value === 'approved') {
-      setButtonText('Approved');
-      setButtonColor(' #25AE7A');
-    } else if (value === 'acknowledged') {
-      setButtonText('Acknowledged');
-      setButtonColor(' #FFBE0B');
-    } else if (value === 'deadline') {
-      setButtonText('Deadline');
-      setButtonColor('orange');
-    }else if (value === 'inprogress') {
-      setButtonText('On-Process');
-      setButtonColor('#FFBE0B');
+  // const handleRadioChange = (event) => {
+  //   const { value } = event.target;
+  //   if (value === 'approved') {
+  //     setButtonText('Approved');
+  //     setButtonColor(' #25AE7A');
+  //   } else if (value === 'acknowledged') {
+  //     setButtonText('Acknowledged');
+  //     setButtonColor(' #FFBE0B');
+  //   } else if (value === 'deadline') {
+  //     setButtonText('Deadline');
+  //     setButtonColor('orange');
+  //   }else if (value === 'inprogress') {
+  //     setButtonText('On-Process');
+  //     setButtonColor('#FFBE0B');
       
-    }else if (value === 'submitted') {
-      setButtonText('Submitted');
-      setButtonColor('#62B8FC');
-    }
-  }
+  //   }else if (value === 'submitted') {
+  //     setButtonText('Submitted');
+  //     setButtonColor('#62B8FC');
+  //   }
+  // }
 
   const [loanDetails,setLoanDetails] = useState({
       location:'',
@@ -239,17 +341,30 @@ function ApplicationStatus() {
      tenure:'',
      interest:'',
      duedate:'',
+     appStatus:'',
+     groupID:'',
+     groupName:'',
+    groupLeader:{name: '',contactNumber: '', panNumber:''},
+    subLeader:{name: '',contactNumber: '', panNumber:''},
+    members:[
+      {name: '',contactNumber: '', panNumber:''},
+      {name: '',contactNumber: '', panNumber:''}
+    ],
+    groupLocation:'',
+    panCard: '',
+    photos: '',
     });
-    const handleChange = (e, role, field ) => {
-      const { value } = e.target;
+
+    // const handleChange = (e, role, field ) => {
+    //   const { value } = e.target;
   
-      if (role === 'loan') {
-        setLoanDetails(prevDetails => ({
-          ...prevDetails,
-          [field]: value,
-        }));
-      } 
-    };
+    //   if (role === 'loan') {
+    //     setLoanDetails(prevDetails => ({
+    //       ...prevDetails,
+    //       [field]: value,
+    //     }));
+    //   } 
+    // };
 
     const handleSearchChange = (event) => {
       setSearchQuery(event.target.value);
@@ -264,11 +379,33 @@ function ApplicationStatus() {
       try {
           await axios.post('http://localhost:3008/add-application', loanDetails);
           console.log(loanDetails);
+          setButtonText("Submitted");
+          setModal(!modal);
           alert('Application added successfully');
       } catch (error) {
           console.error('Error adding application:', error);
       }
     };
+
+    const handleFileChange = (event) =>{
+      setFile(event.target.files[0]);
+    }
+
+    const handleUpload = (event) =>{
+        event.preventDefault()
+        const url ='http://localhost:3008/add-application';
+        const formData = new FormData();
+        formData.append('file',file);
+        formData.append('fileName',file.name);
+        const config = {
+          headers: {
+            'content-type': 'multipart/form-data',
+          },
+        };
+        axios.post(url, formData, config).then((response) => {
+          setUploadedFileURL(response.data.fileUrl);
+        });
+    }
 
 
     return (
@@ -405,13 +542,14 @@ function ApplicationStatus() {
         <div onClick={sendSuccess} className="overlay-2"></div>
           <div className="progress-box">
             <div className="progress-bar">
-          {/* <span className="progress-value">{counter}%</span> */}
+          <span className="progress-value">{counter}%</span> 
           <span className="tick">&#10004;</span>
           </div>
           <span className="progress-text">Report send successfully</span>
           </div>
           </div>
-      )}
+      )} 
+     
 
 
 {/*Popup for send successful message*/}
@@ -438,18 +576,164 @@ function ApplicationStatus() {
             </thead>
             <tbody>
             {filteredData.map((application, index) => (
-            
                 <tr key={index}>
-                    <td onClick={() => toggleModal(application._id)}><div style={{color:'#0087F3',cursor:'pointer'}}>{application.applicationID}</div></td>
+                    <td onClick={() => toggleModal2(application._id)}><div style={{color:'#0087F3',cursor:'pointer'}}>{application.applicationID}</div></td>
                     <td>28/08/2024</td>
-                    <td onClick={GroupId}><div style={{color:'#0087F3',cursor:'pointer'}}>-</div></td>
+                    <td onClick={() => GroupId(application._id)}><div style={{color:'#0087F3',cursor:'pointer'}}>{application.groupName}</div></td>                    
+                    <td>{application.groupLeader.name}</td>
+                    <td>{application.groupLeader.contactNumber}</td>
                     <td>-</td>
-                    <td>-</td>
-                    <td>{application.loanamount}</td>
                     <td style={{ backgroundColor: buttonColor, color:'white' }}
   onClick={OpenModal} className="status-popup">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
                 </tr>
                 ))}
+
+                {togglemodal2 && selectedApplication && (
+                  <div className="modal">
+                    <div onClick={toggleModal2} className="overlay"></div>
+                    <div className="modal-content">
+                      
+                      <h4 className="appno-status">Application ID- {selectedApplication.applicationID}</h4>
+                      <h4 className="appno-status">Group ID- {selectedApplication.groupID}</h4>
+
+                      <p className="status">Status</p>
+          
+                      <button style={{ backgroundColor: buttonColor, color: 'white', 
+                      cursor: dropdownVisible ? 'pointer' : 'default' }} 
+                  onClick={dropdownVisible ? AppstatusPopup2 : true} 
+                  className="btn" 
+                  disabled={!dropdownVisible}
+                >
+                  {buttonText} &nbsp;
+                  {dropdownVisible && <img src={dropdown} alt="dropdown" />}</button>
+          
+                       {appstatuspopup2 && (
+                  <div className="app-statuspopup">
+                    <div className="modal-list">
+                      <div className="submitted">
+            <input   className="radio-button" type="radio" name="status" 
+           value="submitted" onChange={handleRadioChange} /> 
+                      <p className={`submit ${appliedStatus === "submitted" ? "#62B8FC" : ""}`} >
+                        Submitted</p>
+                      </div>
+                      <div className="submitted">
+                      <input className="radio-button" type="radio" name="status" value="acknowledged"
+                       onChange={handleRadioChange} />
+                      <p className={`submit ${appliedStatus === "acknowledged" ? "#FFBE0B" : ""}`}>
+                        Acknowledged</p>
+                      </div>
+                      <div className="submitted">
+                      <input className="radio-button" type="radio" name="status" value="approved" 
+                      onChange={handleRadioChange} />
+                      <p className={`submit ${appliedStatus === "approved" ? "#25AE7A" : ""}`}>
+                        Approved</p>
+                      </div>
+                      <div className="submitted">
+                      <input className="radio-button" type="radio" name="status" value="deadline" 
+                      onChange={handleRadioChange} />
+                      <p className={`submit ${appliedStatus === "deadline" ? "orange" : ""}`} >
+                        Deadline</p>
+                      </div>
+                      <div className="submitted">
+                      <input className="radio-button" type="radio" name="status" value="disbursed" 
+                      onChange={handleRadioChange} />
+                      <p  className={`submit ${appliedStatus === "disbursed" ? "#2CBA00" : ""}`}>
+                        Disbursed
+                      </p>
+                      </div> <div className="submitted">
+                      <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
+                      onChange={handleRadioChange} />
+                      <p className={`submit ${appliedStatus === "inprogress" ? "#FFBE0B" : ""}`}>
+                        In-Progress</p>
+                      </div>
+                      <div className="submitted">
+                      <p onClick={handlecancel} className="cancel">Cancel</p>
+                      <button onClick={handleOk} className="btn-ok">Ok</button>
+                      </div>
+                      
+                            </div>
+                            </div>
+                            
+                      )}
+            
+                      <h4 className="group-info">Group Info</h4>
+                      <div className="group-details">
+                       <div className="group-information"> 
+                        <p>Group Name</p>
+                        <p>Group Leader</p>
+                        <p>Contact Number</p>
+                        <p>Group Members</p>
+                        <p>Location</p>
+                        </div>
+                        <div className="information">
+                          <p>{selectedApplication.groupName}</p>
+                          <p>{selectedApplication.groupLeader.name}</p>
+                          <p>{selectedApplication.groupLeader.contactNumber}</p>
+                          <p>{selectedApplication.members.length}</p>
+                          <p>{selectedApplication.groupLocation}</p>
+                        </div>
+                        </div>
+                        <h4 className="group-info">Attachments</h4>
+                        <div className="group-details">
+                          <div className="group-information">
+                           <p>Pan card</p>
+                           <br/>
+                           <p>Photos</p>
+                          </div>
+                          <div>
+                          <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
+                          <div className="img-pdf"> <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
+                          </div>
+                        </div>
+                              {isVisible && (
+                     <div className="loan-section" style={{display: 'block'}} >
+                       <div className="loanstatus-active">
+                                <h4>Loan Status <span>ACTIVE</span></h4>
+                                <p className="collection">Collection Agent</p>
+                              </div>
+                              <button onClick={Collectionagent2} className="btn2">  {selectedAgent} &nbsp;
+                                  <img className="dropdown" src={dropdownblack} alt="dropdown2" /> </button>
+                                  {collectionagent2 && (
+                         <div className="collection-agent-popup">
+                         <div className = "agent-list">
+                         {agents.map((agent, index) => (
+                        <li key={index} onClick={() => handleAgentSelect(agent)}>
+                          {agent}
+                        </li>
+                      ))}
+                         </div>
+                         </div>
+                        )}
+                        <div className="group-details">
+                        <div className="group-information">
+                      <p>Loan Account Number</p>
+                      <p>Tenure</p>
+                      <p>Interest</p>
+                      <p>Due Date</p>
+                      <p>Bank Pass Book</p>
+                        </div>
+                        <div className="information">
+                        <p>-</p>
+                        <p>-</p>
+                        <p>-</p>
+                        <p>-</p>
+                        <div className="img-pdf">
+                        <input className="information" type="file" onChange={handleFileChange}><button onClick={handleUpload}>img.pdf</button></input>
+                        {uploadedFileURL && <img src={uploadedFileURL} alt="Uploaded content"/>}</div>
+                        </div>   
+                        </div>
+                        </div>
+                
+              )}
+                        <div className="add-loan-button">
+                          <button onClick={handleSubmit}>ADD</button>
+                        </div>
+                        <button className="close-modal" onClick={toggleModal2}>
+                          <img src={closeicon} alt="icon" /></button>
+                           
+                         </div>
+                       </div>
+                )}
            
               {Openmodal && (
         <div className="openmodal">
@@ -485,21 +769,20 @@ function ApplicationStatus() {
             
                   </div>
                   </div>
-                  
             )}
           
-  
          </tbody>
       </table>
         
-        {grouppopup && (
-                      <div className='grouppopup'>
-                        <div onClick={GroupId} className='overlay'></div>
+      
+        {grouppopup && selectedApplication &&(
+                      <div className='grouppopup-a'>
+                        <div onClick={GroupId} className='overlay-g'></div>
                         <div className="groupid-content">
-                      <h5 className='group-id5'>Group Id</h5>
+                      <h5 className='group-id5'>Group Id </h5>
                      
                       <div className="group-member">
-                      <h5>Group Member  <span style={{background:' #044483',color:'white',width:'100vw'}}>0</span> </h5>
+                      <h5>Group Member  <span style={{background:' #044483',color:'white',width:'100vw'}}>{selectedApplication.members.length}</span> </h5>
                       <div className='application-status2'>
                        <h4> Application Status</h4>
                        <button className='pending'>Pending  
@@ -514,22 +797,22 @@ function ApplicationStatus() {
                     <table className='group-table'>
                       <tr>
                        <td className='id-details'>Group Id</td>
-                       <td className='id-info'>- &nbsp; G 401</td>
+                       <td className='id-info'>- {selectedApplication.groupID}</td>
                       </tr>
                       &nbsp;
                       <tr>
                        <td className='id-details'>Group Name</td>
-                       <td  className='id-info'>- &nbsp;  Chennai Group</td>
+                       <td  className='id-info'>- {selectedApplication.groupName} &nbsp; </td>
                       </tr>
                       &nbsp;
                       <tr>
                        <td className='id-details'>Group Leader</td>
-                       <td  className='id-info'>- &nbsp;  Vijay</td>
+                       <td  className='id-info'>- {selectedApplication.groupLeader.name} &nbsp; </td>
                       </tr>
                       &nbsp;
                       <tr>
                        <td className='id-details'>Contact Number</td>
-                       <td  className='id-info'>- &nbsp;+ 91 7890123456</td>
+                       <td  className='id-info'>- {selectedApplication.groupLeader.contactNumber} &nbsp;</td>
                       </tr>
                     </table>
                    </div> 
@@ -537,22 +820,22 @@ function ApplicationStatus() {
                     <table className='group-table'>
                       <tr>
                       <td className='id-details'>Loan Amount</td>
-                      <td className='id-info'>- &nbsp; Rs.2,50,000</td>
+                      <td className='id-info'>- &nbsp; -</td>
                       </tr>
                      &nbsp;
                       <tr>
                        <td className='id-details'>Collection Agent</td>
-                       <td  className='id-info'>- &nbsp;  Vijay</td>
+                       <td  className='id-info'>- &nbsp;  -</td>
                       </tr>
                       &nbsp;
                       <tr>
                        <td className='id-details'>Over Due</td>
-                       <td  className='id-info'>- &nbsp;  Rs.60,000</td>
+                       <td  className='id-info'>- &nbsp;  -</td>
                       </tr>
                       &nbsp;
                       <tr>
                        <td className='id-details'>Loan Status</td>
-                       <td  className='id-info'>- &nbsp;Active/3</td>
+                       <td  className='id-info'>- &nbsp;-</td>
                       </tr>
                    </table>
                    </div>
@@ -608,161 +891,80 @@ function ApplicationStatus() {
                       </div>
                      )}
 
-
-{modal && groupData &&(
+{error && <p>Error: {error}</p>}
+      {modal && groupData && (
         <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
-            
-            <h4 className="appno-status">Application no SLK-123456</h4>
             <p className="status">Status</p>
             <div className="group-id-box">
-            <h4>Group ID</h4> 
-            <input type="text" value={groupId} onChange={handleGroupIdChange} onClick={fetchAndDisplayGroupDetails}onKeyDown={handleKeyDown}/>
-            <button style={{ backgroundColor: buttonColor, color:'white' }} onClick={AppstatusPopup} className="btn"> {buttonText} <img src={dropdown} alt="dropdown"/> </button>
-            </div>
-            {appstatuspopup && (
-        <div className="app-statuspopup">
-          <div className="modal-list">
-            <div className="submitted">
-            <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
-            <p className="submit" >Submitted</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="acknowledged" onChange={handleRadioChange} />
-            <p className="submit">Acknowledged</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
-            <p className="submit">Approved</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
-            <p className="submit">Deadline</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="disbursed" onChange={handleRadioChange} />
-            <p  className="submit">Disbursed</p>
-            </div> <div className="submitted">
-            <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
-            onChange={handleRadioChange} />
-            <p className="submit">In-Progress</p>
-            </div>
-            <div className="submitted">
-            <p onClick={AppstatusPopup} className="cancel">Cancel</p>
-            <button onClick={AppstatusPopup} className="btn-ok">Ok</button>
+              <h4>Group ID</h4> 
+              <input
+                type="text"
+                value={groupId}
+                onChange={handleGroupIdChange}
+                onKeyDown={handleKeyDown}
+                onClick={fetchAndDisplayGroupDetails}
+              />
+              <button style={{ backgroundColor: 'blue', color: 'white' }} onClick={AppstatusPopup} className="btn">
+                App Status <img src={dropdown} alt="dropdown" />
+              </button>
             </div>
             
-                  </div>
-                  </div>
-                  
-            )}
-
             <h4 className="group-info">Group Info</h4>
             <div className="group-details">
-             <div className="group-information"> 
-              <p>Group Name</p>
-              <p>Group Leader</p>
-              <p>Contact Number</p>
-              <p>Group Members</p>
-              <p>Location</p>
+              <div className="group-information"> 
+                <p>Group Name</p>
+                <p>Group Leader</p>
+                <p>Contact Number</p>
+                <p>Group Members</p>
+                <p>Location</p>
               </div>
+              <div>
               <div className="information">
                 <label>
-              <input type="text" id="name" name="name" className="input-line" value={groupData.groupName}/>
-              </label>
-              <label>
-              <input type="text" id="name" name="name" className="input-line" />
+                  <input type="text" id="name" name="name" className="input-lines" value={groupData.groupName || ''} />
                 </label>
-              <label>
-              <input type="text" id="name" name="name" className="input-line"/>
-              </label>
-              <label>
-              <input type="text" id="name" name="name" className="input-line" />
-              </label>
-              <label>
-              <input type="text" id="name" name="name" className="input-line"
-    value={loanDetails.location} onChange={(e) => handleChange(e, 'loan', 'location')} />
-              </label>
+                <label>
+                  <input type="text" id="name" name="name" className="input-lines" value={groupData.groupLeader?.name || ''} />
+                </label>
+                <label>
+                  <input type="text" id="name" name="name" className="input-lines" value={groupData.groupLeader?.contactNumber || ''} />
+                </label>
+                <label>
+                  <input type="text" id="name" name="name" className="input-lines" value={groupData.members?.length || ''} />
+                </label>
+                <label>
+                  <input type="text" id="name" name="name" className="input-lines" value={groupData.groupLocation || ''} />
+                </label>
               </div>
               </div>
-             <div className="loanstatus-active">
-              <h4>Loan Status <span>ACTIVE</span></h4>
-              <p className="collection">Collection Agent</p>
             </div>
-            <button onClick={Collectionagent} className="btn2">R.Suresh Krishna <img className="dropdown" src={dropdownblack} alt="dropdown2"/> </button>
-              {collectionagent && (
-               <div className="collection-agent-popup">
-               <div className = "agent-list">
-                       <li>B.Vijay</li>
-                       <li>S.Ramesh</li>
-                       <li>A.karthik</li>
-                       <li>R.Ram</li>
-                       <li>V.Vignesh</li>
-                       <li>D.Dhanush</li>
-                       <li>V.Harish</li>
-                      
-               </div>
-               </div>
-              )}
-              
-              <div className="group-details">
+            <h4 className="group-info">Attachments</h4>
+            <div className="group-details">
               <div className="group-information">
-              <p >Loan Amount</p>
-            <p>Loan Account Number</p>
-            <p>Tenure</p>
-            <p>Interest</p>
-            <p>Due Date</p>
+                <p>Pan card</p>
+                <p>Photos</p>
+                
               </div>
-              <div className="information">
-              <label>
-              <input type="text" id="name" name="name" className="input-line"
-       value={loanDetails.loanamount} onChange={(e) => handleChange(e, 'loan', 'loanamount')} />
-              </label>
-             <label>
-             <input type="text" id="name" name="name" className="input-line"
-        value={loanDetails.loanaccountnumber} onChange={(e) => handleChange(e, 'loan', 'loanaccountnumber')}/>
-             </label>
-             <label>
-             <input type="text" id="name" name="name" className="input-line"
-      value={loanDetails.tenure} onChange={(e) => handleChange(e, 'loan', 'tenure')} />
-             </label>
-             <label>
-             <input type="text" id="name" name="name" className="input-line" 
-        value={loanDetails.interest} onChange={(e) => handleChange(e, 'loan', 'interest')}/>
-             </label>
-              <label>
-              <input type="date" id="name" name="name" className="input-line"
-              value={loanDetails.duedate} onChange={(e) => handleChange(e, 'loan', 'duedate')} />
-              </label>
-              </div>
-              </div>
-              <h4 className="group-info">Attachments</h4>
-              <div className="group-details">
-                <div className="group-information">
-                 <p>Pan card</p>
-                 <br/>
-                 <p>Photos</p>
-                 <br/>
-                 <p>Bank Pass Book</p>
+              <div>
+                <div className="img-pdf">
+                  <img src={pdf} alt="pdf" />
+                  <p className="information">img.pdf</p>
                 </div>
-                <div>
-                <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
-                <input type="text" id="name" name="name" className="input-line" />
-                <input type="text" id="name" name="name" className="input-line" />
-                <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
-                <input type="text" id="name" name="name" className="input-line" />
+                <div className="img-pdf">
+                  <img src={pdf} alt="pdf" />
+                  <p className="information">img.pdf</p>
                 </div>
               </div>
-              <div className="add-loan-button">
-                <button onClick={handleSubmit}>ADD</button>
-              </div>
+            </div>
+            <div className="add-loan-button">
+              <button onClick={handleSubmit} >ADD</button>
+            </div>
             <button className="close-modal" onClick={toggleModal}>
               <img src={closeicon} alt="icon" />
             </button>
-          
           </div>
-   
         </div>
       )}
       </div>
