@@ -225,7 +225,7 @@
                   <td>+91 980765421</td>
                   <td>N/A</td>
 <td style={{ backgroundColor: buttonColor, color:'white' }}
- onChange={updateButtonTextAndColor}  className="loan-status">{buttonText} </td>
+ onChange={updateButtonTextAndColor}  className="loan-status1">{buttonText} </td>
                 </tr>
              
                    &nbsp; 

@@ -28,9 +28,9 @@
     display: flex;
     justify-content: space-around;
 }
-.loan-amount button{
+.loan-amount input{
     border: 0.5px solid #044483;
-    width: fit-content;
+    width:60px;
     height: 30px;
     border-radius: 10px;
     background-color: white;

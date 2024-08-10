@@ -797,10 +797,17 @@ hr{
   color: #FFFFFF;
   margin-right: 10px;
 }
+.loan-status1{
+  background-color: #62B8FC;  
+border-radius: 20px;
+width: 100px;
+height: 10px;
+color: #FFFFFF;
+margin-right: 10px;
+}
 .loan-status2{
   background-color: #25AE7A; 
 border-radius: 20px;
-cursor: pointer;
 width: 100px;
 height: 10px;
 color: #FFFFFF;
@@ -808,7 +815,6 @@ color: #FFFFFF;
 .loan-status3{
   background-color: #FFBE0B;
 border-radius: 20px;
-cursor: pointer;
 width: 100px;
 height: 10px;
 color: var(--BLACK, #393938);
@@ -816,7 +822,6 @@ color: var(--BLACK, #393938);
 .loan-status4{
   background-color: #FFBE0B;
 border-radius: 20px;
-cursor: pointer;
 width: 100px;
 height: 10px;
 color:var(--BLACK, #393938);
@@ -824,7 +829,6 @@ color:var(--BLACK, #393938);
 .loan-status5{
   background-color: #62B8FC;  
 border-radius: 20px;
-cursor: pointer;
 width: 100px;
 height: 10px;
 color: #FFFFFF;
