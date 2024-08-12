@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import './application-status.css';
 import { FiDownload } from "react-icons/fi";
 import dropdown from './Vector.png';
-import pdf from './pdf-file 1.png';
+// import pdf from './pdf-file 1.png';
 // import dropdownblack from './dropdown black.png';
 import { CiSearch } from "react-icons/ci";
 import closeicon from './ion_close.png';
@@ -19,7 +19,7 @@ function ApplicationStatus() {
   const [modal, setModal] = useState(false);
   const [buttonText, setButtonText,] = useState('Submitted');
   const [buttonColor, setButtonColor] = useState('#12c2e9');
-  const [Openmodal, setOpenModal] = useState(false);
+  // const [Openmodal, setOpenModal] = useState(false);
   const [openPopup, setPopup] =useState(false);
   const [opensave, setopenDownload] =useState(false);
   const [opensend, setopenShare]=useState(false);
@@ -45,6 +45,24 @@ function ApplicationStatus() {
   const [selectedApplication, setSelectedApplication] = useState(null);
   const [file, setFile] = useState()
   const [uploadedFileURL, setUploadedFileURL] = useState(null)
+  const [loanDetails,setLoanDetails] = useState({
+    loanamount:'',
+    loanaccountnumber:'',
+    tenure:'',
+    interest:'',
+    duedate:'',
+    appStatus:'',
+    groupID:'',
+    groupName:'',
+    groupLeader:{
+      name: '',
+      contactNumber: ''
+    },
+    members: '',
+    groupLocation:'',
+    panCard: '',
+    photos: '',
+   });
 
 
 
@@ -75,6 +93,8 @@ function ApplicationStatus() {
     try {
       const response = await axios.get(`http://localhost:3008/getgroups/${groupId}`);
       setGroupData(response.data);
+      setButtonText("Submitted");
+      setLoanDetails(response.data);
       //setModal(true);
     } catch (error) {
       console.error('Error fetching group details:', error.response ? error.response.data : error.message); // Log full error response
@@ -256,21 +276,10 @@ const updateButtonTextAndColor = (newStatus) => {
       console.log(`Sending ${fileType} report to ${email}`);
       closeShare(); 
     };
-    
 
-    const OpenModal = () => {
-      setOpenModal(!Openmodal);
-    };
-  
-    if(Openmodal) {
-      document.body.classList.add('active-modal')
-    } else {
-      document.body.classList.remove('active-modal')
-    }
-
-    const GroupId = () => {
+    const GroupId = (id) => {
       setGroupId(!grouppopup);
-      const application = applicationData.find((application) => application._id);
+      const application = applicationData.find((application) => application._id === id);
       setSelectedApplication(application);
     };
   
@@ -308,10 +317,6 @@ const updateButtonTextAndColor = (newStatus) => {
       }
     }
   }, [counter]);
-
-         
-
-    
     
   // const handleRadioChange = (event) => {
   //   const { value } = event.target;
@@ -334,44 +339,30 @@ const updateButtonTextAndColor = (newStatus) => {
   //   }
   // }
 
-  const [loanDetails,setLoanDetails] = useState({
-      location:'',
-     loanamount:'',
-     loanaccountnumber:'',
-     tenure:'',
-     interest:'',
-     duedate:'',
-     appStatus:'',
-     groupID:'',
-     groupName:'',
-    groupLeader:{name: '',contactNumber: '', panNumber:''},
-    subLeader:{name: '',contactNumber: '', panNumber:''},
-    members:[
-      {name: '',contactNumber: '', panNumber:''},
-      {name: '',contactNumber: '', panNumber:''}
-    ],
-    groupLocation:'',
-    panCard: '',
-    photos: '',
-    });
-
-    // const handleChange = (e, role, field ) => {
-    //   const { value } = e.target;
+  const handleChange = (e, role, field, index=null) => {
+    const { value } = e.target;
   
-    //   if (role === 'loan') {
-    //     setLoanDetails(prevDetails => ({
-    //       ...prevDetails,
-    //       [field]: value,
-    //     }));
-    //   } 
-    // };
+    if (role === 'loan') {
+      setLoanDetails(prevDetails => ({
+        ...prevDetails,
+        [field]: value,
+      }));
+    }
+    else {
+        setLoanDetails(prevData => ({
+            ...prevData,
+            [field]: value,
+        }));
+    }
+  }
 
+    
     const handleSearchChange = (event) => {
       setSearchQuery(event.target.value);
     };
 
     const filteredData = applicationData.filter(application =>
-      application.loanamount.toLowerCase().includes(searchQuery) ||
+      application.groupLeader.name.toLowerCase().includes(searchQuery) ||
       application.applicationID.toLowerCase().includes(searchQuery)
       );
 
@@ -385,6 +376,20 @@ const updateButtonTextAndColor = (newStatus) => {
       } catch (error) {
           console.error('Error adding application:', error);
       }
+    };
+
+    const handleSubmitLoan = async () => {
+      if (selectedApplication){
+      try {
+          const response = await axios.put(`http://localhost:3008/update-application/${selectedApplication}`, selectedApplication._id);
+          if (response.data.message === 'Application added successfully'){
+            setApplicationData();
+            settoggleModal2(false);
+          }
+      } catch (error) {
+          console.error('Error adding application:', error);
+      }
+    }
     };
 
     const handleFileChange = (event) =>{
@@ -551,16 +556,6 @@ const updateButtonTextAndColor = (newStatus) => {
       )} 
      
 
-
-{/*Popup for send successful message*/}
-      {opensave && (
-        <div className="share-popup">
-          <div onClick={closeShare} className="overlay"></div>
-          <div className="share-box">
-          </div>
-        </div>
-      )}
-
         <table className='table-ap'>
             <thead>
             
@@ -584,7 +579,7 @@ const updateButtonTextAndColor = (newStatus) => {
                     <td>{application.groupLeader.contactNumber}</td>
                     <td>-</td>
                     <td style={{ backgroundColor: buttonColor, color:'white' }}
-  onClick={OpenModal} className="status-popup">{buttonText}<img className="dropdown" src={dropdown} alt="dropdown" /> </td>
+  className="status-popup">{buttonText}</td>
                 </tr>
                 ))}
 
@@ -669,7 +664,7 @@ const updateButtonTextAndColor = (newStatus) => {
                           <p>{selectedApplication.groupName}</p>
                           <p>{selectedApplication.groupLeader.name}</p>
                           <p>{selectedApplication.groupLeader.contactNumber}</p>
-                          <p>{selectedApplication.members.length}</p>
+                          <p>{selectedApplication.members}</p>
                           <p>{selectedApplication.groupLocation}</p>
                         </div>
                         </div>
@@ -681,9 +676,16 @@ const updateButtonTextAndColor = (newStatus) => {
                            <p>Photos</p>
                           </div>
                           <div>
-                          <div className="img-pdf">  <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
-                          <div className="img-pdf"> <img src={pdf} alt="pdf"  /><p className="information">img.pdf</p></div>
-                          </div>
+                        <div className="img-pdf">
+                          <input className="information" type="file" onChange={handleFileChange}/>
+                        {uploadedFileURL && <img src={uploadedFileURL} alt="Uploaded content"/>}
+                        </div>   
+                        <div className = "img-pdf">
+                          <input className="information" type="file" onChange={handleFileChange}/>
+                          {/* <button onClick={handleUpload}></button> */}
+                        {uploadedFileURL && <img src={uploadedFileURL} alt="Uploaded content"/>}
+                        </div>
+                        </div>
                         </div>
                               {isVisible && (
                      <div className="loan-section" style={{display: 'block'}} >
@@ -713,20 +715,30 @@ const updateButtonTextAndColor = (newStatus) => {
                       <p>Bank Pass Book</p>
                         </div>
                         <div className="information">
-                        <p>-</p>
-                        <p>-</p>
-                        <p>-</p>
-                        <p>-</p>
+                        <div>
+                      <input type="text" id="name" name="name" className="input-line1" value={loanDetails.loanaccountnumber} onChange={(e) => handleChange(e, 'loan', 'loanaccountnumber')}/>
+                        </div>
+                        <div>
+                      <input type="text" id="name" name="name" className="input-line1" value={loanDetails.tenure} onChange={(e) => handleChange(e, 'loan', 'tenure')}/>
+                        </div>
+                        <div>
+                      <input type="text" id="name" name="name" className="input-line1" value={loanDetails.interest} onChange={(e) => handleChange(e, 'loan', 'interest')}/>
+                        </div>
+                        <div>
+                      <input type="date" id="name" name="name" className="input-line1" value={loanDetails.duedate} onChange={(e) => handleChange(e, 'loan', 'duedate')}/>
+                        </div>
                         <div className="img-pdf">
-                        <input className="information" type="file" onChange={handleFileChange}><button onClick={handleUpload}>img.pdf</button></input>
-                        {uploadedFileURL && <img src={uploadedFileURL} alt="Uploaded content"/>}</div>
-                        </div>   
-                        </div>
-                        </div>
+                          <input className="information" type="file" onChange={handleFileChange}/>
+                          {/* <button onClick={handleUpload}></button> */}
+                        {uploadedFileURL && <img src={uploadedFileURL} alt="Uploaded content"/>}
+                        </div>  
+                      </div>
+                      </div>
+                      </div>
                 
               )}
                         <div className="add-loan-button">
-                          <button onClick={handleSubmit}>ADD</button>
+                          <button onClick={handleSubmitLoan}>ADD</button>
                         </div>
                         <button className="close-modal" onClick={toggleModal2}>
                           <img src={closeicon} alt="icon" /></button>
@@ -734,42 +746,6 @@ const updateButtonTextAndColor = (newStatus) => {
                          </div>
                        </div>
                 )}
-           
-              {Openmodal && (
-        <div className="openmodal">
-          <div className="modal-list">
-            <div className="submitted">
-            <input   className="radio-button" type="radio" name="status" value="submitted" onChange={handleRadioChange} />
-            <p className="submit" >Submitted</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="acknowledged" onChange={handleRadioChange} />
-            <p className="submit">Acknowledged</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="approved" onChange={handleRadioChange} />
-            <p className="submit">Approved</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" name="status" value="deadline" onChange={handleRadioChange} />
-            <p className="submit">Deadline</p>
-            </div>
-            <div className="submitted">
-            <input className="radio-button" type="radio" />
-            <p className="submit">Disbursed</p>
-            </div> <div className="submitted">
-            <input style={{color:'#393938'}}  className="radio-button" type="radio" name="status" value="inprogress" 
-            onChange={handleRadioChange} />
-            <p className="submit">In-Progress</p>
-            </div>
-            <div className="submitted">
-            <p onClick={OpenModal} className="cancel">Cancel</p>
-            <button onClick={OpenModal} className="btn-ok">Ok</button>
-            </div>
-            
-                  </div>
-                  </div>
-            )}
           
          </tbody>
       </table>
@@ -782,7 +758,7 @@ const updateButtonTextAndColor = (newStatus) => {
                       <h5 className='group-id5'>Group Id </h5>
                      
                       <div className="group-member">
-                      <h5>Group Member  <span style={{background:' #044483',color:'white',width:'100vw'}}>{selectedApplication.members.length}</span> </h5>
+                      <h5>Group Member  <span style={{background:' #044483',color:'white',width:'100vw'}}>{selectedApplication.members}</span> </h5>
                       <div className='application-status2'>
                        <h4> Application Status</h4>
                        <button className='pending'>Pending  
@@ -797,12 +773,12 @@ const updateButtonTextAndColor = (newStatus) => {
                     <table className='group-table'>
                       <tr>
                        <td className='id-details'>Group Id</td>
-                       <td className='id-info'>- {selectedApplication.groupID}</td>
+                       <td className='id-info'> {selectedApplication.groupID}</td>
                       </tr>
                       &nbsp;
                       <tr>
                        <td className='id-details'>Group Name</td>
-                       <td  className='id-info'>- {selectedApplication.groupName} &nbsp; </td>
+                       <td  className='id-info'>{selectedApplication.groupName} &nbsp; </td>
                       </tr>
                       &nbsp;
                       <tr>
@@ -825,7 +801,7 @@ const updateButtonTextAndColor = (newStatus) => {
                      &nbsp;
                       <tr>
                        <td className='id-details'>Collection Agent</td>
-                       <td  className='id-info'>- &nbsp;  -</td>
+                       <td  className='id-info'>- &nbsp; -</td>
                       </tr>
                       &nbsp;
                       <tr>
@@ -949,12 +925,14 @@ const updateButtonTextAndColor = (newStatus) => {
               </div>
               <div>
                 <div className="img-pdf">
-                  <img src={pdf} alt="pdf" />
-                  <p className="information">img.pdf</p>
+                  <input className="information" type="file" onChange={handleFileChange}/>
+                        {/* <button onClick={handleUpload}></button> */}
+                        {uploadedFileURL && <img src={uploadedFileURL} alt="Uploaded content"/>}
                 </div>
                 <div className="img-pdf">
-                  <img src={pdf} alt="pdf" />
-                  <p className="information">img.pdf</p>
+                <input className="information" type="file" onChange={handleFileChange}/>
+                        {/* <button onClick={handleUpload}></button> */}
+                        {uploadedFileURL && <img src={uploadedFileURL} alt="Uploaded content"/>}
                 </div>
               </div>
             </div>

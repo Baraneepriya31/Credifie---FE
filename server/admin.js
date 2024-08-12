@@ -182,40 +182,28 @@ async function getNextSequence(name) {
 
 // add loan application
 
-   const applicationSchema = new mongoose.Schema({
-    applicationID: String, 
-    location:String,
-    loanamount : String,
-    loanaccountnumber: String,
-    tenure:String,
-    interest:String,
-    duedate:String,
-    appStatus: String,
-    groupName: String,
-    appStatus: String,
-    groupID: String,
-    groupLeader: {
-      name: String,
-      contactNumber: String,
-      panNumber: String,
-    },
-    subLeader: {
-      name: String,
-      contactNumber: String,
-      panNumber: String,
-    },
-    members: [
-      {
-        name: String,
-        contactNumber: String,
-        panNumber: String,
-      },
-    ],
-    groupLocation:String,
-    panCard: String,
-    photos: String,
-  });
-  
+const applicationSchema = new mongoose.Schema({
+  applicationID:String,
+  location:String,
+  loanamount:String,
+  loanaccountnumber:String,
+  tenure:String,
+  interest:String,
+  duedate:String,
+  groupName: String,
+  appStatus: String,
+  groupID: String,
+  groupName:String,
+  groupLeader:{
+    name: String,
+    contactNumber:String,
+  },
+  members: Number,
+  groupLocation:String,
+  panCard: String,
+  photos: String,
+})
+
   const Application = mongoose.model('Application', applicationSchema);
   async function getNextSequence(name) {
       const counter = await Counter.findOneAndUpdate(
@@ -238,31 +226,14 @@ async function getNextSequence(name) {
     appStatus: 'Submitted',
     groupID: 'CRDG113',
     groupName: 'Example Group',
-        groupLeader: {
-          name: 'John Doe',
-          contactNumber: '1234567890',
-          panNumber: 'ABCDE1234F',
-        },
-        subLeader: {
-          name: 'Jane Doe',
-          contactNumber: '0987654321',
-          panNumber: 'FGHIJ5678K',
-        },
-        members: [
-          {
-            name: 'Member 1',
-            contactNumber: '1111111111',
-            panNumber: 'LMNOP9012Q',
-          },
-          {
-            name: 'Member 2',
-            contactNumber: '2222222222',
-            panNumber: 'RSTUV3456W',
-          },
-        ],
-        groupLocation: 'Thanjavur',
-        panCard: 'File',
-        photos: 'JPG',
+    groupLeader: {
+      name: 'John Doe',
+      contactNumber: '1234567890',
+    },
+    members: 2,
+    groupLocation: 'Thanjavur',
+    panCard: 'File',
+    photos: 'JPG',
     });
       await newApplication.save();
       console.log('Application added successfully');

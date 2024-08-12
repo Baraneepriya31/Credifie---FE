@@ -61,7 +61,11 @@
 
 .group-details{
 border-bottom: 0.5px solid #aaaaaa;
-padding: 10px;
+padding: 10px 0px 5px 10px;
+display: flex;
+justify-content: space-between;
+font-size: 10px;
+margin-bottom: 5px;
 }
 
 
@@ -762,8 +766,13 @@ margin-left: 190px;
 cursor: pointer;
 }
 
-.img-pdf{
+.img-pdf div{
   cursor: pointer;
+  margin-left: 30px;
+}
+.information{
+    color: #393938;
+    font-size: 10px;
 }
 
 .progress-bar {

@@ -24,6 +24,19 @@ function CollectionAgent () {
     const [searchQuery, setSearchQuery]=useState([]);
     const [selectedRows, setSelectedRows] = useState([]);
     // const [deleteRows, setDelete] = useState([]); 
+    const [agentDetails,setAgentDetails] = useState({
+        
+      firstName:'',
+      lastName:'',
+      contactnumber:'',
+      pannumber:'',
+      dateofbirth:'',
+      gender:'',
+      emailid:'',
+      maritalstatus:'',
+      totalexperience:'',
+      highesteducation:'',
+    });
     
 
     
@@ -134,19 +147,6 @@ function CollectionAgent () {
     };
 
 
-      const [agentDetails,setAgentDetails] = useState({
-        
-        firstName:'',
-        lastName:'',
-        contactnumber:'',
-        pannumber:'',
-        dateofbirth:'',
-        gender:'',
-        emailid:'',
-        maritalstatus:'',
-        totalexperience:'',
-        highesteducation:'',
-      });
       const handleChange = (e, role, field ) => {
         const { value } = e.target;
         console.log("Handle change working");

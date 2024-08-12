@@ -390,26 +390,15 @@ const applicationschema = new mongoose.Schema({
   groupName: String,
   appStatus: String,
   groupID: String,
-  groupLeader: {
+  groupName:String,
+  groupLeader:{
     name: String,
-    contactNumber: String,
-    panNumber: String,
+    contactNumber:String,
   },
-  subLeader: {
-    name: String,
-    contactNumber: String,
-    panNumber: String,
-  },
-  members: [
-    {
-      name: String,
-      contactNumber: String,
-      panNumber: String,
-    },
-  ],
-  groupLocation: String,
+  membersCount: Number,
+  groupLocation:String,
   panCard: String,
-    photos: String,
+  photos: String,
 })
 
 const Application = mongoose.model('Application', applicationschema);
@@ -424,8 +413,8 @@ async function getNextSequence(name) {
 }
 
 app.post('/add-application', async (req, res) => {
-  const {location, loanamount, loanaccountnumber, tenure, interest, duedate, appStatus, groupID, groupName, groupLeader, subLeader, members,
-    groupLocation} = req.body;
+  const {location, loanamount, loanaccountnumber, tenure, interest, duedate, appStatus, groupID, groupName, groupLeader, members,
+    groupLocation, panCard, photos,} = req.body;
   try {
     const appid = await getNextSequence('applicationID');
     const newApplication = new Application({
@@ -440,7 +429,6 @@ app.post('/add-application', async (req, res) => {
     groupID,
     groupName,
     groupLeader,
-    subLeader,
     members,
     groupLocation,
     panCard,
@@ -454,6 +442,25 @@ app.post('/add-application', async (req, res) => {
     res.status(500).json({ message: 'Failed to add Application' });
   };
 });
+
+// Edit agent
+app.put('/update-application/:id', async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+
+  try {
+    const updatedApplication = await Application.findByIdAndUpdate(id, updateData, { new: true });
+    if (updatedApplication) {
+      res.status(200).json({ message: 'Application updated successfully', updatedApplication });
+    } else {
+      res.status(404).json({ message: 'Application not found' });
+    }
+  } catch (error) {
+    console.error('Error updating application:', error);
+    res.status(500).json({ message: 'Failed to update application' });
+  }
+});
+
 
 
 app.get('/getapplication', async (req, res) => {

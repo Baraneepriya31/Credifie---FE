@@ -267,7 +267,7 @@ function Group() {
     ],
     groupLocation:'',
     isDisabled: false,
-  });
+  })
 
   const handleChange = (e, role, field, index=null) => {
   const { value } = e.target;
@@ -328,8 +328,10 @@ const filteredData = groupData.filter(group =>
 const handleSubmit = async () => {
     try {
         await axios.post('http://localhost:3008/add-group', groupDetails);
-        alert('Group added successfully');
+        // setGroupDetails([...groupDetails, newgroup]);
         setGroupData();
+        addgroup();
+        
     } catch (error) {
         console.error('Error adding group:', error);
     }
@@ -574,7 +576,7 @@ const handleSubmit = async () => {
                       <h5 className='group-id5'>Group Id - {selectedGroup.groupID}</h5>
                      
                       <div className="group-member">
-                      <h5>Group Member  <span style={{color:'black',width:'100vw'}}>{selectedGroup.members.length}</span> </h5>
+                      <h5>Group Member  <span style={{color:'black',width:'100vw'}}>{selectedGroup.members.length+2}</span> </h5>
                       <div className='application-status2'>
                        <h4> Application Status - </h4>
                        <button className='pending'>-</button>
