@@ -11,29 +11,29 @@ const DoughnutChart = () => {
         datasets: [
             {
                 label: 'Application Status',
-                data: [25, 25, 50], 
+                data: [], 
                 backgroundColor: ['#f44336', '#ffeb3b','#4caf50'], 
-                hoverBackgroundColor: ['#ef5350', '#ffecb3' ,'#66bb6a']
+                hoverBackgroundColor: ['#ef5350', '#ffecb3' ,'#66bb6a'], 
             }
         ]
     });
       
     useEffect(() => {
-        
         fetch('/api/application-status')
             .then(response => response.json())
             .then(data => {
-                const statusCounts = {
-                    verified: data.verifiedCount,
-                    inProgress: data.inProgressCount,
-                    rejected: data.rejectedCount
-                };
-                  
+                const totalApplications = data.verifiedCount + data.inProgressCount + data.rejectedCount;
+
+                // Calculate percentages
+                const verifiedPercentage = ((data.verifiedCount / totalApplications) * 100).toFixed(2);
+                const inProgressPercentage = ((data.inProgressCount / totalApplications) * 100).toFixed(2);
+                const rejectedPercentage = ((data.rejectedCount / totalApplications) * 100).toFixed(2);
+
                 setChartData({
                     datasets: [
                         {
                             label: 'Application Status',
-                            data: [statusCounts.verified, statusCounts.inProgress, statusCounts.rejected],
+                            data: [verifiedPercentage, inProgressPercentage, rejectedPercentage],
                             backgroundColor: ['#f44336', '#ffeb3b', '#4caf50'],
                             hoverBackgroundColor: ['#ef5350', '#ffecb3', '#66bb6a']
                         }
