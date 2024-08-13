@@ -21,7 +21,7 @@ import './Group.css';
  function Group() {
             
   const [addmodal, setAddmodal] = useState(false);
-  const [buttonText, setButtonText,] = useState('Submitted');
+  const [buttonText, setButtonText,] = useState('Select');
   const [buttonColor, setButtonColor] = useState('#12c2e9');
   const [disablemodal, setDisableModal] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -131,32 +131,6 @@ import './Group.css';
       document.body.classList.remove('active-modal')
     }
 
-    // const handleRadioChange = (event) => {
-    //   const { value } = event.target;
-    //   if (value === 'approved') {
-    //     setButtonText('Approved');
-    //     setButtonColor(' #25AE7A');
-    //   } else if (value === 'aknowledged') {
-    //     setButtonText('Aknowledged');
-    //     setButtonColor(' #FFBE0B');
-    //   } else if (value === 'deadline') {
-    //     setButtonText('Deadline');
-    //     setButtonColor('orange');
-    //   }else if (value === 'inprogress') {
-    //     setButtonText('On-Process');
-    //     setButtonColor('#FFBE0B');
-    //   }else if (value === 'pending') {
-    //     setButtonText('Pending');
-    //     setButtonColor('#62B8FC');
-    //   }else if (value === 'submitted') {
-    //     setButtonText('Submitted');
-    //     setButtonColor('#62B8FC');
-    //   }else if (value === 'disbursed') {
-    //     setButtonText('Disbursed');
-    //     setButtonColor('#2CBA00');
-    //   }
-    // }
-      
     const handleRadioChange = (event) => {
       setSelectedStatus(event.target.value);
   };
@@ -170,7 +144,6 @@ import './Group.css';
     OpenModal();
   };
   const updateButtonTextAndColor = (newStatus) => {
-      // Update the button text and color based on the new status
       if (newStatus === 'approved') {
         setButtonText('Approved');
         setButtonColor('#25AE7A');
@@ -250,15 +223,17 @@ const addMemberRow = () => {
     });
 };
 
-const handleSubmit = async () => {
+const handleSubmit = async (newGroup) => {
     try {
         await axios.post('http://localhost:3008/add-group', groupDetails);
         alert('Group added successfully');
+        setGroupDetails([newGroup, ...groupDetails]);
         addgroup();
     } catch (error) {
         console.error('Error adding group:', error);
     }
   };
+
   const handleCheckboxChange = (index) => {
     setSelectedRows(prevState => {
       if (prevState.includes(index)) {
@@ -752,7 +727,7 @@ const handleSend = async (e) => {
 
                    {disablemodal && (
                     <div className='disablemodal'>
-                    <div onClick={DisableModal} className="overlay"></div>
+                    <div onClick={Closedisable} className="overlay"></div>
                    <div className="disable-content">
                          <h4 className='groupid'>Group ID</h4> 
                          <img src={alert} alt="alert" className='alert' />

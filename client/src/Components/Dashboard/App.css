@@ -79,7 +79,7 @@ span{
   background: white;
   padding: 0px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 900px;
+  max-width: 1000px;
   width: 100%;
   height: 600px;
   text-align: center;
@@ -113,18 +113,19 @@ span{
   width: 100%;
   height: 70px;
   position: absolute;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
+   display: flex;
+   justify-content: space-between; 
+   flex-direction: row; 
 }
 
 .close-icon1{
   position: absolute;
   z-index: 3;
-  align-items: right;
   color: #fff;
-  font-size: 24px;
+  font-size: 30px;
   cursor: pointer;
+  margin-left: 950px;
+  margin-top: 10px;
 }
 
 .profile-inner-box{
@@ -257,7 +258,8 @@ margin-left: 50px;
   border: none;
   color: #ffffff;
   cursor: pointer;
-  
+  margin-top:250px;
+  margin-right: 40px;
 }
 
 
@@ -442,6 +444,7 @@ li{
 
 .main-title{
   display:flex;
+  width:fit-content
 }
 .main-title h3{
   width:135px;

@@ -105,6 +105,7 @@ function Header() {
     //       console.error('Error adding Profile:', error);
     //   }
     // };
+
     
     return(
     
@@ -208,7 +209,7 @@ function Header() {
 value={profileDetails.emailid} onChange={(e) => handleChange(e, 'Profile', 'emailid')}
                         />
                     </div>
-                    </div>
+                   
                     <div>
                       <div className="profile-input">
                         <label htmlFor="number">Contact Number<span onClick={handleEditClick}>{isEditing? "CANCEL" :"EDIT"}</span> </label>
@@ -220,7 +221,7 @@ value={profileDetails.emailid} onChange={(e) => handleChange(e, 'Profile', 'emai
 value={profileDetails.contactnumber} onChange={(e) => handleChange(e, 'Profile', 'contactnumber')}
                         />
                     </div>
-                    </div>
+                  
                     <div>
                       <div className="profile-input">
                         <label htmlFor="text">Base Location<span onClick={handleEditClick}>{isEditing? "CANCEL" :"EDIT"}</span> </label>
@@ -234,11 +235,9 @@ value={profileDetails.baselocation} onChange={(e) => handleChange(e, 'Profile', 
                          {/* <span>Edit</span>  */}
                     </div>
                     </div>
-                    {isEditing && (
-                      <div className="save-button">
-                      <button onClick = {handleSaveClick} > SAVE </button>
-                      </div>
-                    )}
+                  
+                    </div> 
+                    </div>
                   </div>
                 )}
 
@@ -255,11 +254,6 @@ value={profileDetails.baselocation} onChange={(e) => handleChange(e, 'Profile', 
                         />
                     </div>
                     </div>
-                    {isEditing && (
-                      <div className="save-button">
-                      <button onClick = {handleSaveClick} > SAVE </button>
-                      </div>
-                    )}
                     </div>
                     )}
 
@@ -287,15 +281,16 @@ value={profileDetails.baselocation} onChange={(e) => handleChange(e, 'Profile', 
                         />
                     </div>
                     </div>
-                    {isEditing && (
-                      <div className="save-button">
-                      <button onClick = {handleSaveClick} > SAVE </button>
-                      </div>
-                    )}
+
                     </div>
                     )}
 
                 </div>
+                {isEditing && (
+                      <div className="save-button">
+                      <button onClick = {handleSaveClick} > SAVE </button>
+                      </div>
+                    )}
                   </div>
                   
                   </div>

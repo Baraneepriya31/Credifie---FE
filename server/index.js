@@ -327,8 +327,6 @@ db.once('open', function() {
     duedate:String,
   });  
         
-  
-
   const Loan = mongoose.model('Agent', loanschema);
 
   app.get('/api/loan', async (req, res) => {
@@ -397,7 +395,25 @@ db.once('open', function() {
       res.status(500).json({ message: 'Failed to add profile' });
     }
   });     
-    
+  router.put('/profile', async (req, res) => {
+    const { emailid, name, empId, contactNumber, baselocation  } = req.body;
+    try {
+        const admin = await Admin.findOneAndUpdate(
+            { emailid },
+            { name}, 
+            {empId },
+            {contactNumber},
+            {baselocation},
+            { new: true }
+        );
+        res.json(admin);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+module.exports = router;
+
   const upload = multer({ dest: 'uploads/' });   
   
   app.post('/send-document', upload.single('file'), (req, res) => {
