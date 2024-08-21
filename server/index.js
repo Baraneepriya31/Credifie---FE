@@ -381,13 +381,6 @@ app.delete('/agents/:id', async (req, res) => {
 
 const applicationschema = new mongoose.Schema({
   applicationID:String,
-  location:String,
-  loanamount:String,
-  loanaccountnumber:String,
-  tenure:String,
-  interest:String,
-  duedate:String,
-  groupName: String,
   appStatus: String,
   groupID: String,
   groupName:String,
@@ -399,6 +392,15 @@ const applicationschema = new mongoose.Schema({
   groupLocation:String,
   panCard: String,
   photos: String,
+  CollectionAgent: String,
+  location:String,
+  loanamount:String,
+  loanaccountnumber:String,
+  tenure:String,
+  interest:String,
+  duedate:String,
+  groupName: String,
+
 })
 
 const Application = mongoose.model('Application', applicationschema);
@@ -413,18 +415,11 @@ async function getNextSequence(name) {
 }
 
 app.post('/add-application', async (req, res) => {
-  const {location, loanamount, loanaccountnumber, tenure, interest, duedate, appStatus, groupID, groupName, groupLeader, members,
-    groupLocation, panCard, photos,} = req.body;
+  const {appStatus, groupID, groupName, groupLeader, members, groupLocation, panCard, photos, collectionAgent, loanamount, loanaccountnumber, tenure, interest, duedate, bankPassBook } = req.body;
   try {
     const appid = await getNextSequence('applicationID');
     const newApplication = new Application({
     applicationID: `CRDA${appid.toString().padStart(3, '100')}`, 
-    location,
-    loanamount,
-    loanaccountnumber,
-    tenure,
-    interest,
-    duedate,
     appStatus,
     groupID,
     groupName,
@@ -433,6 +428,13 @@ app.post('/add-application', async (req, res) => {
     groupLocation,
     panCard,
     photos,
+    collectionAgent,
+    loanamount,
+    loanaccountnumber,
+    tenure,
+    interest,
+    duedate,
+    bankPassBook,
     });
   
     await newApplication.save();
@@ -443,23 +445,47 @@ app.post('/add-application', async (req, res) => {
   };
 });
 
-// Edit agent
 app.put('/update-application/:id', async (req, res) => {
-  const { id } = req.params;
-  const updateData = req.body;
-
   try {
-    const updatedApplication = await Application.findByIdAndUpdate(id, updateData, { new: true });
-    if (updatedApplication) {
-      res.status(200).json({ message: 'Application updated successfully', updatedApplication });
-    } else {
-      res.status(404).json({ message: 'Application not found' });
-    }
+      const { appStatus, collectionAgent, loanaccountnumber, tenure, interest, duedate, bankPassBook } = req.body;
+
+      // Check for missing fields
+      if (!appStatus || !collectionAgent || !loanaccountnumber || !tenure || !interest || !duedate || !bankPassBook) {
+          return res.status(400).json({ message: "Missing required fields" });
+      }
+
+      // Update the application
+      const updatedApplication = await Application.findByIdAndUpdate(
+          req.params.id,
+          {
+              $set: {
+                  appStatus: appStatus,
+                  collectionAgent: collectionAgent,
+                  loanaccountnumber: loanaccountnumber,
+                  tenure: tenure,
+                  interest: interest,
+                  duedate: duedate,
+                  bankPassBook: bankPassBook,
+              }
+          },
+          { new: true }
+      );
+
+      if (!updatedApplication) {
+          return res.status(404).json({ message: "Application not found" });
+      }
+
+      res.json({
+          message: "Application updated successfully",
+          updatedApplication
+      });
   } catch (error) {
-    console.error('Error updating application:', error);
-    res.status(500).json({ message: 'Failed to update application' });
+      console.error(error); // Log error for debugging
+      res.status(500).json({ message: "An error occurred", error });
   }
 });
+
+
 
 
 

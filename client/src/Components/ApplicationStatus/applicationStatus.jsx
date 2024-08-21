@@ -46,12 +46,7 @@ function ApplicationStatus() {
   const [file, setFile] = useState()
   const [uploadedFileURL, setUploadedFileURL] = useState(null)
   const [loanDetails,setLoanDetails] = useState({
-    loanamount:'',
-    loanaccountnumber:'',
-    tenure:'',
-    interest:'',
-    duedate:'',
-    appStatus:'',
+     appStatus:'',
     groupID:'',
     groupName:'',
     groupLeader:{
@@ -62,8 +57,15 @@ function ApplicationStatus() {
     groupLocation:'',
     panCard: '',
     photos: '',
-   });
+    collectionAgent: '',
 
+    loanamount:'',
+    loanaccountnumber:'',
+    tenure:'',
+    interest:'',
+    duedate:'',
+    bankPassBook: '',
+   });
 
 
 
@@ -93,8 +95,8 @@ function ApplicationStatus() {
     try {
       const response = await axios.get(`http://localhost:3008/getgroups/${groupId}`);
       setGroupData(response.data);
-      setButtonText("Submitted");
       setLoanDetails(response.data);
+      // setApplicationData();
       //setModal(true);
     } catch (error) {
       console.error('Error fetching group details:', error.response ? error.response.data : error.message); // Log full error response
@@ -123,11 +125,6 @@ function ApplicationStatus() {
     fetchGroupData();
   }, []);
 
-  // const GroupId = (id) =>{
-  //   setGroupId(!grouppopup);
-  // const group = groupData.find((group) => group._id === id);
-  // setSelectedGroup(group);
-  // }
 
   const handleRadioChange = (event) => {
     setSelectedStatus(event.target.value);
@@ -150,9 +147,7 @@ const handlecancel = () => {
   setAppliedStatus(appliedStatus);
   AppstatusPopup2(false);
 }
-// const handleButtonClick = () => {
-//   OpenModal();
-// };
+
 const updateButtonTextAndColor = (newStatus) => {
     // Update the button text and color based on the new status
     if (newStatus === 'approved') {
@@ -381,8 +376,9 @@ const updateButtonTextAndColor = (newStatus) => {
     const handleSubmitLoan = async () => {
       if (selectedApplication){
       try {
-          const response = await axios.put(`http://localhost:3008/update-application/${selectedApplication}`, selectedApplication._id);
-          if (response.data.message === 'Application added successfully'){
+          const response = await axios.post(`http://localhost:3008/add-application/${selectedApplication._id}`, selectedApplication);
+          if (response.data.message === 'Application added successfully'){ 
+            // setLoanDetails({...response.data});
             setApplicationData();
             settoggleModal2(false);
           }
@@ -396,21 +392,21 @@ const updateButtonTextAndColor = (newStatus) => {
       setFile(event.target.files[0]);
     }
 
-    const handleUpload = (event) =>{
-        event.preventDefault()
-        const url ='http://localhost:3008/add-application';
-        const formData = new FormData();
-        formData.append('file',file);
-        formData.append('fileName',file.name);
-        const config = {
-          headers: {
-            'content-type': 'multipart/form-data',
-          },
-        };
-        axios.post(url, formData, config).then((response) => {
-          setUploadedFileURL(response.data.fileUrl);
-        });
-    }
+    // const handleUpload = (event) =>{
+    //     event.preventDefault()
+    //     const url ='http://localhost:3008/add-application';
+    //     const formData = new FormData();
+    //     formData.append('file',file);
+    //     formData.append('fileName',file.name);
+    //     const config = {
+    //       headers: {
+    //         'content-type': 'multipart/form-data',
+    //       },
+    //     };
+    //     axios.post(url, formData, config).then((response) => {
+    //       setUploadedFileURL(response.data.fileUrl);
+    //     });
+    // }
 
 
     return (

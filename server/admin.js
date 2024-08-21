@@ -184,13 +184,6 @@ async function getNextSequence(name) {
 
 const applicationSchema = new mongoose.Schema({
   applicationID:String,
-  location:String,
-  loanamount:String,
-  loanaccountnumber:String,
-  tenure:String,
-  interest:String,
-  duedate:String,
-  groupName: String,
   appStatus: String,
   groupID: String,
   groupName:String,
@@ -202,6 +195,14 @@ const applicationSchema = new mongoose.Schema({
   groupLocation:String,
   panCard: String,
   photos: String,
+  CollectionAgent: String,
+  loanamount:String,
+  loanaccountnumber:String,
+  tenure:String,
+  interest:String,
+  duedate:String,
+  bankPassBook: String,
+ 
 })
 
   const Application = mongoose.model('Application', applicationSchema);
@@ -217,12 +218,6 @@ const applicationSchema = new mongoose.Schema({
     const appid = await getNextSequence('applicationId');
     const newApplication = new Application({
     applicationID: `CRDA${appid.toString().padStart(3, '100')}`, 
-    location:'India',
-    loanamount:'3,50,000',
-    loanaccountnumber:'IBFC12345',
-    tenure:'6 months',
-    interest:'25%',
-    duedate:'10-09-2024',
     appStatus: 'Submitted',
     groupID: 'CRDG113',
     groupName: 'Example Group',
@@ -234,6 +229,13 @@ const applicationSchema = new mongoose.Schema({
     groupLocation: 'Thanjavur',
     panCard: 'File',
     photos: 'JPG',
+    collectionAgent: 'Suresh',
+    loanamount:'3,50,000',
+    loanaccountnumber:'IBFC12345',
+    tenure:'6 months',
+    interest:'25%',
+    duedate:'10-09-2024',
+    bankPassBook: 'pdf',
     });
       await newApplication.save();
       console.log('Application added successfully');
