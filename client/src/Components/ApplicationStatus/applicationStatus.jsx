@@ -405,7 +405,7 @@ const updateButtonTextAndColor = (newStatus) => {
             </button>
             </div>
             <div className="application-status-text">
-                <p>Total Application</p>
+             <p>Total Application</p>
             </div> 
             <div className="table-container">
             <div className="box-header">
