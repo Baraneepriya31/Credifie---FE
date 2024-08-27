@@ -4,10 +4,10 @@ import { FiDownload } from "react-icons/fi";
 import dropdown from './Vector.png';
 // import pdf from './pdf-file 1.png';
 // import dropdownblack from './dropdown black.png';
-import { CiSearch } from "react-icons/ci";
+import {CiSearch} from "react-icons/ci";
 import closeicon from './ion_close.png';
-import { MdOutlineMailOutline } from "react-icons/md";
-import { FaFilePdf, FaFileExcel } from 'react-icons/fa';
+import {MdOutlineMailOutline} from "react-icons/md";
+import {FaFilePdf, FaFileExcel} from 'react-icons/fa';
 import dropdownblack from './dropdown black.png';
 import axios from'axios';
 

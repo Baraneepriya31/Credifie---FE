@@ -53,7 +53,7 @@ const CheckMail = () => {
                 <img src={mail} id='lock' alt="lock"/>
                 <h2>Check Your Email</h2>
                 <div>{errorMessage || 'We have sent a password reset link to your registered mail ID'}</div>
-                {message && <p className="success-message">{message}</p>}
+                {message&&<p className="success-message">{message}</p>}
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
                 <form>
                     <button type="button" onClick={handleResend}>RESEND EMAIL</button>
