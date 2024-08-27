@@ -12,7 +12,6 @@ const ForgotPassword = () => {
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
     };
-
     const handleSubmit = (event) => {
         event.preventDefault();
         fetch('http://localhost:3008/forgot-password', {
@@ -35,7 +34,6 @@ const ForgotPassword = () => {
             setMessage('An error occurred. Please try again.');
         });
     };
-
     return (
         <div id="admin-page">
             <img src={login_ellipse1} id="image-eli1" alt="ellipse" />
@@ -66,5 +64,4 @@ const ForgotPassword = () => {
         </div>
     );
 };
-
 export default ForgotPassword;
