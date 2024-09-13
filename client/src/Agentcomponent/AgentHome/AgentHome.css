@@ -1,0 +1,32 @@
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: white;
+}
+.home-container{
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr 1fr ;
+    grid-template-rows: 0.1fr 3fr;
+    grid-template-areas: 
+    'sidebar header header header'
+    'sidebar main main main';
+    height: 100vh ;
+}
+.logo-container {
+    grid-area: header;
+    display: flex;
+     align-items: center; 
+     justify-content: space-between;
+     padding: 0 30px 0 30px;  
+    background-color:#044483 ;
+    width: 1105px;
+    height: 105px;
+    /* top: -1px;
+    left: 100px; */
+}
+.home-logo{
+    height: 60px;
+    margin-top: 0;
+    
+}

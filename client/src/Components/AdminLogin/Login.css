@@ -135,11 +135,11 @@
 .eye-icon {
     position: absolute;
     right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+     top: 50%; 
+     transform: translateY(-50%); 
     cursor: pointer;
     color: #666;
-    bottom: 50%;
+     bottom: 50%; 
 }
 
 .admin-login form button {

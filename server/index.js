@@ -448,7 +448,7 @@ module.exports = router;
   
   router.get('/agents', async (req, res) => {
     try {
-      const agents = await Agent.find({}, 'name'); // Fetch only the 'name' field
+      const agents = await Agent.find({}, 'name');                     
       res.json(agents);
     } catch (err) {
       res.status(500).json({ message: err.message });

@@ -1,19 +1,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import CollectionAgent from './Components/CollectionAgent/CollectionAgent';
-import LoanCalculator from './Components/Dashboard/Loancalculator';
-// import AdminLogin from './Components/AdminLogin/Login';
-// import ForgotPassword from './Components/ForgotPassword/forgot-password';
-// import ResetPassword from './Components/ResetPassword/reset-password';
-// import CheckMail from './Components/CheckMail/check-mail';
-// import PasswordReset from './Components/PasswordReset/password-reset';
+// import CollectionAgent from './Components/CollectionAgent/CollectionAgent';
+// import LoanCalculator from './Components/Dashboard/Loancalculator';
+//  import AdminLogin from './Components/AdminLogin/Login';
+//  import ForgotPassword from './Components/ForgotPassword/forgot-password';
+//  import ResetPassword from './Components/ResetPassword/reset-password';
+//  import CheckMail from './Components/CheckMail/check-mail';
+//  import PasswordReset from './Components/PasswordReset/password-reset';
 
-import Sidebar from './Components/Dashboard/sidebar';
-import Home from './Components/Dashboard/Home';
-import Group from './Components/Groups/Group';
-import ApplicationStatus from './Components/ApplicationStatus/applicationStatus';
-import Header from './Components/Dashboard/Header';
-
+// import Sidebar from './Components/Dashboard/sidebar';
+// import Home from './Components/Dashboard/Home';
+// import Group from './Components/Groups/Group';
+// import ApplicationStatus from './Components/ApplicationStatus/applicationStatus';
+// import Header from './Components/Dashboard/Header';
+import AgentLogin from './Agentcomponent/AgentLogin/agentlogin';
+import AgentHome from './Agentcomponent/AgentHome/AgentHome';
 const App = () => {
     // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -30,16 +31,21 @@ const App = () => {
     // };
 
     return (
+        <>
         <Router>
-            {/* <Routes>
-            <Route path="/" element={<AdminLogin onLogin={handleLogin} />} />
-            <Route path="/login" element={<AdminLogin onLogin={handleLogin} />} /> 
-            <Route path="/forgot-password" element={<ForgotPassword />} />
+             <Routes>
+            {/* <Route path="/" element={<AdminLogin  />} />
+            <Route path="/login" element={<AdminLogin  />} />  */}
+            {/* <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/reset-password/:token" element={<ResetPassword />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/check-mail" element={<CheckMail />} />
-                <Route path="/password-reset" element={<PasswordReset />} />
-            </Routes> */}
+                <Route path="/password-reset" element={<PasswordReset />} /> */}
+                  <Route path="/agentlogin" element={<AgentLogin />} />
+                  <Route path="/agenthome" element={<AgentHome />} />
+            </Routes> 
+            </Router>
+            {/* <Router>
             <div className="grid-container">
                 <Header />
                 <Sidebar />
@@ -52,7 +58,10 @@ const App = () => {
                 <Route path="/loancalculator" element={<LoanCalculator />} />
             </Routes>
             </div>
-        </Router>
+        </Router> */}
+
+        
+        </>
     );
 };
 

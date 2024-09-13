@@ -1,0 +1,87 @@
+body{
+    background-color:white;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.agent-login{
+    background-color: #044483;
+    width: 400px;
+    height: 570px;
+    box-shadow: 0px 23px 15px 0px #00000026;
+    margin-left: 40%;
+    margin-top: 30px;
+    
+}
+.agent-container{
+    background-color: white;
+    width: 400px;
+    height: 393px;
+    border-radius: 25px 25px 0 0   ;
+    margin-top: 30px;
+   
+}
+.logo{
+   margin-left: 45%;
+   margin-top: 20px;
+}
+.logo-name{
+    text-align: center;
+    color: #ffffff;
+    font-family: Roboto, sans-serif;
+    font-size: 36px;
+    font-weight: 500;
+}
+.logo-name span{
+    color: #25AE7A; 
+}
+.agent-container p{
+    text-align: center;
+    padding-top: 30px;
+    font-size: 30px;
+    font-weight: 500;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+     align-items: flex-start; 
+      margin-left: 15%; 
+     position: relative;
+     gap: 15px;
+     color: #666;
+    
+}
+.employee{
+    text-align: left;
+    position: relative;
+    color: #666;
+}
+input{
+    border: none;
+    border-bottom: 0.5px solid #aaa;
+   outline: none;
+   width: 280px;
+   
+}  
+.eye-icon {
+    position: absolute;
+    margin-top: 33%;
+     transform: translateY(-50%); 
+    cursor: pointer;
+    color: #666;
+    margin-left: 79%;
+}
+.login-btn{
+    width: 40%;
+    padding: 10px;
+    background-color:#0bd6a6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 30px;
+    margin-left: 80px;
+}
