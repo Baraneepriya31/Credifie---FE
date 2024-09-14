@@ -11,8 +11,6 @@ function Agentlogin() {
   const [id, setId] =useState('');
   const navigate = useNavigate();
  
-   
-
   const handlesubmit=async(e) =>{
     e.preventDefault();
         if(id === '' || password === '') {
@@ -22,10 +20,6 @@ function Agentlogin() {
         }
   }
    
-  
-
-  
-
 const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
 };

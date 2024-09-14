@@ -1,6 +1,6 @@
 import React from 'react';
 import './AgentHome.css';
-import logo from './login-top.png'
+import logo from './login-top.png';
 function AgentHome() {
   return (
     <div className="home-container">
