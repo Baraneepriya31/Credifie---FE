@@ -84,7 +84,6 @@ db.once('open', function() {
         if (!admin) {
             return res.status(400).json({ success: false, message: 'No account with that email address exists' });
         }
-
         // Generate a reset token
         const token = crypto.randomBytes(20).toString('hex');
         admin.resetPasswordToken = token;
@@ -121,12 +120,10 @@ db.once('open', function() {
     }
 });
 
-
   app.post('/resend-email', async (req, res) => {
     const { email } = req.body;
     const token = crypto.randomBytes(20).toString('hex');
     const expiration = Date.now() + 3600000; 
-
     try {
       const admin = await Admin.findOneAndUpdate(
         { email },

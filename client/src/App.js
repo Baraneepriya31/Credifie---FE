@@ -12,10 +12,12 @@ import Sidebar from './Components/Dashboard/sidebar';
 import Home from './Components/Dashboard/Home';
 import Group from './Components/Groups/Group';
 import ApplicationStatus from './Components/ApplicationStatus/applicationStatus';
+import UserLogin from './UserComponent/UserLogin/userLogin';
 import './App.css';
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    
 
     useEffect(() => {
         const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -37,6 +39,7 @@ const App = () => {
     };
 
     return (
+    
         <Router>
             <Routes>
                 <Route path="/" element={<AdminLogin onLogin={handleLogin} />} />
@@ -46,8 +49,9 @@ const App = () => {
                 <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/check-mail" element={<CheckMail />} />
                 <Route path="/password-reset" element={<PasswordReset />} />
+                <Route path="/userLogin" element={<UserLogin />} />
             </Routes>
-            {isLoggedIn && (
+            {/* {isLoggedIn && (
                 <div className="grid-container">
                     <Header onLogout={handleLogout} />
                     <Sidebar />
@@ -59,8 +63,11 @@ const App = () => {
                         <Route path="/loancalculator" element={<AuthenticatedRoute element={<LoanCalculator />} />} />
                     </Routes>
                 </div>
-            )}
+            )} */}
+            
         </Router>
+        
+
     );
 };
 

@@ -76,7 +76,7 @@ const AdminLogin = ({ onLogin }) => {
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label htmlFor="email">Email Id</label>
+                    <label htmlFor="email">Email Id</label>
                         <input
                             type="email"
                             id="email"
